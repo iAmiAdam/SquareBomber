@@ -6,18 +6,16 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 public class GameScreen implements Screen {
 	
-	private TiledMap map;
+	private SquareBomber game;
 	private OrthogonalTiledMapRenderer renderer;
 	private OrthographicCamera camera;
 	
 	public GameScreen(SquareBomber game) {
-		
+		this.game = game;
 	}
 	@Override
 	public void render(float delta) {
@@ -30,18 +28,13 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
-		//camera.viewportWidth = width;
-		//camera.viewportHeight = height;
 		camera.update();
 	}
 
 	@Override
 	public void show() {
-		TmxMapLoader loader = new TmxMapLoader();
 		
-		map = loader.load("map.tmx");
-		
-		renderer = new OrthogonalTiledMapRenderer(map, 1/64f);
+		renderer = new OrthogonalTiledMapRenderer(game.assets.map, 1/64f);
 		
 		camera = new OrthographicCamera(20f, 12f);
 		camera.position.set(7f,5f, 0);
@@ -63,7 +56,6 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void dispose() {
-		map.dispose();
 		renderer.dispose();
 	}
 }

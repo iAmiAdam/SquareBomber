@@ -1,16 +1,16 @@
 package info.adamjsmith.squarebomber;
 
-import info.adamjsmith.squarebomber.screens.GameScreen;
+import info.adamjsmith.squarebomber.screens.LoadingScreen;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 
 public class SquareBomber extends Game implements ApplicationListener{
-	public Assets assets;
+	public Assets assets = new Assets();
 	
 	@Override
 	public void create () {
-		setScreen(new GameScreen(this));
+		setScreen(new LoadingScreen(this));
 	}
 	
 	@Override

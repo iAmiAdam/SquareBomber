@@ -24,7 +24,7 @@ public class LoadingScreen implements Screen {
 	@Override
 	public void show() {
 		game.assets.load();
-		
+		game.setScreen(new GameScreen(game));
 	}
 
 	@Override
