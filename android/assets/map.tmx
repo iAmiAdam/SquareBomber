@@ -3,9 +3,69 @@
  <tileset firstgid="1" name="Ground" tilewidth="128" tileheight="128" spacing="1">
   <image source="tiles.png" width="386" height="128"/>
  </tileset>
- <layer name="Tile Layer 1" width="19" height="19">
+ <layer name="Ground" width="19" height="19">
   <data encoding="base64" compression="zlib">
-   eJxjZGBgYAJiRirRzFTAMPOYKXQPsn5mCsxB1z/qrlF3jbpr+LqLWuUXtWgAD5ECfg==
+   eJxjZGBgYAJixlF6lB6lR+lRetDRAAACAh4=
   </data>
  </layer>
+ <layer name="Blocks" width="19" height="19">
+  <data encoding="base64" compression="zlib">
+   eJxjYKAuYKYCRjaLUregsymlR9016q5Rdw1vd1Gr/KIWAADEjQFU
+  </data>
+ </layer>
+ <objectgroup name="BlockObjects" width="19" height="19">
+  <object x="384" y="384" width="128" height="128"/>
+  <object x="640" y="384" width="128" height="128"/>
+  <object x="896" y="384" width="128" height="128"/>
+  <object x="1152" y="384" width="128" height="128"/>
+  <object x="1408" y="384" width="128" height="128"/>
+  <object x="1664" y="384" width="128" height="128"/>
+  <object x="1920" y="384" width="128" height="128"/>
+  <object x="1920" y="640" width="128" height="128"/>
+  <object x="1664" y="640" width="128" height="128"/>
+  <object x="1408" y="640" width="128" height="128"/>
+  <object x="1408" y="896" width="128" height="128"/>
+  <object x="1664" y="896" width="128" height="128"/>
+  <object x="1920" y="896" width="128" height="128"/>
+  <object x="1920" y="1152" width="128" height="128"/>
+  <object x="1920" y="1408" width="128" height="128"/>
+  <object x="1664" y="1408" width="128" height="128"/>
+  <object x="1408" y="1408" width="128" height="128"/>
+  <object x="1408" y="1152" width="128" height="128"/>
+  <object x="1664" y="1152" width="128" height="128"/>
+  <object x="1664" y="1664" width="128" height="128"/>
+  <object x="1408" y="1664" width="128" height="128"/>
+  <object x="1408" y="1920" width="128" height="128"/>
+  <object x="1664" y="1920" width="128" height="128"/>
+  <object x="1920" y="1920" width="128" height="128"/>
+  <object x="1920" y="1664" width="128" height="128"/>
+  <object x="1152" y="1920" width="128" height="128"/>
+  <object x="896" y="1920" width="128" height="128"/>
+  <object x="640" y="1920" width="128" height="128"/>
+  <object x="640" y="1664" width="128" height="128"/>
+  <object x="896" y="1664" width="128" height="128"/>
+  <object x="1152" y="1664" width="128" height="128"/>
+  <object x="1152" y="1408" width="128" height="128"/>
+  <object x="896" y="1408" width="128" height="128"/>
+  <object x="640" y="1408" width="128" height="128"/>
+  <object x="384" y="1408" width="128" height="128"/>
+  <object x="384" y="1664" width="128" height="128"/>
+  <object x="640" y="1152" width="128" height="128"/>
+  <object x="896" y="1152" width="128" height="128"/>
+  <object x="1152" y="1152" width="128" height="128"/>
+  <object x="1152" y="896" width="128" height="128"/>
+  <object x="896" y="896" width="128" height="128"/>
+  <object x="640" y="896" width="128" height="128"/>
+  <object x="384" y="896" width="128" height="128"/>
+  <object x="384" y="1152" width="128" height="128"/>
+  <object x="640" y="640" width="128" height="128"/>
+  <object x="896" y="640" width="128" height="128"/>
+  <object x="1152" y="640" width="128" height="128"/>
+  <object x="384" y="640" width="128" height="128"/>
+  <object x="384" y="1920" width="128" height="128"/>
+  <object x="256" y="2176" width="1920" height="128"/>
+  <object x="2176" y="256" width="128" height="1920"/>
+  <object x="128" y="256" width="128" height="1920"/>
+  <object x="256" y="128" width="1920" height="128"/>
+ </objectgroup>
 </map>

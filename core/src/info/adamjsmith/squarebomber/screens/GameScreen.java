@@ -28,8 +28,8 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
-		camera.viewportWidth = width;
-		camera.viewportHeight = height;
+		//camera.viewportWidth = width;
+		//camera.viewportHeight = height;
 		camera.update();
 	}
 
@@ -39,10 +39,10 @@ public class GameScreen implements Screen {
 		
 		map = loader.load("map.tmx");
 		
-		renderer = new OrthogonalTiledMapRenderer(map);
+		renderer = new OrthogonalTiledMapRenderer(map, 1/64f);
 		
-		camera = new OrthographicCamera();
-		camera.zoom = 1/5f;
+		camera = new OrthographicCamera(20f, 12f);
+		camera.position.set(7f,5f, 0);
 	}
 
 	@Override
