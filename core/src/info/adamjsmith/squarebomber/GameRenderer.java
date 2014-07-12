@@ -23,7 +23,7 @@ public class GameRenderer {
 		
 		batch = new SpriteBatch();
 		renderer = new OrthogonalTiledMapRenderer(game.assets.map, 1/128f);
-		camera = new OrthographicCamera(20f, 12f);
+		camera = new OrthographicCamera(10f, 6f);
 	}
 	
 	public void render() {
@@ -37,7 +37,7 @@ public class GameRenderer {
 		
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
-		batch.draw(game.assets.playerStop, world.player.getX(), world.player.getY(), 1f, 1f);
+		batch.draw(game.assets.playerStop, world.player.getX() - (world.player.getWidth() / 2), world.player.getY() - (world.player.getHeight() / 2), world.player.getWidth() + 0.1f, world.player.getHeight() + 0.1f);
 		batch.end();
 		
 		debugRenderer.render(world.world, camera.combined);
