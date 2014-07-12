@@ -33,5 +33,4 @@ public class GameRenderer {
 		
 		debugRenderer.render(world.world, camera.combined);
 	}
-
 }

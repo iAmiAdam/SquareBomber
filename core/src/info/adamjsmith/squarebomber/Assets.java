@@ -22,6 +22,7 @@ public class Assets {
 	public void load() {
 		map = new TmxMapLoader().load("map/map.tmx");
 		manager.load("player.png", Texture.class);
+		manager.finishLoading();
 		
 		player = manager.get("player.png", Texture.class);
 		

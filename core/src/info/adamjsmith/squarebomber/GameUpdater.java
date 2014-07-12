@@ -1,5 +1,6 @@
 package info.adamjsmith.squarebomber;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -20,26 +21,30 @@ public class GameUpdater {
 	
 	public World world;
 	
+	private static float ppt;
+	
 	public GameUpdater(SquareBomber game) {
 		this.game = game;
 		createWorld();
 	}
 	
 	public void update() {
-		
+		world.step(1/45f, 6, 2);
 	}
 	
 	private void createWorld() {
+		
+		ppt = 64f;
+		
 		world = new World(new Vector2(0f,0f), false);
 		
-		MapObjects objects = game.assets.map.getLayers().get("Blocks").getObjects();
+		MapObjects objects = game.assets.map.getLayers().get("BlockObjects").getObjects();
 		
 		Array<Body> bodies = new Array<Body>();
 		
 		for(MapObject object : objects) {
-			if (object instanceof TextureMapObject) {
 				Shape shape = getRectangle((RectangleMapObject)object);
-				
+				Gdx.app.log("size", "works");
 				BodyDef bd = new BodyDef();
 				bd.type = BodyType.StaticBody;
 				Body body = world.createBody(bd);
@@ -47,15 +52,15 @@ public class GameUpdater {
 				bodies.add(body);
 				
 				shape.dispose();
-			}
 		}
 	}
 	
 	private static PolygonShape getRectangle(RectangleMapObject rectangleObject) {
 		Rectangle rectangle = rectangleObject.getRectangle();
 		PolygonShape polygon = new PolygonShape();
-		Vector2 size = new Vector2((rectangle.x + rectangle.width), (rectangle.y + rectangle.height));
-		polygon.setAsBox(rectangle.width, rectangle.height, size, 0.0f);		
+		Vector2 size = new Vector2((rectangle.x + rectangle.width) / ppt, (rectangle.y + rectangle.height) / ppt);
+		polygon.setAsBox(rectangle.width / ppt, rectangle.height / ppt, size, 0.0f);		
+		Gdx.app.log("size", String.valueOf( size));
 		return polygon;
 	}
 
