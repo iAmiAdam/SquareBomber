@@ -10,8 +10,8 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 public class Assets {
 	
 	private AssetManager manager;
-	public TiledMap map;
 	private Texture player;
+	public TiledMap map;
 	public Animation playerWalk;
 	public TextureRegion playerStop;
 	
@@ -27,6 +27,7 @@ public class Assets {
 		player = manager.get("player.png", Texture.class);
 		
 		TextureRegion tmp[][] = TextureRegion.split(player, 128, 128);
+		playerStop = tmp[0][0];
 		
 		TextureRegion[] walkFrames = new TextureRegion[8]; 
 		
@@ -37,10 +38,9 @@ public class Assets {
 		}
 		
 		playerWalk = new Animation(0.2f, walkFrames);
-		playerStop = tmp[0][0];
 	}
 	
 	public void dispose() {
-		manager.dispose();
+		//manager.dispose();
 	}
 }
