@@ -29,6 +29,7 @@ public class GameUpdater {
 	}
 	
 	public void update() {
+		player.update();
 		world.step(1/45f, 6, 2);
 	}
 	
@@ -52,7 +53,7 @@ public class GameUpdater {
 				shape.dispose();
 		}
 		
-		player = new Player(world, 4.25f, 4.25f);
+		player = new Player(world, 4.5f, 4.5f);
 		
 		
 	}

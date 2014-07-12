@@ -3,7 +3,9 @@ package info.adamjsmith.squarebomber.screens;
 import info.adamjsmith.squarebomber.GameRenderer;
 import info.adamjsmith.squarebomber.GameUpdater;
 import info.adamjsmith.squarebomber.SquareBomber;
+import info.adamjsmith.squarebomber.input.GameInputProcessor;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 
 public class GameScreen implements Screen {
@@ -31,6 +33,7 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void show() {
+		Gdx.input.setInputProcessor(new GameInputProcessor(updater.player));
 	}
 
 	@Override
