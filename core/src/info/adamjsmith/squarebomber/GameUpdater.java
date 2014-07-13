@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import info.adamjsmith.squarebomber.objects.Bomb;
 import info.adamjsmith.squarebomber.objects.Crate;
+import info.adamjsmith.squarebomber.objects.Explosion;
 import info.adamjsmith.squarebomber.objects.Player;
 
 import com.badlogic.gdx.maps.MapObject;
@@ -27,8 +28,10 @@ public class GameUpdater {
 	
 	public World world;
 	public Player player;
+	
 	public Array<Crate> crates = new Array<Crate>();
 	public Array<Bomb> bombs = new Array<Bomb>();
+	public Array<Explosion> explosions = new Array<Explosion>();
 	
 	public GameUpdater(SquareBomber game) {
 		this.game = game;
@@ -96,8 +99,9 @@ public class GameUpdater {
 			bomb.update();
 			if(bomb.exploded) {
 				iter.remove();
-				bomb = null;
 				player.bombs++;
+				explosions.add(new Explosion((int)bomb.getX(), (int)bomb.getY(), bomb.power));
+				bomb = null;
 			}
 		}
 	}
