@@ -1,5 +1,6 @@
 package info.adamjsmith.squarebomber;
 
+import info.adamjsmith.squarebomber.objects.Bomb;
 import info.adamjsmith.squarebomber.objects.Crate;
 
 import com.badlogic.gdx.Gdx;
@@ -75,6 +76,13 @@ public class GameRenderer {
 						world.player.getWidth(), world.player.getHeight(),
 						1f, 1f, world.player.rotation);
 				break;
+		}
+	}
+	
+	private void drawBombs() {
+		Array<Bomb> bombs = world.getBombs();
+		for(Bomb bomb: bombs) {
+			batch.draw(game.assets.bomb, bomb.getX(), bomb.getY(), 1f, 1f);
 		}
 	}
 }

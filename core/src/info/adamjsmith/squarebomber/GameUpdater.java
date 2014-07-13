@@ -82,6 +82,10 @@ public class GameUpdater {
 		return crates;
 	}
 	
+	public Array<Bomb> getBombs() {
+		return bombs;
+	}
+	
 	private static PolygonShape getRectangle(RectangleMapObject rectangleObject) {
 		rectangle = rectangleObject.getRectangle();
 		PolygonShape polygon = new PolygonShape();
