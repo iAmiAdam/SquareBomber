@@ -43,7 +43,7 @@ public class GameRenderer {
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		drawCrates();
-		batch.draw(game.assets.playerStop, world.player.getX() - (world.player.getWidth() / 2), world.player.getY() - (world.player.getHeight() / 2), world.player.getWidth() + 0.1f, world.player.getHeight() + 0.1f);
+		batch.draw(game.assets.playerStop, world.player.getX() - (world.player.getWidth() / 2), world.player.getY() - (world.player.getHeight() / 2), world.player.getWidth(), world.player.getHeight());
 		batch.end();
 		
 		debugRenderer.render(world.world, camera.combined);

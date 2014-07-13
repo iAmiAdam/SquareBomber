@@ -24,8 +24,8 @@ public class Player extends DynamicObject {
 	
 	
 	public Player(World world, float x, float y) {
-		this.width = 0.65f;
-		this.height = 0.45f;
+		this.width = 0.75f;
+		this.height = 0.75f;
 		this.x =  x;
 		this.y = y;
 		this.speed = 5f;
