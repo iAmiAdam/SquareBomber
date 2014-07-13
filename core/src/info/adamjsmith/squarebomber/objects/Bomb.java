@@ -4,7 +4,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 
 public class Bomb extends StaticObject {
 	private float placed;
-	private int power;
+	public int power;
 	public boolean exploded;
 	
 	public Bomb(int x, int y, int power) {

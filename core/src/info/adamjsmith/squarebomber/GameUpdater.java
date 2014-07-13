@@ -97,6 +97,7 @@ public class GameUpdater {
 			if(bomb.exploded) {
 				iter.remove();
 				bomb = null;
+				player.bombs++;
 			}
 		}
 	}
@@ -110,7 +111,10 @@ public class GameUpdater {
 	}
 	
 	public void placeBomb() {
-		bombs.add(new Bomb((int)player.getX(), (int)player.getY(), player.power));
+		if(player.bombs > 0) {
+			bombs.add(new Bomb((int)player.getX(), (int)player.getY(), player.power));
+			player.bombs--;
+		}
 	}
 
 }
