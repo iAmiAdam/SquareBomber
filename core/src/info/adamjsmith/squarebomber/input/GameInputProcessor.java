@@ -46,6 +46,9 @@ public class GameInputProcessor implements InputProcessor {
 		if(screenX > (Gdx.graphics.getWidth() / 4) + (Gdx.graphics.getWidth() / 2)) {
 			player.move(Direction.RIGHT);
 		}
+		if(screenX < (Gdx.graphics.getHeight() / 8) && screenY < (Gdx.graphics.getWidth() / 8)) {
+			player.placeBomb();
+		}
 		return false;
 	}
 

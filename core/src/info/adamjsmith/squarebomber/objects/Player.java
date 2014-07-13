@@ -83,6 +83,6 @@ public class Player extends DynamicObject {
 	}
 	
 	public void placeBomb() {
-		
+		new Bomb((int)this.x, (int)this.y, this.power);
 	}
 }
