@@ -1,5 +1,6 @@
 package info.adamjsmith.squarebomber;
 
+import info.adamjsmith.squarebomber.objects.Bomb;
 import info.adamjsmith.squarebomber.objects.Crate;
 import info.adamjsmith.squarebomber.objects.Player;
 
@@ -25,6 +26,7 @@ public class GameUpdater {
 	public World world;
 	public Player player;
 	public Array<Crate> crates = new Array<Crate>();
+	public Array<Bomb> bombs = new Array<Bomb>();
 	
 	public GameUpdater(SquareBomber game) {
 		this.game = game;
@@ -86,6 +88,10 @@ public class GameUpdater {
 		Vector2 size = new Vector2(((rectangle.x + rectangle.width) * 0.5f) / ppt, ((rectangle.y + rectangle.height) * 0.5f) / ppt);
 		polygon.setAsBox((rectangle.width * 0.5f) / ppt, (rectangle.height * 0.5f) / ppt, size, 0.0f);		
 		return polygon;
+	}
+	
+	public void placeBomb() {
+		bombs.add(new Bomb((int)player.getX(), (int)player.getY(), player.power));
 	}
 
 }

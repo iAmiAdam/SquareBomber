@@ -81,8 +81,4 @@ public class Player extends DynamicObject {
 			body.setLinearVelocity(0f, 0f);
 		}
 	}
-	
-	public void placeBomb() {
-		new Bomb((int)this.x, (int)this.y, this.power);
-	}
 }
