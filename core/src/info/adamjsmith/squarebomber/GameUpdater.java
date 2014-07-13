@@ -48,6 +48,7 @@ public class GameUpdater {
 				Shape shape = getRectangle((RectangleMapObject)object);
 				BodyDef bd = new BodyDef();
 				bd.type = BodyType.StaticBody;
+				bd.position.set((rectangle.x * 0.5f) / ppt, (rectangle.y * 0.5f) / ppt);
 				Body body = world.createBody(bd);
 				body.createFixture(shape, 1);
 				shape.dispose();
@@ -60,15 +61,17 @@ public class GameUpdater {
 			
 			BodyDef bd = new BodyDef();
 			bd.type = BodyType.StaticBody;
-			bd.position.set(rectangle.x / ppt, rectangle.y / ppt);
+			bd.position.set((rectangle.x * 0.5f) / ppt, (rectangle.y * 0.5f) / ppt);
 			Body body = world.createBody(bd);
 			body.createFixture(shape, 1);
 			Crate crate = new Crate(body);
+			crate.x = rectangle.x / ppt;
+			crate.y = rectangle.y / ppt;
 			crates.add(crate);
 			shape.dispose();
 		}
 		
-		player = new Player(world, 4.5f, 4.5f);
+		player = new Player(world, 2.5f, 2.5f);
 		
 		
 	}
@@ -80,8 +83,8 @@ public class GameUpdater {
 	private static PolygonShape getRectangle(RectangleMapObject rectangleObject) {
 		rectangle = rectangleObject.getRectangle();
 		PolygonShape polygon = new PolygonShape();
-		Vector2 size = new Vector2((rectangle.x + rectangle.width * 0.5f) / ppt, (rectangle.y + rectangle.height * 0.5f) / ppt);
-		polygon.setAsBox(rectangle.width * 0.5f / ppt, rectangle.height * 0.5f / ppt, size, 0.0f);		
+		Vector2 size = new Vector2(((rectangle.x + rectangle.width) * 0.5f) / ppt, ((rectangle.y + rectangle.height) * 0.5f) / ppt);
+		polygon.setAsBox((rectangle.width * 0.5f) / ppt, (rectangle.height * 0.5f) / ppt, size, 0.0f);		
 		return polygon;
 	}
 

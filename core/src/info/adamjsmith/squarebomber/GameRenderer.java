@@ -26,7 +26,7 @@ public class GameRenderer {
 		
 		batch = new SpriteBatch();
 		renderer = new OrthogonalTiledMapRenderer(game.assets.map, 1/128f);
-		camera = new OrthographicCamera(10f, 6f);
+		camera = new OrthographicCamera(19f, 19f);
 	}
 	
 	public void render() {
