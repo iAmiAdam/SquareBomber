@@ -1,7 +1,6 @@
 package info.adamjsmith.squarebomber.input;
 
 import info.adamjsmith.squarebomber.GameUpdater;
-import info.adamjsmith.squarebomber.objects.Player;
 import info.adamjsmith.squarebomber.objects.Player.Direction;
 
 import com.badlogic.gdx.Gdx;

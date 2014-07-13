@@ -92,6 +92,10 @@ public class GameUpdater {
 		return bombs;
 	}
 	
+	public Array<Explosion> getExplosions() {
+		return explosions;
+	}
+	
 	private void updateBombs() {
 		Iterator<Bomb> iter = bombs.iterator();
 		while(iter.hasNext()) {
@@ -100,7 +104,10 @@ public class GameUpdater {
 			if(bomb.exploded) {
 				iter.remove();
 				player.bombs++;
-				explosions.add(new Explosion((int)bomb.getX(), (int)bomb.getY(), bomb.power));
+				Explosion ex = new Explosion((int)bomb.getX(), (int)bomb.getY(), bomb.power);
+				explosions.add(ex);
+				Body body = world.createBody(ex.bd);
+				body.createFixture(ex.shape, 1);
 				bomb = null;
 			}
 		}
