@@ -41,6 +41,7 @@ public class GameUpdater {
 	public void update() {
 		player.update();
 		updateBombs();
+		updateExplosions();
 		world.step(1/45f, 6, 2);
 	}
 	
@@ -109,6 +110,18 @@ public class GameUpdater {
 				Body body = world.createBody(ex.bd);
 				body.createFixture(ex.shape, 1);
 				bomb = null;
+			}
+		}
+	}
+	
+	private void updateExplosions() {
+		Iterator<Explosion> iter = explosions.iterator();
+		while(iter.hasNext()) {
+			Explosion explosion = iter.next();
+			explosion.update();
+			if(explosion.over) {
+				iter.remove();
+				explosion = null;
 			}
 		}
 	}

@@ -4,10 +4,13 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.utils.TimeUtils;
 
 public class Explosion extends StaticObject {
 	
 	private int reach;
+	private float created;
+	public boolean over;
 	
 	public BodyDef bd;
 	public PolygonShape shape;
@@ -16,6 +19,8 @@ public class Explosion extends StaticObject {
 		this.x = x;
 		this.y = y;
 		this.reach = power;
+		this.created = TimeUtils.nanoTime();
+		this.over = false;
 		
 		bd = new BodyDef();
 	    bd.type = BodyType.StaticBody;
@@ -43,6 +48,7 @@ public class Explosion extends StaticObject {
 	}
 	
 	public void update() {
-		
+		if(TimeUtils.nanoTime() - created / 1000000000.0f > 1)
+			this.over = true;
 	}
 }
