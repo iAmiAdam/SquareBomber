@@ -2,6 +2,7 @@ package info.adamjsmith.squarebomber;
 
 import info.adamjsmith.squarebomber.objects.Bomb;
 import info.adamjsmith.squarebomber.objects.Crate;
+import info.adamjsmith.squarebomber.objects.Explosion;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -50,6 +51,7 @@ public class GameRenderer {
 		drawCrates();
 		drawPlayer();
 		drawBombs();
+		drawExplosions();
 		batch.end();
 		
 		debugRenderer.render(world.world, camera.combined);
@@ -60,7 +62,7 @@ public class GameRenderer {
 	private void drawCrates() {
 		Array<Crate> crates = world.getCrates();
 		for(Crate crate: crates) {
-			batch.draw(game.assets.crate, crate.getX(), crate.getY(), 1f, 1f);
+			batch.draw(game.assets.crate, crate.getX() + 0.025f, crate.getY() + 0.025f, 0.95f, 0.95f);
 		}
 	}
 	
@@ -87,6 +89,75 @@ public class GameRenderer {
 		Array<Bomb> bombs = world.getBombs();
 		for(Bomb bomb: bombs) {
 			batch.draw(game.assets.bomb, bomb.getX(), bomb.getY(), 1f, 1f);
+		}
+	}
+	
+	private void drawExplosions() {
+		
+		float x = 0;
+		float y = 0;
+		float rotation = 0;
+		Array<Explosion> explosions = world.getExplosions();
+		for (Explosion explosion: explosions) {
+			batch.draw(game.assets.exStart, explosion.getX(), explosion.getY(), 1f, 1f);
+			for(int i = 0; i < 4; i++) {
+				switch(i) {
+				case 0:
+					x = explosion.getX() + 1f;
+					y = explosion.getY();
+					rotation = 0;
+					break;
+				case 1:
+					x = explosion.getX();
+					y = explosion.getY();
+					rotation = 90;
+					break;
+				case 2:
+					x = explosion.getX();
+					y = explosion.getY();
+					rotation = 90;
+					break;
+				case 3:
+					x = explosion.getX();
+					y = explosion.getY();
+					rotation = 0;
+				}
+				
+				
+				
+				if (explosion.sides[i] > 0) {
+					for(int j = 1; j <= explosion.sides[i]; j++) {
+						if(i == 0) {
+							if(j == explosion.sides[i]) {
+								batch.draw(game.assets.exEnd, x + j, y, x + 0.5f, y + 0.5f, 1f, 1f, 1f, 1f, rotation, 0, 0, 1, 1, false, false);
+							} else {
+								batch.draw(game.assets.exMid, x + j, y, x + 0.5f, y + 0.5f, 1f, 1f, 1f, 1f, rotation, 0, 0, 1, 1, false, false);
+							}
+						}
+						if (i == 1) {
+							if (j == explosion.sides[i]) {
+								batch.draw(game.assets.exEnd, x + j, y, 1f, 1f, 0, 0, 128, 128, true, false);
+							} else {
+								batch.draw(game.assets.exMid, x, y + j, x + 0.5f, y + 0.5f, 1f, 1f, 1f, 1f, rotation, 0, 0, 1, 1, false, false);
+							}
+						}
+						if (i == 2) {
+							if (j == explosion.sides[i]) {
+								batch.draw(game.assets.exEnd, x - j, y, x + 0.5f, y + 0.5f, 1f, 1f, 1f, 1f, rotation, 0, 0, 1, 1, false, false);	
+							} else {
+								batch.draw(game.assets.exMid, x - j, y, x + 0.5f, y + 0.5f, 1f, 1f, 1f, 1f, rotation, 0, 0, 1, 1, false, false);
+							}
+						}
+						if (i == 3) {
+							if(j == explosion.sides[i]) {
+								batch.draw(game.assets.exEnd, x, y - j, x + 0.5f, y + 0.5f, 1f, 1f, 1f, 1f, rotation, 0, 0, 1, 1, false, false);
+							} else {
+								batch.draw(game.assets.exMid, x, y - j, x + 0.5f, y + 0.5f, 1f, 1f, 1f, 1f, rotation, 0, 0, 1, 1, false, false);
+							}
+						}						
+					}
+				}
+			}
 		}
 	}
 }

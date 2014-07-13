@@ -59,7 +59,7 @@ public class GameUpdater {
 				bd.type = BodyType.StaticBody;
 				bd.position.set((rectangle.x * 0.5f) / ppt, (rectangle.y * 0.5f) / ppt);
 				Body body = world.createBody(bd);
-				body.createFixture(shape, 1);
+				body.createFixture(shape, 1).setUserData(4);;
 				shape.dispose();
 		}
 		
@@ -72,7 +72,7 @@ public class GameUpdater {
 			bd.type = BodyType.StaticBody;
 			bd.position.set((rectangle.x * 0.5f) / ppt, (rectangle.y * 0.5f) / ppt);
 			Body body = world.createBody(bd);
-			body.createFixture(shape, 1);
+			body.createFixture(shape, 1).setUserData(1);
 			Crate crate = new Crate(body);
 			crate.x = rectangle.x / ppt;
 			crate.y = rectangle.y / ppt;
@@ -107,9 +107,7 @@ public class GameUpdater {
 				player.bombs++;
 				Explosion ex = new Explosion((int)bomb.getX(), (int)bomb.getY(), bomb.power);
 				explosions.add(ex);
-				Body body = world.createBody(ex.bd);
-				body.createFixture(ex.shape, 1);
-				ex.body = body;
+				ex.rayCast(world);
 				bomb = null;
 			}
 		}
@@ -121,9 +119,8 @@ public class GameUpdater {
 			Explosion explosion = iter.next();
 			explosion.update();
 			if(explosion.over) {
-				iter.remove();
-				world.destroyBody(explosion.body);
-				explosion = null;
+				//iter.remove();
+				//explosion = null;
 			}
 		}
 	}

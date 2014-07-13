@@ -1,48 +1,28 @@
 package info.adamjsmith.squarebomber.objects;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.RayCastCallback;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.TimeUtils;
 
 public class Explosion extends StaticObject {
 	
 	private int reach;
 	private float created;
+	public int[] sides;
+	private int i;
 	public boolean over;
 	
-	public BodyDef bd;
-	public PolygonShape shape;
-	public Body body;
-	
-	public Explosion(int x, int y, int power) {
+	public Explosion(float x, float y, int power) {
 		this.x = x;
 		this.y = y;
 		this.reach = power;
 		this.created = TimeUtils.nanoTime();
 		this.over = false;
-		
-		bd = new BodyDef();
-	    bd.type = BodyType.StaticBody;
-		bd.position.set(this.x, this.y);
-		
-		shape = new PolygonShape();
-		
-		Vector2[] vertices = new Vector2[9];
-		vertices[0] = new Vector2(0f, 0f);
-		vertices[1] = new Vector2(-this.reach, 0f);
-		vertices[2] = new Vector2(-this.reach, 1f);
-		vertices[3] = new Vector2(0f, 1f);
-		vertices[4] = new Vector2(0f, 1f + this.reach);
-		vertices[5] = new Vector2(1f, 1f + this.reach);
-		vertices[6] = new Vector2(1f, 1f);
-		vertices[7] = new Vector2(1f + this.reach, 1f);
-		vertices[8] = new Vector2(1f + this.reach, 0f);	
-		
-		shape.set(vertices);
-		
+		sides = new int[4];
+		i = 0;
 	}
 	
 	public void draw() {
@@ -50,8 +30,63 @@ public class Explosion extends StaticObject {
 	}
 	
 	public void update() {
-		if(TimeUtils.nanoTime() - this.created / 1000000000.0f > 1f) {
+		if(TimeUtils.nanoTime() - this.created / 1000000000.0f > 5f) {
 			this.over = true;
 		}
 	}
+	
+	public RayCastCallback callback = new RayCastCallback() {
+
+		@Override
+		public float reportRayFixture(Fixture fixture, Vector2 point,
+				Vector2 normal, float fraction) {
+			
+			switch((Integer)fixture.getUserData()) {
+			case 0:
+				sides[i] = 1;
+				//TODO kill player and get x and y
+				break;
+				
+			case 1:
+				sides[i] = 1;
+				//TODO smash crate and x and y
+				break;
+				
+			case 2: 
+				sides[i] = 1;
+				//TODO explode other bomb
+				break;
+				
+			case 3:
+				//nothing
+				sides[i] = 1;
+				break;
+				
+			case 4:
+				//TODO y
+				sides[i] = 0;
+				break;
+			default:
+				sides[i] = 1;
+			}
+			return 0;
+		}
+	};
+	
+	public void rayCast(World world) {
+		Vector2 p1 = new Vector2(this.x, this.y);
+		Vector2 p2 = new Vector2(this.x, this.y + this.reach);
+		world.rayCast(callback, p1, p2);
+		i++;
+		p1 = new Vector2(this.x + 1f, this.y);
+		p2 = new Vector2(this.x + 1f + this.reach, this.y + 1f);
+		world.rayCast(callback, p1, p2);
+		i++;
+		p1 = new Vector2(this.x, this.y);
+		p2 = new Vector2(this.x + 1f, this.y - this.reach);
+		i++;
+		p1 = new Vector2(this.x, this.y);
+		p2 = new Vector2(this.x - this.reach, this.y + 1);
+	}
+	
 }
