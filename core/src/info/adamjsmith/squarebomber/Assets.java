@@ -30,7 +30,7 @@ public class Assets {
 		player = manager.get("player.png", Texture.class);
 		crate = manager.get("crate.png", Texture.class);
 		
-		TextureRegion tmp[][] = TextureRegion.split(player, 128, 128);
+		TextureRegion tmp[][] = TextureRegion.split(player, 88, 93);
 		playerStop = tmp[0][0];
 		
 		TextureRegion[] walkFrames = new TextureRegion[8]; 
