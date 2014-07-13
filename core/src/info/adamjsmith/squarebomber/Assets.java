@@ -1,5 +1,6 @@
 package info.adamjsmith.squarebomber;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -9,13 +10,14 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 
 public class Assets {
 	
-	private AssetManager manager;
+	public AssetManager manager;
 	private Texture player;
 	
 	public TiledMap map;
 	public Texture crate;
 	public Animation playerWalk;
 	public TextureRegion playerStop;
+	public TextureRegion test;
 	
 	public Assets() {
 		manager = new AssetManager();
@@ -30,18 +32,20 @@ public class Assets {
 		player = manager.get("player.png", Texture.class);
 		crate = manager.get("crate.png", Texture.class);
 		
-		TextureRegion tmp[][] = TextureRegion.split(player, 88, 93);
+		TextureRegion[][] tmp = TextureRegion.split(player, 88, 93);
 		playerStop = tmp[0][0];
 		
 		TextureRegion[] walkFrames = new TextureRegion[8]; 
-		
+		int index = 0;
 		for (int i = 0; i < 1; i++) {
 			for (int j = 0; j < 8; j++) {
-				walkFrames[i] = tmp[i][j];
+				walkFrames[index++] = tmp[i][j];
 			}
 		}
 		
-		playerWalk = new Animation(0.2f, walkFrames);
+		Gdx.app.log("size", String.valueOf(walkFrames.length));
+		test = walkFrames[3];
+		playerWalk = new Animation(0.1f, walkFrames);
 	}
 	
 	public void dispose() {

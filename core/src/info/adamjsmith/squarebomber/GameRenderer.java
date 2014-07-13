@@ -6,8 +6,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.utils.Array;
 
 public class GameRenderer {
@@ -18,7 +18,9 @@ public class GameRenderer {
 	private OrthogonalTiledMapRenderer renderer;
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
-	private Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
+	
+	private float stateTime;
+	private TextureRegion currentFrame = new TextureRegion();
 	
 	public GameRenderer(SquareBomber game, GameUpdater world) {
 		this.world = world;
@@ -43,16 +45,36 @@ public class GameRenderer {
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		drawCrates();
-		batch.draw(game.assets.playerStop, world.player.getX() - (world.player.getWidth() / 2), world.player.getY() - (world.player.getHeight() / 2), world.player.getWidth(), world.player.getHeight());
+		drawPlayer();
 		batch.end();
 		
-		debugRenderer.render(world.world, camera.combined);
+		stateTime += Gdx.graphics.getDeltaTime();
+		
 	}
 	
 	private void drawCrates() {
 		Array<Crate> crates = world.getCrates();
 		for(Crate crate: crates) {
 			batch.draw(game.assets.crate, crate.getX(), crate.getY(), 1f, 1f);
+		}
+	}
+	
+	private void drawPlayer() {
+		switch(world.player.direction) {
+			case STOP:
+				batch.draw(game.assets.playerStop, world.player.getX() - (world.player.getWidth() / 2), world.player.getY() - (world.player.getHeight() / 2), 
+						world.player.getWidth() / 2, world.player.getHeight() / 2,
+						world.player.getWidth(), world.player.getHeight(),
+						1f, 1f, world.player.rotation);
+				stateTime = 0;
+				break;
+			default:
+				currentFrame = game.assets.playerWalk.getKeyFrame(stateTime, true);
+				batch.draw(currentFrame, world.player.getX() - (world.player.getWidth() / 2), world.player.getY() - (world.player.getHeight() / 2), 
+						world.player.getWidth() / 2, world.player.getHeight() / 2,
+						world.player.getWidth(), world.player.getHeight(),
+						1f, 1f, world.player.rotation);
+				break;
 		}
 	}
 }

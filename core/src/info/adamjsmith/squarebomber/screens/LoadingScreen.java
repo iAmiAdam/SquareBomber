@@ -13,7 +13,9 @@ public class LoadingScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
-		
+		if(game.assets.manager.update()) {
+			game.setScreen(new GameScreen(game));
+		}
 	}
 
 	@Override
@@ -24,7 +26,6 @@ public class LoadingScreen implements Screen {
 	@Override
 	public void show() {
 		game.assets.load();
-		game.setScreen(new GameScreen(game));
 	}
 
 	@Override
