@@ -47,6 +47,7 @@ public class GameRenderer {
 		batch.begin();
 		drawCrates();
 		drawPlayer();
+		drawBombs();
 		batch.end();
 		
 		stateTime += Gdx.graphics.getDeltaTime();

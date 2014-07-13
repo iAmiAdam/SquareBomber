@@ -1,5 +1,7 @@
 package info.adamjsmith.squarebomber;
 
+import java.util.Iterator;
+
 import info.adamjsmith.squarebomber.objects.Bomb;
 import info.adamjsmith.squarebomber.objects.Crate;
 import info.adamjsmith.squarebomber.objects.Player;
@@ -35,6 +37,7 @@ public class GameUpdater {
 	
 	public void update() {
 		player.update();
+		updateBombs();
 		world.step(1/45f, 6, 2);
 	}
 	
@@ -84,6 +87,18 @@ public class GameUpdater {
 	
 	public Array<Bomb> getBombs() {
 		return bombs;
+	}
+	
+	private void updateBombs() {
+		Iterator<Bomb> iter = bombs.iterator();
+		while(iter.hasNext()) {
+			Bomb bomb =  iter.next();
+			bomb.update();
+			if(bomb.exploded) {
+				iter.remove();
+				bomb = null;
+			}
+		}
 	}
 	
 	private static PolygonShape getRectangle(RectangleMapObject rectangleObject) {

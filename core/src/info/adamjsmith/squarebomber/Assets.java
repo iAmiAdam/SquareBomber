@@ -15,6 +15,7 @@ public class Assets {
 	
 	public TiledMap map;
 	public Texture crate;
+	public Texture bomb;
 	public Animation playerWalk;
 	public TextureRegion playerStop;
 	public TextureRegion test;
@@ -27,10 +28,12 @@ public class Assets {
 		map = new TmxMapLoader().load("map/map.tmx");
 		manager.load("player.png", Texture.class);
 		manager.load("crate.png", Texture.class);
+		manager.load("bomb.png", Texture.class);
 		manager.finishLoading();
 		
 		player = manager.get("player.png", Texture.class);
 		crate = manager.get("crate.png", Texture.class);
+		bomb = manager.get("bomb.png", Texture.class);
 		
 		TextureRegion[][] tmp = TextureRegion.split(player, 88, 93);
 		playerStop = tmp[0][0];
