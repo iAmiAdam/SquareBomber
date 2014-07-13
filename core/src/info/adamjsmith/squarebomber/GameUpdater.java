@@ -109,6 +109,7 @@ public class GameUpdater {
 				explosions.add(ex);
 				Body body = world.createBody(ex.bd);
 				body.createFixture(ex.shape, 1);
+				ex.body = body;
 				bomb = null;
 			}
 		}
@@ -121,6 +122,7 @@ public class GameUpdater {
 			explosion.update();
 			if(explosion.over) {
 				iter.remove();
+				world.destroyBody(explosion.body);
 				explosion = null;
 			}
 		}

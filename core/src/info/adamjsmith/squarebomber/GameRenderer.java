@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.utils.Array;
 
 public class GameRenderer {
@@ -22,6 +23,7 @@ public class GameRenderer {
 	
 	private float stateTime;
 	private TextureRegion currentFrame = new TextureRegion();
+	private Box2DDebugRenderer debugRenderer =  new Box2DDebugRenderer();
 	
 	public GameRenderer(SquareBomber game, GameUpdater world) {
 		this.world = world;
@@ -50,6 +52,7 @@ public class GameRenderer {
 		drawBombs();
 		batch.end();
 		
+		debugRenderer.render(world.world, camera.combined);
 		stateTime += Gdx.graphics.getDeltaTime();
 		
 	}

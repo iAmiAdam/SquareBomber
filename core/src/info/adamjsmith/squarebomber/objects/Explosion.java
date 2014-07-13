@@ -1,6 +1,7 @@
 package info.adamjsmith.squarebomber.objects;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -14,6 +15,7 @@ public class Explosion extends StaticObject {
 	
 	public BodyDef bd;
 	public PolygonShape shape;
+	public Body body;
 	
 	public Explosion(int x, int y, int power) {
 		this.x = x;
@@ -28,10 +30,10 @@ public class Explosion extends StaticObject {
 		
 		shape = new PolygonShape();
 		
-		Vector2[] vertices = new Vector2[8];
+		Vector2[] vertices = new Vector2[9];
 		vertices[0] = new Vector2(0f, 0f);
-		vertices[1] = new Vector2(0f - this.reach, 0f);
-		vertices[2] = new Vector2(0f - this.reach, 1f);
+		vertices[1] = new Vector2(-this.reach, 0f);
+		vertices[2] = new Vector2(-this.reach, 1f);
 		vertices[3] = new Vector2(0f, 1f);
 		vertices[4] = new Vector2(0f, 1f + this.reach);
 		vertices[5] = new Vector2(1f, 1f + this.reach);
@@ -48,7 +50,8 @@ public class Explosion extends StaticObject {
 	}
 	
 	public void update() {
-		if(TimeUtils.nanoTime() - created / 1000000000.0f > 1)
+		if(TimeUtils.nanoTime() - this.created / 1000000000.0f > 1f) {
 			this.over = true;
+		}
 	}
 }
