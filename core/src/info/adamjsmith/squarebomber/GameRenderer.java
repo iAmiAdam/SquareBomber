@@ -1,11 +1,14 @@
 package info.adamjsmith.squarebomber;
 
+import info.adamjsmith.squarebomber.objects.Crate;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.utils.Array;
 
 public class GameRenderer {
 	
@@ -37,9 +40,17 @@ public class GameRenderer {
 		
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
+		drawCrates();
 		batch.draw(game.assets.playerStop, world.player.getX() - (world.player.getWidth() / 2), world.player.getY() - (world.player.getHeight() / 2), world.player.getWidth() + 0.1f, world.player.getHeight() + 0.1f);
 		batch.end();
 		
 		debugRenderer.render(world.world, camera.combined);
+	}
+	
+	private void drawCrates() {
+		Array<Crate> crates = world.getCrates();
+		for(Crate crate: crates) {
+			batch.draw(game.assets.crate, crate.getX(), crate.getY(), 1f, 1f);
+		}
 	}
 }

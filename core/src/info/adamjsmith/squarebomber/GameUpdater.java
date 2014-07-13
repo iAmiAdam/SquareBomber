@@ -1,5 +1,6 @@
 package info.adamjsmith.squarebomber;
 
+import info.adamjsmith.squarebomber.objects.Crate;
 import info.adamjsmith.squarebomber.objects.Player;
 
 import com.badlogic.gdx.maps.MapObject;
@@ -19,9 +20,11 @@ public class GameUpdater {
 	
 	private SquareBomber game;
 	private static float ppt;
+	private static Rectangle rectangle;
 	
 	public World world;
 	public Player player;
+	public Array<Crate> crates = new Array<Crate>();
 	
 	public GameUpdater(SquareBomber game) {
 		this.game = game;
@@ -41,16 +44,28 @@ public class GameUpdater {
 		
 		MapObjects objects = game.assets.map.getLayers().get("BlockObjects").getObjects();
 		
-		Array<Body> bodies = new Array<Body>();
-		
 		for(MapObject object : objects) {
 				Shape shape = getRectangle((RectangleMapObject)object);
 				BodyDef bd = new BodyDef();
 				bd.type = BodyType.StaticBody;
 				Body body = world.createBody(bd);
 				body.createFixture(shape, 1);
-				bodies.add(body);
 				shape.dispose();
+		}
+		
+		objects = game.assets.map.getLayers().get("CrateObjects").getObjects();
+		
+		for(MapObject object : objects) {
+			Shape shape = getRectangle((RectangleMapObject)object);
+			
+			BodyDef bd = new BodyDef();
+			bd.type = BodyType.StaticBody;
+			bd.position.set(rectangle.x / ppt, rectangle.y / ppt);
+			Body body = world.createBody(bd);
+			body.createFixture(shape, 1);
+			Crate crate = new Crate(body);
+			crates.add(crate);
+			shape.dispose();
 		}
 		
 		player = new Player(world, 4.5f, 4.5f);
@@ -58,8 +73,12 @@ public class GameUpdater {
 		
 	}
 	
+	public Array<Crate> getCrates() {
+		return crates;
+	}
+	
 	private static PolygonShape getRectangle(RectangleMapObject rectangleObject) {
-		Rectangle rectangle = rectangleObject.getRectangle();
+		rectangle = rectangleObject.getRectangle();
 		PolygonShape polygon = new PolygonShape();
 		Vector2 size = new Vector2((rectangle.x + rectangle.width * 0.5f) / ppt, (rectangle.y + rectangle.height * 0.5f) / ppt);
 		polygon.setAsBox(rectangle.width * 0.5f / ppt, rectangle.height * 0.5f / ppt, size, 0.0f);		
