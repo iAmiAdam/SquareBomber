@@ -13,4 +13,8 @@ public class Crate extends StaticObject {
 		this.x = pos.x;
 		this.y = pos.y;
 	}
+	
+	public void explode() {
+		
+	}
 }

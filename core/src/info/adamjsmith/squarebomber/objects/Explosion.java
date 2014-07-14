@@ -1,6 +1,5 @@
 package info.adamjsmith.squarebomber.objects;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
@@ -72,7 +71,6 @@ public class Explosion extends StaticObject {
 				break;
 				
 			case 4:
-				//TODO y
 				if((pos.x - p1.x) - 1 > reach) {
 					sides[i] = pos.x - p1.x;
 					sides[i] = (sides[i] < 0 ? -sides[i] : sides[i]);
