@@ -43,6 +43,7 @@ public class Player extends DynamicObject {
 		body = world.createBody(bd);
 		body.setFixedRotation(true);
 		body.createFixture(polygon, 1);
+		body.setUserData(this);
 		
 		this.direction = Direction.STOP;
 	}

@@ -9,20 +9,19 @@ import com.badlogic.gdx.physics.box2d.RayCastCallback;
 
 public class ExplosionDetector implements RayCastCallback {
 	
-	private GameUpdater world;
-	
 	public float[] sides;
-	private float x;
-	private float y;
 	private int i;
 	public boolean over;
 	private int reach;
 	
 	private Vector2 p1;
 	
-	public ExplosionDetector(GameUpdater world) {
-		this.world = world;
+	public ExplosionDetector(int reach) {
 		this.i = -1;
+		sides = new float[4];
+		for (int i = 0; i < 4; i++) {
+			sides[i] = reach;
+		}
 	}
 	
 	public void setVars(Vector2 p1) {
@@ -44,7 +43,7 @@ public class ExplosionDetector implements RayCastCallback {
 		case 1:
 			GameObject data = (GameObject) body.getUserData();
 			data.exists = false;
-			if(x != point.x) {
+			if(p1.x != point.x) {
 				sides[i] = pos.x - p1.x;
 				sides[i] = (sides[i] < 0 ? -sides[i] : sides[i]);
 				if (sides[i] < 2) sides[i] = 1;

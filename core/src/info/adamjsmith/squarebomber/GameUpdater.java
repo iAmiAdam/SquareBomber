@@ -135,7 +135,7 @@ public class GameUpdater {
 		Iterator<Crate> iter = crates.iterator();
 		while(iter.hasNext()) {
 			Crate crate = iter.next();
-			if(crate == null) {
+			if(crate.exists == false) {
 				iter.remove();
 			}
 		}
@@ -157,7 +157,7 @@ public class GameUpdater {
 	}
 	
 	private void rayCast(float reach, float x, float y, Explosion explosion) {
-		ExplosionDetector callback = new ExplosionDetector(this);
+		ExplosionDetector callback = new ExplosionDetector((int)explosion.reach);
 		Vector2 p1, p2;
 		p1 = new Vector2(x + 0.5f, y + 0.95f);
 		p2 = new Vector2(x + 0.5f, y + 0.95f + reach);
@@ -176,6 +176,8 @@ public class GameUpdater {
 		callback.setVars(p1);
 		world.rayCast(callback, p1, p2);	
 		explosion.sides = callback.sides;
+		callback = null;
+		
 	}
 	
 	private void sweepDeadBodies() {
@@ -190,6 +192,7 @@ public class GameUpdater {
 					world.destroyBody(body);
 					body.setUserData(null);
 					body = null;
+					data = null;
 				}
 			}
 		}
