@@ -103,7 +103,7 @@ public class GameRenderer {
 			for(int i = 0; i < 4; i++) {
 				switch(i) {
 				case 0:
-					x = explosion.getX() + 1f;
+					x = explosion.getX();
 					y = explosion.getY();
 					rotation = 0;
 					break;
@@ -129,30 +129,32 @@ public class GameRenderer {
 					for(int j = 1; j <= explosion.sides[i]; j++) {
 						if(i == 0) {
 							if(j == explosion.sides[i]) {
-								batch.draw(game.assets.exEnd, x + j, y, x + 0.5f, y + 0.5f, 1f, 1f, 1f, 1f, rotation, 0, 0, 1, 1, false, false);
+								batch.draw(game.assets.exEnd, x, y + j, x + 0.5f, y + 0.5f, 1f, 1f, 1f, 1f, rotation, 0, 0, 128, 128, false, false);
 							} else {
-								batch.draw(game.assets.exMid, x + j, y, x + 0.5f, y + 0.5f, 1f, 1f, 1f, 1f, rotation, 0, 0, 1, 1, false, false);
+								batch.draw(game.assets.exMid, x, y + j, x + 0.5f, y + 0.5f, 1f, 1f, 1f, 1f, rotation, 0, 0, 128, 128, false, false);
 							}
 						}
 						if (i == 1) {
 							if (j == explosion.sides[i]) {
 								batch.draw(game.assets.exEnd, x + j, y, 1f, 1f, 0, 0, 128, 128, true, false);
 							} else {
-								batch.draw(game.assets.exMid, x, y + j, x + 0.5f, y + 0.5f, 1f, 1f, 1f, 1f, rotation, 0, 0, 1, 1, false, false);
+								batch.draw(game.assets.exMid, x + j, y, 1f, 1f, 0, 0, 128, 128, false, false);
 							}
 						}
 						if (i == 2) {
 							if (j == explosion.sides[i]) {
-								batch.draw(game.assets.exEnd, x - j, y, x + 0.5f, y + 0.5f, 1f, 1f, 1f, 1f, rotation, 0, 0, 1, 1, false, false);	
+								Gdx.app.log("works", String.valueOf(i));
+								batch.draw(game.assets.exEnd, x, y - j, x + 0.5f, y + 0.5f, 1f, 1f, 1f, 1f, rotation, 0, 0, 128, 128, false, false);	
 							} else {
-								batch.draw(game.assets.exMid, x - j, y, x + 0.5f, y + 0.5f, 1f, 1f, 1f, 1f, rotation, 0, 0, 1, 1, false, false);
+								batch.draw(game.assets.exMid, x, y - j, x + 0.5f, y + 0.5f, 1f, 1f, 1f, 1f, rotation, 0, 0, 128, 128, false, false);
 							}
 						}
 						if (i == 3) {
 							if(j == explosion.sides[i]) {
-								batch.draw(game.assets.exEnd, x, y - j, x + 0.5f, y + 0.5f, 1f, 1f, 1f, 1f, rotation, 0, 0, 1, 1, false, false);
+								Gdx.app.log("works", String.valueOf(i));
+								batch.draw(game.assets.exEnd, x - j, y, x + 0.5f, y + 0.5f, 1f, 1f, 1f, 1f, rotation, 0, 0, 128, 128, false, false);
 							} else {
-								batch.draw(game.assets.exMid, x, y - j, x + 0.5f, y + 0.5f, 1f, 1f, 1f, 1f, rotation, 0, 0, 1, 1, false, false);
+								batch.draw(game.assets.exMid, x - j, y, x + 0.5f, y + 0.5f, 1f, 1f, 1f, 1f, rotation, 0, 0, 128, 128, false, false);
 							}
 						}						
 					}
