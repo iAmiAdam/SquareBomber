@@ -1,11 +1,13 @@
 package info.adamjsmith.squarebomber;
 
-import java.util.Iterator;
-
+import info.adamjsmith.squarebomber.objects.Block;
 import info.adamjsmith.squarebomber.objects.Bomb;
 import info.adamjsmith.squarebomber.objects.Crate;
 import info.adamjsmith.squarebomber.objects.Explosion;
+import info.adamjsmith.squarebomber.objects.GameObject;
 import info.adamjsmith.squarebomber.objects.Player;
+
+import java.util.Iterator;
 
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
@@ -40,8 +42,10 @@ public class GameUpdater {
 	
 	public void update() {
 		player.update();
+		updateCrates();
 		updateBombs();
 		updateExplosions();
+		sweepDeadBodies();
 		world.step(1/45f, 6, 2);
 	}
 	
@@ -60,6 +64,7 @@ public class GameUpdater {
 				bd.position.set((rectangle.x * 0.5f) / ppt, (rectangle.y * 0.5f) / ppt);
 				Body body = world.createBody(bd);
 				body.createFixture(shape, 1).setUserData(4);
+				body.setUserData(new Block());
 				shape.dispose();
 		}
 		
@@ -76,6 +81,7 @@ public class GameUpdater {
 			Crate crate = new Crate(body);
 			crate.x = rectangle.x / ppt;
 			crate.y = rectangle.y / ppt;
+			body.setUserData(crate);
 			crates.add(crate);
 			shape.dispose();
 		}
@@ -107,7 +113,7 @@ public class GameUpdater {
 				player.bombs++;
 				Explosion ex = new Explosion((int)bomb.getX(), (int)bomb.getY(), bomb.power);
 				explosions.add(ex);
-				ex.rayCast(world);
+				rayCast(ex.reach, ex.x, ex.y, ex);
 				bomb = null;
 			}
 		}
@@ -125,6 +131,16 @@ public class GameUpdater {
 		}
 	}
 	
+	private void updateCrates() {
+		Iterator<Crate> iter = crates.iterator();
+		while(iter.hasNext()) {
+			Crate crate = iter.next();
+			if(crate == null) {
+				iter.remove();
+			}
+		}
+	}
+	
 	private static PolygonShape getRectangle(RectangleMapObject rectangleObject) {
 		rectangle = rectangleObject.getRectangle();
 		PolygonShape polygon = new PolygonShape();
@@ -137,6 +153,45 @@ public class GameUpdater {
 		if(player.bombs > 0) {
 			bombs.add(new Bomb((int)player.getX(), (int)player.getY(), player.power));
 			player.bombs--;
+		}
+	}
+	
+	private void rayCast(float reach, float x, float y, Explosion explosion) {
+		ExplosionDetector callback = new ExplosionDetector(this);
+		Vector2 p1, p2;
+		p1 = new Vector2(x + 0.5f, y + 0.95f);
+		p2 = new Vector2(x + 0.5f, y + 0.95f + reach);
+		callback.setVars(p1);
+		world.rayCast(callback, p1, p2);
+		p1 = new Vector2(x + 0.9f, y + 0.5f);
+		p2 = new Vector2(x + 0.9f + reach, y + 0.5f);
+		callback.setVars(p1);
+		world.rayCast(callback, p1, p2);
+		p1 = new Vector2(x + 0.5f, y + 0.1f);
+		p2 = new Vector2(x + 0.5f, (y + 0.1f) - reach);
+		callback.setVars(p1);
+		world.rayCast(callback, p1, p2);
+		p1 = new Vector2(x + 0.1f,  y + 0.5f);
+		p2 = new Vector2((x + 0.1f) - reach, y + 0.5f);
+		callback.setVars(p1);
+		world.rayCast(callback, p1, p2);	
+		explosion.sides = callback.sides;
+	}
+	
+	private void sweepDeadBodies() {
+		Array<Body> bodies = new Array<Body>();
+		world.getBodies(bodies);
+		Iterator<Body> iter = bodies.iterator(); 
+		while(iter.hasNext()) {
+			Body body = iter.next();
+			if(body != null) {
+				GameObject data = (GameObject) body.getUserData();
+				if(!data.exists) {
+					world.destroyBody(body);
+					body.setUserData(null);
+					body = null;
+				}
+			}
 		}
 	}
 

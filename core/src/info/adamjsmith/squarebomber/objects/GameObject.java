@@ -7,6 +7,7 @@ public class GameObject extends Object {
 	public static final int IDExplosion = 3;
 	public static final int IDBlock = 4;
 	public static final int IDPowerUp = 5;
+	public boolean exists = true;
 		
 	public int ID;
 }
