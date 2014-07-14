@@ -10,11 +10,13 @@ import com.badlogic.gdx.utils.TimeUtils;
 
 public class Explosion extends StaticObject {
 	
-	private int reach;
+	private float reach;
 	private float created;
-	public int[] sides;
+	public float[] sides;
 	private int i;
 	public boolean over;
+	
+	private Vector2 p1, p2;
 	
 	public Explosion(float x, float y, int power) {
 		this.x = x;
@@ -22,7 +24,7 @@ public class Explosion extends StaticObject {
 		this.reach = power;
 		this.created = TimeUtils.nanoTime();
 		this.over = false;
-		sides = new int[4];
+		sides = new float[4];
 		i = 0;
 	}
 	
@@ -31,7 +33,7 @@ public class Explosion extends StaticObject {
 	}
 	
 	public void update() {
-		if(TimeUtils.nanoTime() - this.created / 1000000000.0f > 5f) {
+		if((TimeUtils.nanoTime() - this.created) / 1000000000.0f > 1f) {
 			this.over = true;
 		}
 	}
@@ -50,61 +52,64 @@ public class Explosion extends StaticObject {
 				break;
 				
 			case 1:
-				
 				//TODO smash crate
-				sides[i] = 1;
-				if(x != pos.x) {
-					sides[i] = (int) (point.x - x);
+				if(x != point.x) {
+					sides[i] = pos.x - p1.x;
 					sides[i] = (sides[i] < 0 ? -sides[i] : sides[i]);
+					if (sides[i] < 2) sides[i] = 1;
 				} else {
-					sides[i] = (int) (point.y - 1 - y);
+					sides[i] = pos.y - p1.y;
 					sides[i] = (sides[i] < 0 ? -sides[i] : sides[i]);
+					if (sides[i] < 2) sides[i] = 1;
 				}
 				break;
 				
 			case 2: 
-				sides[i] = 1;
 				//TODO explode other bomb
 				break;
 				
 			case 3:
-				sides[i] = 1;
 				break;
 				
 			case 4:
 				//TODO y
-				if(x != pos.x) {
-					sides[i] = (int) (point.x - x);
+				if((pos.x - p1.x) - 1 > reach) {
+					sides[i] = pos.x - p1.x;
+					sides[i] = (sides[i] < 0 ? -sides[i] : sides[i]);
+
+				} else if((point.y - p1.y) - 1 > reach) {
+					sides[i] = pos.y - p1.y;
 					sides[i] = (sides[i] < 0 ? -sides[i] : sides[i]);
 				} else {
-					sides[i] = (int) (point.y - 1 - y);
-					sides[i] = (sides[i] < 0 ? -sides[i] : sides[i]);
+					sides[i] = 0;
 				}
 				break;
 			default:
-				sides[i] = 1;
+				sides[i] = reach;
 			}
 			return 0;
 		}
 	};
 	
 	public void rayCast(World world) {
-		Vector2 p1 = new Vector2(this.x, this.y + 1f);
-		Vector2 p2 = new Vector2(this.x, this.y + this.reach);
+		sides[i] = reach;
+		p1 = new Vector2(this.x + 0.5f, this.y + 0.95f);
+		p2 = new Vector2(this.x + 0.5f, this.y + 0.95f + this.reach);
 		world.rayCast(callback, p1, p2);
 		i++;
-		p1 = new Vector2(this.x + 1f, this.y);
-		p2 = new Vector2(this.x + this.reach, this.y + 1f);
+		sides[i] = reach;
+		p1 = new Vector2(this.x + 0.9f, this.y + 0.5f);
+		p2 = new Vector2(this.x + 0.9f + reach, this.y + 0.5f);
 		world.rayCast(callback, p1, p2);
 		i++;
-		p1 = new Vector2(this.x, this.y);
-		p2 = new Vector2(this.x + 1f, this.y - this.reach);
+		sides[i] = reach;
+		p1 = new Vector2(this.x + 0.5f, this.y + 0.1f);
+		p2 = new Vector2(this.x + 0.5f, (this.y + 0.1f) - this.reach);
 		world.rayCast(callback, p1, p2);
 		i++;
-		p1 = new Vector2(this.x, this.y);
-		p2 = new Vector2(this.x - this.reach, this.y + 1);
-		world.rayCast(callback, p1, p2);
-		
+		sides[i] = reach;
+		p1 = new Vector2(this.x + 0.1f,  this.y + 0.5f);
+		p2 = new Vector2((this.x + 0.1f) - this.reach, this.y + 0.5f);
+		world.rayCast(callback, p1, p2);		
 	}
-	
 }

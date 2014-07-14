@@ -59,7 +59,7 @@ public class GameUpdater {
 				bd.type = BodyType.StaticBody;
 				bd.position.set((rectangle.x * 0.5f) / ppt, (rectangle.y * 0.5f) / ppt);
 				Body body = world.createBody(bd);
-				body.createFixture(shape, 1).setUserData(4);;
+				body.createFixture(shape, 1).setUserData(4);
 				shape.dispose();
 		}
 		
@@ -118,9 +118,9 @@ public class GameUpdater {
 		while(iter.hasNext()) {
 			Explosion explosion = iter.next();
 			explosion.update();
-			if(explosion.over) {
-				//iter.remove();
-				//explosion = null;
+			if(explosion.over == true) {
+				iter.remove();
+				explosion = null;
 			}
 		}
 	}

@@ -17,8 +17,10 @@ public class Assets {
 	public Texture crate;
 	public Texture bomb;
 	public Texture exMid;
+	public Texture exMidUp;
 	public Texture exStart;
 	public Texture exEnd;
+	public Texture exEndUp;
 	
 	public Animation playerWalk;
 	public TextureRegion playerStop;
@@ -34,16 +36,20 @@ public class Assets {
 		manager.load("crate.png", Texture.class);
 		manager.load("bomb.png", Texture.class);
 		manager.load("explosionmid.png", Texture.class);
+		manager.load("explosionmidup.png", Texture.class);
 		manager.load("explosionstart.png", Texture.class);
 		manager.load("explosionend.png", Texture.class);
+		manager.load("explosionendup.png", Texture.class);
 		manager.finishLoading();
 		
 		player = manager.get("player.png", Texture.class);
 		crate = manager.get("crate.png", Texture.class);
 		bomb = manager.get("bomb.png", Texture.class);
 		exMid = manager.get("explosionmid.png", Texture.class);
+		exMidUp = manager.get("explosionmidup.png", Texture.class);
 		exStart = manager.get("explosionstart.png", Texture.class);
 		exEnd = manager.get("explosionend.png", Texture.class);
+		exEndUp = manager.get("explosionendup.png", Texture.class);
 			
 		TextureRegion[][] tmp = TextureRegion.split(player, 88, 93);
 		playerStop = tmp[0][0];
