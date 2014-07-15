@@ -1,5 +1,7 @@
 package info.adamjsmith.squarebomber.objects;
 
+import java.util.Random;
+
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
@@ -14,7 +16,10 @@ public class Crate extends StaticObject {
 		this.y = pos.y;
 	}
 	
-	public void explode() {
-		
+	public boolean explode() {
+		Random generator = new Random();
+		float powerUp = generator.nextInt((3 - 1) + 1) + 1 ;
+		if(powerUp == 2) return true;
+		else return false;
 	}
 }

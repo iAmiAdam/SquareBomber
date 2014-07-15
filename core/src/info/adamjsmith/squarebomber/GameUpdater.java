@@ -6,6 +6,7 @@ import info.adamjsmith.squarebomber.objects.Crate;
 import info.adamjsmith.squarebomber.objects.Explosion;
 import info.adamjsmith.squarebomber.objects.GameObject;
 import info.adamjsmith.squarebomber.objects.Player;
+import info.adamjsmith.squarebomber.objects.PowerUp;
 
 import java.util.Iterator;
 
@@ -34,6 +35,7 @@ public class GameUpdater {
 	public Array<Crate> crates = new Array<Crate>();
 	public Array<Bomb> bombs = new Array<Bomb>();
 	public Array<Explosion> explosions = new Array<Explosion>();
+	public Array<PowerUp> powerUps = new Array<PowerUp>();
 	
 	public GameUpdater(SquareBomber game) {
 		this.game = game;
@@ -103,6 +105,10 @@ public class GameUpdater {
 		return explosions;
 	}
 	
+	public Array<PowerUp> getPowerUps() {
+		return powerUps;
+	}
+	
 	private void updateBombs() {
 		Iterator<Bomb> iter = bombs.iterator();
 		while(iter.hasNext()) {
@@ -136,6 +142,9 @@ public class GameUpdater {
 		while(iter.hasNext()) {
 			Crate crate = iter.next();
 			if(crate.exists == false) {
+				if(crate.explode()) {
+					placePowerUp(crate.x, crate.y);
+				}
 				iter.remove();
 			}
 		}
@@ -154,6 +163,10 @@ public class GameUpdater {
 			bombs.add(new Bomb((int)player.getX(), (int)player.getY(), player.power));
 			player.bombs--;
 		}
+	}
+	
+	private void placePowerUp(float x, float y) {
+		powerUps.add(new PowerUp(x, y));
 	}
 	
 	private void rayCast(Explosion explosion) {
