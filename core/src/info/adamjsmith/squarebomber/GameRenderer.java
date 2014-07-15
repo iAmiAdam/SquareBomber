@@ -3,7 +3,10 @@ package info.adamjsmith.squarebomber;
 import info.adamjsmith.squarebomber.objects.Bomb;
 import info.adamjsmith.squarebomber.objects.Crate;
 import info.adamjsmith.squarebomber.objects.Explosion;
+import info.adamjsmith.squarebomber.objects.ExplosionPart;
 import info.adamjsmith.squarebomber.objects.PowerUp;
+
+import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -111,67 +114,32 @@ public class GameRenderer {
 	}
 	
 	private void drawExplosions() {
-		
-		float x = 0;
-		float y = 0;
 		Array<Explosion> explosions = world.getExplosions();
 		for (Explosion explosion: explosions) {
-			batch.draw(game.assets.exStart, explosion.getX(), explosion.getY(), 1f, 1f);
-			for(int i = 0; i < 4; i++) {
-				switch(i) {
+			Iterator<ExplosionPart> partsIter = explosion.parts.iterator();
+			while(partsIter.hasNext()) {
+				ExplosionPart part = partsIter.next();
+				switch(part.type) {
 				case 0:
-					x = explosion.getX();
-					y = explosion.getY();
+					batch.draw(game.assets.exStart, part.position.x, part.position.y, 1f, 1f);
 					break;
 				case 1:
-					x = explosion.getX();
-					y = explosion.getY();
+					if(part.direction == 1) {
+						batch.draw(game.assets.exMidUp, part.position.x, part.position.y, 1f, 1f, 0, 0, 128, 128, part.flip, part.flip);
+					} else {
+						batch.draw(game.assets.exMid, part.position.x, part.position.y, 1f, 1f, 0, 0, 128, 128, part.flip, part.flip);
+					}
 					break;
 				case 2:
-					x = explosion.getX();
-					y = explosion.getY();
-					break;
-				case 3:
-					x = explosion.getX();
-					y = explosion.getY();
-				}
-				
-				
-				
-				if (explosion.sides[i] > 0) {
-					for(int j = 1; j <= explosion.sides[i]; j++) {
-						if(i == 0) {
-							if(j == explosion.sides[i]) {
-								batch.draw(game.assets.exEndUp, x, y + j, 1f, 1f, 0, 0, 128, 128, false, false);
-							} else {
-								batch.draw(game.assets.exMidUp, x, y + j, 1f, 1f, 0, 0, 128, 128, false, false);
-							}
-						}
-						if (i == 1) {
-							if (j == explosion.sides[i]) {
-								batch.draw(game.assets.exEnd, x + j, y, 1f, 1f, 0, 0, 128, 128, true, false);
-							} else {
-								batch.draw(game.assets.exMid, x + j, y, 1f, 1f, 0, 0, 128, 128, false, false);
-							}
-						}
-						if (i == 2) {
-							
-							if (j == explosion.sides[i]) {
-								batch.draw(game.assets.exEndUp, x, y - j, 1f, 1f, 0, 0, 128, 128, true, true);
-							} else {
-								batch.draw(game.assets.exMidUp, x, y - j, 1f, 1f, 0, 0, 128, 128, true, true);
-							}
-						}
-						if (i == 3) {
-							if(j == explosion.sides[i]) {
-								batch.draw(game.assets.exEnd, x - j, y, 1f, 1f);
-							} else {
-								batch.draw(game.assets.exMid, x - j, y, 1f, 1f);
-							}
-						}						
+					if(part.direction == 1) {
+						batch.draw(game.assets.exEndUp, part.position.x, part.position.y, 1f, 1f, 0, 0, 128, 128, part.flip, part.flip);
+					} else {
+						batch.draw(game.assets.exEnd, part.position.x, part.position.y, 1f, 1f, 0, 0, 128, 128, part.flip, part.flip);
 					}
+					break;
 				}
 			}
+			
 		}
 	}
 }

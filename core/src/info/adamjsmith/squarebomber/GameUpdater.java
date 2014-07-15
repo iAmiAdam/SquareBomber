@@ -4,12 +4,14 @@ import info.adamjsmith.squarebomber.objects.Block;
 import info.adamjsmith.squarebomber.objects.Bomb;
 import info.adamjsmith.squarebomber.objects.Crate;
 import info.adamjsmith.squarebomber.objects.Explosion;
+import info.adamjsmith.squarebomber.objects.ExplosionPart;
 import info.adamjsmith.squarebomber.objects.GameObject;
 import info.adamjsmith.squarebomber.objects.Player;
 import info.adamjsmith.squarebomber.objects.PowerUp;
 
 import java.util.Iterator;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -28,6 +30,7 @@ public class GameUpdater {
 	private SquareBomber game;
 	private static float ppt;
 	private static Rectangle rectangle;
+	private Array<Block> blocks = new Array<Block>();
 	
 	public World world;
 	public Player player;
@@ -67,8 +70,11 @@ public class GameUpdater {
 				bd.position.set((rectangle.x * 0.5f) / ppt, (rectangle.y * 0.5f) / ppt);
 				Body body = world.createBody(bd);
 				body.createFixture(shape, 1).setUserData(4);
-				body.setUserData(new Block());
+				Block block = new Block(rectangle.x / ppt, rectangle.y / ppt);
+				body.setUserData(block);
+				blocks.add(block);
 				shape.dispose();
+				
 		}
 		
 		objects = game.assets.map.getLayers().get("CrateObjects").getObjects();
@@ -118,9 +124,9 @@ public class GameUpdater {
 			if(bomb.exploded) {
 				iter.remove();
 				player.bombs++;
-				Explosion ex = new Explosion((int)bomb.getX(), (int)bomb.getY(), bomb.power);
+				Explosion ex = new Explosion(bomb.getX(), bomb.getY(), bomb.power);
 				explosions.add(ex);
-				rayCast(ex);
+				ExplosionBuilder(ex);
 				bomb = null;
 			}
 		}
@@ -184,34 +190,103 @@ public class GameUpdater {
 		}
 	}
 	
-	private void rayCast(Explosion explosion) {
-		ExplosionDetector callback = new ExplosionDetector((int)explosion.reach);
-		Vector2 p1, p2;
-		float x = explosion.x;
-		float y = explosion.y;
-		float reach = explosion.reach;
-		p1 = new Vector2(x + 0.5f, y + 0.95f);
-		p2 = new Vector2(x + 0.5f, y + 0.95f + reach);
-		callback.setVars(p1);
-		world.rayCast(callback, p1, p2);
-		p1 = new Vector2(x + 0.9f, y + 0.5f);
-		p2 = new Vector2(x + 0.9f + reach, y + 0.5f);
-		callback.setVars(p1);
-		callback.i++;
-		world.rayCast(callback, p1, p2);
-		p1 = new Vector2(x + 0.5f, y + 0.1f);
-		p2 = new Vector2(x + 0.5f, (y + 0.1f) - reach);
-		callback.setVars(p1);
-		callback.i++;
-		world.rayCast(callback, p1, p2);
-		p1 = new Vector2(x + 0.1f,  y + 0.5f);
-		p2 = new Vector2((x + 0.1f) - reach, y + 0.5f);
-		callback.setVars(p1);
-		callback.i++;
-		world.rayCast(callback, p1, p2);	
-		explosion.sides = callback.sides;
-		callback = null;
+	private void ExplosionBuilder(Explosion explosion) {
+		boolean up = false;
+		boolean down = false;
+		boolean left = false;
+		boolean right = false;
 		
+		
+		explosion.parts.add(new ExplosionPart(explosion.x, explosion.y, 0, 0, false));
+		
+		for (int i = 1; i <= explosion.reach; i++){
+			Iterator<Block> blocksIter = blocks.iterator();
+			while(blocksIter.hasNext()) {
+				Block block = blocksIter.next();
+				if (up == false) {
+					Gdx.app.log("blockx", String.valueOf(block.x));
+					if(block.x == explosion.x && block.y == explosion.y + i) {
+						up = true;
+					}
+				}
+				if (down == false) {
+					if(block.x == explosion.x && block.y == explosion.y - i) {
+						down = true;
+					}
+				}
+				if (left == false) {
+					if(block.x == explosion.x - 1 && block.y == explosion.y) {
+						left = true;
+					}
+				}
+				
+				if (right == false) {
+					if(block.x == explosion.x + 1 && block.y == explosion.y) {
+						right = true;
+					}
+				}
+			}
+			Iterator<Crate> cratesIter = crates.iterator();
+			while(cratesIter.hasNext()) {
+				Crate crate = cratesIter.next();
+				if (up == false){
+					if(crate.x == explosion.x && crate.y == explosion.y + i) {
+						up = true;
+						crate.exists = false;
+						explosion.parts.add(new ExplosionPart(explosion.x, explosion.y + i, 2, 1, false));
+					}
+				}
+				if (down == false){
+					if(crate.x == explosion.x && crate.y == explosion.y - i) {
+						down = true;
+						crate.exists = false;
+						explosion.parts.add(new ExplosionPart(explosion.x, explosion.y - i, 2, 1, true));
+					}
+				}
+				if (left == false){
+					if(crate.x == explosion.x - i && crate.y == explosion.y) {
+						left = true;
+						crate.exists = false;
+						explosion.parts.add(new ExplosionPart(explosion.x - i, explosion.y, 2, 0, false));
+					}
+				}
+				if (right == false){
+					if(crate.x == explosion.x + i && crate.y == explosion.y) {
+						right = true;
+						crate.exists = false;
+						explosion.parts.add(new ExplosionPart(explosion.x + i, explosion.y, 2, 0, true));
+					}
+				}
+			}
+			if(up == false) {
+				if(i == explosion.reach) {
+					explosion.parts.add(new ExplosionPart(explosion.x, explosion.y + i, 2, 1, false));
+				} else {
+					explosion.parts.add(new ExplosionPart(explosion.x, explosion.y + i, 1, 1, false));
+				}
+			}
+			if(down == false) {
+				if(i == explosion.reach) {
+					explosion.parts.add(new ExplosionPart(explosion.x, explosion.y - i, 2, 1, true));
+				} else {
+					explosion.parts.add(new ExplosionPart(explosion.x, explosion.y - i, 1, 1, true));
+				}
+			}
+			if(left == false) {
+				if(i == explosion.reach) {
+					explosion.parts.add(new ExplosionPart(explosion.x - i, explosion.y , 2, 0, false));
+				} else {
+					explosion.parts.add(new ExplosionPart(explosion.x - i, explosion.y, 1, 0, false));
+				}
+			}
+			if(right == false) {
+				if(i == explosion.reach) {
+					explosion.parts.add(new ExplosionPart(explosion.x + i, explosion.y, 2, 0, true));
+				} else {
+					explosion.parts.add(new ExplosionPart(explosion.x + i, explosion.y, 1, 0, true));
+				}
+			}
+		}
 	}
 	
 	private void sweepDeadBodies() {

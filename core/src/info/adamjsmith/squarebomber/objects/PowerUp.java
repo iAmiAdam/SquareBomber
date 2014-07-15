@@ -18,10 +18,13 @@ public class PowerUp extends StaticObject{
 		switch (this.type) {
 		case 1:
 			player.bombs++;
+			break;
 		case 2:
 			player.power++;
+			break;
 		case 3:
 			player.speed += 0.5;
+			break;
 		}
 	}
 }

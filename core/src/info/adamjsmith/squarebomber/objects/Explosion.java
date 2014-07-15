@@ -1,13 +1,15 @@
 package info.adamjsmith.squarebomber.objects;
 
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 
 public class Explosion extends StaticObject {
 	
-	public float reach;
+	public int reach;
 	private float created;
 	public float[] sides;
 	public boolean over;
+	public Array<ExplosionPart> parts = new Array<ExplosionPart>();
 	
 	public Explosion(float x, float y, int power) {
 		this.x = x;
