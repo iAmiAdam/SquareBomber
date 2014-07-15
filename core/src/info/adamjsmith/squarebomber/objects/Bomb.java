@@ -1,5 +1,6 @@
 package info.adamjsmith.squarebomber.objects;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.TimeUtils;
 
 public class Bomb extends StaticObject {
@@ -11,7 +12,9 @@ public class Bomb extends StaticObject {
 		this.width = 1f;
 		this.height = 1f;
 		this.x = x;
+		Gdx.app.log("x", String.valueOf(x));
 		this.y = y;
+		Gdx.app.log("y", String.valueOf(y));
 		this.power = power;
 		this.placed = TimeUtils.nanoTime();
 		this.exploded = false;

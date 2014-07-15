@@ -32,13 +32,14 @@ public class ExplosionDetector implements RayCastCallback {
 	@Override
 	public float reportRayFixture(Fixture fixture, Vector2 point,
 			Vector2 normal, float fraction) {
+		float r = 0;
 		Body body = fixture.getBody();
 		switch((Integer)fixture.getUserData()) {
 		case 0:
 			sides[i] = 1;
 			//TODO kill player and get x and y
+			r=1;
 			break;
-			
 		case 1:
 			GameObject data = (GameObject) body.getUserData();
 			data.exists = false;
@@ -51,15 +52,14 @@ public class ExplosionDetector implements RayCastCallback {
 				sides[i] = (sides[i] < 0 ? -sides[i] : sides[i]);
 				if (sides[i] < 2) sides[i] = 1;
 			}
+			r = 0; 
 			break;
-			
 		case 2: 
-			//TODO explode other bomb
+			r = 1;
 			break;
-			
 		case 3:
+			r = 1;
 			break;
-			
 		case 4:
 			if((point.x - p1.x) - 1 > reach ) {
 				sides[i] = point.x - p1.x;
@@ -71,10 +71,9 @@ public class ExplosionDetector implements RayCastCallback {
 			} else {
 				sides[i] = 0;
 			}
+			r = 0;
 			break;
-		default:
-			sides[i] = reach;
 		}
-		return 0;
+		return r;
 	}
 }

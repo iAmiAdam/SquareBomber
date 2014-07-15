@@ -48,6 +48,7 @@ public class GameUpdater {
 		updateBombs();
 		updateExplosions();
 		sweepDeadBodies();
+		checkPowers();
 		world.step(1/45f, 6, 2);
 	}
 	
@@ -168,14 +169,19 @@ public class GameUpdater {
 	private void placePowerUp(float x, float y) {
 		PowerUp powerUp = new PowerUp(x, y);
 		powerUps.add(powerUp);
-		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(0f, 0f, new Vector2(1f, 1f), 0);
-		BodyDef bd = new BodyDef();
-		bd.type = BodyType.StaticBody;
-		bd.position.set(x, y);
-		Body body = world.createBody(bd);
-		body.createFixture(shape, 1).setUserData(5);
-		body.setUserData(powerUp);
+	}
+	
+	private void checkPowers() {
+		Iterator<PowerUp> iter = powerUps.iterator();
+		while(iter.hasNext()) {
+			PowerUp powerUp = iter.next();
+			if(player.getX() > powerUp.getX() && player.getX() < powerUp.getX() + 1f && player.getY() > powerUp.getY() && player.getY() < powerUp.getY() + 1f ||
+					player.getX() + 1f > powerUp.getX() && player.getX() + 1f < powerUp.getX() + 1f && player.getY() + 1f > powerUp.getY() && player.getY() + 1f < powerUp.getY() +1f ) {
+				powerUp.givePower(player);
+				iter.remove();
+				powerUp = null;
+			}
+		}
 	}
 	
 	private void rayCast(Explosion explosion) {
