@@ -113,7 +113,7 @@ public class GameUpdater {
 				player.bombs++;
 				Explosion ex = new Explosion((int)bomb.getX(), (int)bomb.getY(), bomb.power);
 				explosions.add(ex);
-				rayCast(ex.reach, ex.x, ex.y, ex);
+				rayCast(ex);
 				bomb = null;
 			}
 		}
@@ -156,9 +156,12 @@ public class GameUpdater {
 		}
 	}
 	
-	private void rayCast(float reach, float x, float y, Explosion explosion) {
+	private void rayCast(Explosion explosion) {
 		ExplosionDetector callback = new ExplosionDetector((int)explosion.reach);
 		Vector2 p1, p2;
+		float x = explosion.x;
+		float y = explosion.y;
+		float reach = explosion.reach;
 		p1 = new Vector2(x + 0.5f, y + 0.95f);
 		p2 = new Vector2(x + 0.5f, y + 0.95f + reach);
 		callback.setVars(p1);
@@ -166,14 +169,17 @@ public class GameUpdater {
 		p1 = new Vector2(x + 0.9f, y + 0.5f);
 		p2 = new Vector2(x + 0.9f + reach, y + 0.5f);
 		callback.setVars(p1);
+		callback.i++;
 		world.rayCast(callback, p1, p2);
 		p1 = new Vector2(x + 0.5f, y + 0.1f);
 		p2 = new Vector2(x + 0.5f, (y + 0.1f) - reach);
 		callback.setVars(p1);
+		callback.i++;
 		world.rayCast(callback, p1, p2);
 		p1 = new Vector2(x + 0.1f,  y + 0.5f);
 		p2 = new Vector2((x + 0.1f) - reach, y + 0.5f);
 		callback.setVars(p1);
+		callback.i++;
 		world.rayCast(callback, p1, p2);	
 		explosion.sides = callback.sides;
 		callback = null;

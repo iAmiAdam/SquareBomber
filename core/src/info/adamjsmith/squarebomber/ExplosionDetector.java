@@ -10,17 +10,18 @@ import com.badlogic.gdx.physics.box2d.RayCastCallback;
 public class ExplosionDetector implements RayCastCallback {
 	
 	public float[] sides;
-	private int i;
+	public int i;
 	public boolean over;
 	private int reach;
 	
 	private Vector2 p1;
 	
 	public ExplosionDetector(int reach) {
-		this.i = -1;
+		this.i = 0;
 		sides = new float[4];
-		for (int i = 0; i < 4; i++) {
-			sides[i] = reach;
+		this.reach = reach;
+		for (int j = 0; j < 4; j++) {
+			sides[j] = reach;
 		}
 	}
 	
@@ -33,7 +34,6 @@ public class ExplosionDetector implements RayCastCallback {
 			Vector2 normal, float fraction) {
 		Body body = fixture.getBody();
 		Vector2 pos = body.getPosition();
-		i++;
 		switch((Integer)fixture.getUserData()) {
 		case 0:
 			sides[i] = 1;
@@ -44,11 +44,11 @@ public class ExplosionDetector implements RayCastCallback {
 			GameObject data = (GameObject) body.getUserData();
 			data.exists = false;
 			if(p1.x != point.x) {
-				sides[i] = pos.x - p1.x;
+				sides[i] = point.x - p1.x;
 				sides[i] = (sides[i] < 0 ? -sides[i] : sides[i]);
 				if (sides[i] < 2) sides[i] = 1;
 			} else {
-				sides[i] = pos.y - p1.y;
+				sides[i] = point.y - p1.y;
 				sides[i] = (sides[i] < 0 ? -sides[i] : sides[i]);
 				if (sides[i] < 2) sides[i] = 1;
 			}
@@ -62,12 +62,12 @@ public class ExplosionDetector implements RayCastCallback {
 			break;
 			
 		case 4:
-			if((pos.x - p1.x) - 1 > reach) {
-				sides[i] = pos.x - p1.x;
+			if((point.x - p1.x) - 1 > reach ) {
+				sides[i] = point.x - p1.x;
 				sides[i] = (sides[i] < 0 ? -sides[i] : sides[i]);
 
 			} else if((point.y - p1.y) - 1 > reach) {
-				sides[i] = pos.y - p1.y;
+				sides[i] = point.y - p1.y;
 				sides[i] = (sides[i] < 0 ? -sides[i] : sides[i]);
 			} else {
 				sides[i] = 0;
