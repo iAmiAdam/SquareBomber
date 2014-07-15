@@ -33,7 +33,6 @@ public class ExplosionDetector implements RayCastCallback {
 	public float reportRayFixture(Fixture fixture, Vector2 point,
 			Vector2 normal, float fraction) {
 		Body body = fixture.getBody();
-		Vector2 pos = body.getPosition();
 		switch((Integer)fixture.getUserData()) {
 		case 0:
 			sides[i] = 1;

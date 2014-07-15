@@ -3,6 +3,7 @@ package info.adamjsmith.squarebomber;
 import info.adamjsmith.squarebomber.objects.Bomb;
 import info.adamjsmith.squarebomber.objects.Crate;
 import info.adamjsmith.squarebomber.objects.Explosion;
+import info.adamjsmith.squarebomber.objects.PowerUp;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -52,6 +53,7 @@ public class GameRenderer {
 		drawPlayer();
 		drawBombs();
 		drawExplosions();
+		drawPowerUps();
 		batch.end();
 		
 		debugRenderer.render(world.world, camera.combined);
@@ -92,11 +94,26 @@ public class GameRenderer {
 		}
 	}
 	
+	private void drawPowerUps() {
+		Array<PowerUp> powerUps = world.getPowerUps();
+		for(PowerUp powerUp: powerUps) {
+			switch (powerUp.type) {
+			case 1:
+				batch.draw(game.assets.bombUp, powerUp.getX(), powerUp.getY(), 1f, 1f);
+				break;
+			case 2:
+				batch.draw(game.assets.powerUp, powerUp.getX(), powerUp.getY(), 1f, 1f);
+				break;
+			case 3:
+				batch.draw(game.assets.powerUp, powerUp.getX(), powerUp.getY(), 1f, 1f);
+			}
+		}
+	}
+	
 	private void drawExplosions() {
 		
 		float x = 0;
 		float y = 0;
-		float rotation = 0;
 		Array<Explosion> explosions = world.getExplosions();
 		for (Explosion explosion: explosions) {
 			batch.draw(game.assets.exStart, explosion.getX(), explosion.getY(), 1f, 1f);
@@ -105,22 +122,18 @@ public class GameRenderer {
 				case 0:
 					x = explosion.getX();
 					y = explosion.getY();
-					rotation = 90;
 					break;
 				case 1:
 					x = explosion.getX();
 					y = explosion.getY();
-					rotation = 0;
 					break;
 				case 2:
 					x = explosion.getX();
 					y = explosion.getY();
-					rotation = 270;
 					break;
 				case 3:
 					x = explosion.getX();
 					y = explosion.getY();
-					rotation = 0;
 				}
 				
 				
