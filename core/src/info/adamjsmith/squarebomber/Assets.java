@@ -21,6 +21,9 @@ public class Assets {
 	public Texture exStart;
 	public Texture exEnd;
 	public Texture exEndUp;
+	public Texture bombUp;
+	public Texture speedUp;
+	public Texture powerUp;
 	
 	public Animation playerWalk;
 	public TextureRegion playerStop;
@@ -40,6 +43,9 @@ public class Assets {
 		manager.load("explosionstart.png", Texture.class);
 		manager.load("explosionend.png", Texture.class);
 		manager.load("explosionendup.png", Texture.class);
+		manager.load("bombup.png", Texture.class);
+		manager.load("speedup.png", Texture.class);
+		manager.load("powerup.png", Texture.class);
 		manager.finishLoading();
 		
 		player = manager.get("player.png", Texture.class);
@@ -50,6 +56,9 @@ public class Assets {
 		exStart = manager.get("explosionstart.png", Texture.class);
 		exEnd = manager.get("explosionend.png", Texture.class);
 		exEndUp = manager.get("explosionendup.png", Texture.class);
+		bombUp = manager.get("bombup.png",Texture.class);
+		speedUp = manager.get("speedup.png", Texture.class);
+		powerUp = manager.get("powerup.png", Texture.class);
 			
 		TextureRegion[][] tmp = TextureRegion.split(player, 88, 93);
 		playerStop = tmp[0][0];
