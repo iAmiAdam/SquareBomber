@@ -166,7 +166,16 @@ public class GameUpdater {
 	}
 	
 	private void placePowerUp(float x, float y) {
-		powerUps.add(new PowerUp(x, y));
+		PowerUp powerUp = new PowerUp(x, y);
+		powerUps.add(powerUp);
+		PolygonShape shape = new PolygonShape();
+		shape.setAsBox(0f, 0f, new Vector2(1f, 1f), 0);
+		BodyDef bd = new BodyDef();
+		bd.type = BodyType.StaticBody;
+		bd.position.set(x, y);
+		Body body = world.createBody(bd);
+		body.createFixture(shape, 1).setUserData(5);
+		body.setUserData(powerUp);
 	}
 	
 	private void rayCast(Explosion explosion) {

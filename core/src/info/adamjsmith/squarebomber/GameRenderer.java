@@ -50,10 +50,10 @@ public class GameRenderer {
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		drawCrates();
+		drawPowerUps();
 		drawPlayer();
 		drawBombs();
 		drawExplosions();
-		drawPowerUps();
 		batch.end();
 		
 		debugRenderer.render(world.world, camera.combined);
@@ -105,7 +105,7 @@ public class GameRenderer {
 				batch.draw(game.assets.powerUp, powerUp.getX(), powerUp.getY(), 1f, 1f);
 				break;
 			case 3:
-				batch.draw(game.assets.powerUp, powerUp.getX(), powerUp.getY(), 1f, 1f);
+				batch.draw(game.assets.speedUp, powerUp.getX(), powerUp.getY(), 1f, 1f);
 			}
 		}
 	}
