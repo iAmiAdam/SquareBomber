@@ -91,7 +91,7 @@ public class MainMenuScreen implements Screen {
 		
 		multiPlayer.addListener(new InputListener() {
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-				game.actionResolver.startQuickGame();
+				game.setScreen(new MultiplayerMenu(game));
 				return false;
 			}
 		});
