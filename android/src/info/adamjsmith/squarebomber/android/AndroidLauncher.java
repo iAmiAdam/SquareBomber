@@ -1,5 +1,7 @@
 package info.adamjsmith.squarebomber.android;
 
+import info.adamjsmith.squarebomber.SquareBomber;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -7,16 +9,16 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.games.Games;
 import com.google.example.games.basegameutils.GameHelper;
 import com.google.example.games.basegameutils.GameHelper.GameHelperListener;
-
-import info.adamjsmith.squarebomber.SquareBomber;
 
 public class AndroidLauncher extends AndroidApplication implements GameHelperListener, info.adamjsmith.squarebomber.gpgs.ActionResolver {
 	private GameHelper gameHelper;
@@ -43,7 +45,7 @@ public class AndroidLauncher extends AndroidApplication implements GameHelperLis
 		
 		adView = new AdView(this);
 		adView.setAdSize(AdSize.BANNER);
-		adView.setAdUnitId("ca-app-pub-5708097368765164/8542436531");
+		adView.setAdUnitId("ca-app-pub-5708097368765164/9423093735");
 		
 		AdRequest adRequest = new AdRequest.Builder()
 		.addTestDevice("EFDE8B52D744910BE7EB01DEC797353A")
@@ -65,41 +67,59 @@ public class AndroidLauncher extends AndroidApplication implements GameHelperLis
 
 		setContentView(layout);
 	}
+	
+	@Override
+	public void onActivityResult(int request, int response, Intent data) {
+		super.onActivityResult(request, response, data);
+		gameHelper.onActivityResult(request, response, data);
+	}
 
 	@Override
 	public boolean getSignedInGPGS() {
-		// TODO Auto-generated method stub
-		return false;
+		return gameHelper.isSignedIn();
 	}
 
 	@Override
 	public void loginGPGS() {
-		// TODO Auto-generated method stub
-		
+		try {
+			runOnUiThread(new Runnable() {
+				public void run() {
+					gameHelper.beginUserInitiatedSignIn();
+				}
+				
+			});
+		} catch (final Exception e) {
+		}
 	}
 
 	@Override
 	public void submitScoreGPGS(int score) {
-		// TODO Auto-generated method stub
-		
+		if(!getSignedInGPGS()) {
+			loginGPGS();
+		} 
+		Games.Leaderboards.submitScore(gameHelper.getApiClient(), "CgkIrdGHoOILEAIQAQ", score);
+		getLeaderboardGPGS();
 	}
 
 	@Override
 	public void unlockAchievementGPGS(String achievementId) {
-		// TODO Auto-generated method stub
-		
+		Games.Achievements.unlock(gameHelper.getApiClient(), achievementId);		
 	}
 
 	@Override
 	public void getLeaderboardGPGS() {
-		// TODO Auto-generated method stub
-		
+		if(!getSignedInGPGS()) {
+			loginGPGS();
+		} 
+		startActivityForResult(Games.Leaderboards.getLeaderboardIntent(gameHelper.getApiClient(),"CgkIrdGHoOILEAIQAQ"), 100);		
 	}
 
 	@Override
 	public void getAchievementsGPGS() {
-		// TODO Auto-generated method stub
-		
+		if(!getSignedInGPGS()) {
+			loginGPGS();
+		} 
+		startActivityForResult(Games.Achievements.getAchievementsIntent(gameHelper.getApiClient()), 101);
 	}
 
 	@Override
@@ -109,14 +129,12 @@ public class AndroidLauncher extends AndroidApplication implements GameHelperLis
 
 	@Override
 	public void onSignInFailed() {
-		// TODO Auto-generated method stub
-		
+		Toast.makeText(this, "Could not log into Google Game Services", Toast.LENGTH_LONG).show();		
 	}
 
 	@Override
 	public void onSignInSucceeded() {
-		// TODO Auto-generated method stub
-		
+		Toast.makeText(this, "Signed into Google Play Games", Toast.LENGTH_LONG).show();		
 	}
 	
 	protected static Handler handler = new Handler() {
