@@ -27,6 +27,8 @@ public class Assets {
 	public Texture bombUp;
 	public Texture speedUp;
 	public Texture powerUp;
+	public Texture uiBg;
+	public Texture controller;
 	public BitmapFont font16;
 	public BitmapFont font24;
 	public BitmapFont font32;
@@ -55,6 +57,8 @@ public class Assets {
 		manager.load("bombup.png", Texture.class);
 		manager.load("speedup.png", Texture.class);
 		manager.load("powerup.png", Texture.class);
+		manager.load("uibg.png", Texture.class);
+		manager.load("controller.png", Texture.class);
 		manager.finishLoading();
 		
 		player = manager.get("player.png", Texture.class);
@@ -68,6 +72,8 @@ public class Assets {
 		bombUp = manager.get("bombup.png",Texture.class);
 		speedUp = manager.get("speedup.png", Texture.class);
 		powerUp = manager.get("powerup.png", Texture.class);
+		uiBg = manager.get("uibg.png", Texture.class);
+		controller = manager.get("controller.png", Texture.class);
 			
 		TextureRegion[][] tmp = TextureRegion.split(player, 88, 93);
 		playerStop = tmp[0][0];

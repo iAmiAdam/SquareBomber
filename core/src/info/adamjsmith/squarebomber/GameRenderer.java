@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.utils.Array;
 
@@ -24,7 +25,9 @@ public class GameRenderer {
 	
 	private OrthogonalTiledMapRenderer renderer;
 	private OrthographicCamera camera;
+	private OrthographicCamera uiCamera;
 	private SpriteBatch batch;
+	private Matrix4 uiMatrix;
 	
 	private float stateTime;
 	private TextureRegion currentFrame = new TextureRegion();
@@ -37,8 +40,13 @@ public class GameRenderer {
 		batch = new SpriteBatch();
 		renderer = new OrthogonalTiledMapRenderer(game.assets.map, 1/128f);
 		camera = new OrthographicCamera(19f, 19f);
+		uiCamera = new OrthographicCamera(7f, 5f);
 		camera.viewportWidth = 7f;
 		camera.viewportHeight = 5f;
+		uiCamera.position.set(0, 0, 0);
+		
+		uiMatrix = camera.combined.cpy();
+		uiMatrix.setToOrtho2D(0, 0, 7f, 5f);
 	}
 	
 	public void render() {
@@ -57,6 +65,8 @@ public class GameRenderer {
 		drawPlayer();
 		drawBombs();
 		drawExplosions();
+		batch.setProjectionMatrix(uiMatrix);
+		batch.draw(game.assets.controller, 6f, 0f, 1f, 1f);
 		batch.end();
 		
 		debugRenderer.render(world.world, camera.combined);

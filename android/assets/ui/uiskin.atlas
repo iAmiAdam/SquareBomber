@@ -18,3 +18,17 @@ round-down
 	orig: 25, 25
 	offset: 0, 0
 	index: -1
+default-pane
+	rotate: false
+	xy: 0, 25
+	size: 25, 25
+	orig: 25, 25
+	offset: 0, 0
+	index: -1
+default-round-large
+	rotate: false
+	xy: 25, 25
+	size: 15, 15
+	orig: 12, 12
+	offset: 0, 0
+	index: -1

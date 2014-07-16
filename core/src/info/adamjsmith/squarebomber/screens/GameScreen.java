@@ -11,9 +11,10 @@ import com.badlogic.gdx.Screen;
 public class GameScreen implements Screen {
 	
 	private SquareBomber game;
-	
 	private GameUpdater updater;
 	private GameRenderer renderer;
+
+
 	
 	public GameScreen(SquareBomber game) {
 		this.game = game;
@@ -34,6 +35,7 @@ public class GameScreen implements Screen {
 	@Override
 	public void show() {
 		Gdx.input.setInputProcessor(new GameInputProcessor(updater));
+
 	}
 
 	@Override

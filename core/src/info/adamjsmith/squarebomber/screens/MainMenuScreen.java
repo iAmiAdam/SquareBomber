@@ -5,6 +5,7 @@ import info.adamjsmith.squarebomber.SquareBomber;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -18,6 +19,7 @@ public class MainMenuScreen implements Screen {
 	
 	private Stage stage;
 	private Table table;
+	private SpriteBatch batch;
 	
 	public MainMenuScreen(SquareBomber game) {
 		this.game = game;
@@ -26,9 +28,13 @@ public class MainMenuScreen implements Screen {
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		
+		batch.begin();
+		batch.draw(game.assets.uiBg, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		batch.end();
+		
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
-		Table.drawDebug(stage);
 	}
 
 	@Override
@@ -38,6 +44,7 @@ public class MainMenuScreen implements Screen {
 
 	@Override
 	public void show() {
+		batch = new SpriteBatch();
 		createStage();		
 	}
 
@@ -61,7 +68,8 @@ public class MainMenuScreen implements Screen {
 
 	@Override
 	public void dispose() {
-		stage.dispose();		
+		stage.dispose();	
+		batch.dispose();
 	}
 	
 	private void createStage() {
@@ -91,7 +99,6 @@ public class MainMenuScreen implements Screen {
 		table = new Table();
 		stage.addActor(table);
 		table.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		table.debug();
 		
 		table.add(title).colspan(2);
 		table.row();

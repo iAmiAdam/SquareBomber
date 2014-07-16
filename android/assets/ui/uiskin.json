@@ -11,5 +11,10 @@ com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 big: { font: big-header-font },
 default: { font: header-font },
 small: { font: button-font },
-x-small: { font: small-button-font }, }
+x-small: { font: small-button-font }, },
+
+com.badlogic.gdx.scenes.scene2d.ui.Touchpad$TouchpadStyle: {
+    default: { background: default-pane, knob: default-round-large }
+},
+
 }
