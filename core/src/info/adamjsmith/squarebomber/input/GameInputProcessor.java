@@ -11,7 +11,7 @@ public class GameInputProcessor implements InputProcessor {
 	private GameUpdater world;
 	
 	private float x = (Gdx.graphics.getWidth() / 7) * 6;
-	private float y = (Gdx.graphics.getHeight() / 5);
+	private float y = (Gdx.graphics.getHeight() / 5) * 4;
 	private float width = (Gdx.graphics.getWidth()) / 7;
 	private float height = (Gdx.graphics.getHeight()) / 5;
 	private float widthSegment = (Gdx.graphics.getWidth() / 7) / 3;
@@ -68,13 +68,13 @@ public class GameInputProcessor implements InputProcessor {
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		if(screenX > x && screenX < x + widthSegment && screenY < y + height) {
+		if(screenX > x && screenX < x + widthSegment && screenY > y) {
 			world.player.move(Direction.LEFT);
-		} else if(screenX > x + widthSegment + widthSegment && screenY < y + height) {
+		} else if(screenX > x + widthSegment + widthSegment && screenY > y) {
 			world.player.move(Direction.RIGHT);
 		} else if(screenY > y + heightSegment && screenX > x) {
 			world.player.move(Direction.DOWN);
-		} else if(screenY < y + heightSegment + heightSegment && screenX > x) {
+		} else if(screenY < y + heightSegment && screenY > y && screenX > x) {
 			world.player.move(Direction.UP);
 		} else {
 			world.player.move(Direction.STOP);
