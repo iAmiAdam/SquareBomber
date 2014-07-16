@@ -3,10 +3,13 @@ package info.adamjsmith.squarebomber;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class Assets {
 	
@@ -24,6 +27,12 @@ public class Assets {
 	public Texture bombUp;
 	public Texture speedUp;
 	public Texture powerUp;
+	public BitmapFont font16;
+	public BitmapFont font24;
+	public BitmapFont font32;
+	
+	public Skin uiSkin;
+	
 	
 	public Animation playerWalk;
 	public TextureRegion playerStop;
@@ -74,6 +83,19 @@ public class Assets {
 		Gdx.app.log("size", String.valueOf(walkFrames.length));
 		test = walkFrames[3];
 		playerWalk = new Animation(0.1f, walkFrames);
+		
+		font16 = new BitmapFont(Gdx.files.internal("16.fnt"), Gdx.files.internal("16.png"), false);
+		font16.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		
+		font24 = new BitmapFont(Gdx.files.internal("24.fnt"), Gdx.files.internal("24.png"), false);
+		font24.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		
+		font32 = new BitmapFont(Gdx.files.internal("32.fnt"), Gdx.files.internal("32.png"), false);
+		font32.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		
+		uiSkin = new Skin(Gdx.files.internal("ui/uiskin.json"));
+		uiSkin.getFont("header-font").setMarkupEnabled(true);
+		uiSkin.getFont("button-font").setMarkupEnabled(true);
 	}
 	
 	public void dispose() {

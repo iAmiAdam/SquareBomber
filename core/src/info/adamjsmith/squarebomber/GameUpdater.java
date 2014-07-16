@@ -182,7 +182,7 @@ public class GameUpdater {
 		while(iter.hasNext()) {
 			PowerUp powerUp = iter.next();
 			if(player.getX() > powerUp.getX() && player.getX() < powerUp.getX() + 1f && player.getY() > powerUp.getY() && player.getY() < powerUp.getY() + 1f ||
-					player.getX() + 1f > powerUp.getX() && player.getX() + 1f < powerUp.getX() + 1f && player.getY() + 1f > powerUp.getY() && player.getY() + 1f < powerUp.getY() +1f ) {
+			   player.getX() + 1f > powerUp.getX() && player.getX() + 1f < powerUp.getX() + 1f && player.getY() + 1f > powerUp.getY() && player.getY() + 1f < powerUp.getY() +1f ) {
 				powerUp.givePower(player);
 				iter.remove();
 				powerUp = null;
