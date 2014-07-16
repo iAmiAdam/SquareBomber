@@ -1,11 +1,14 @@
-{ com.badlogic.gdx.graphics.g2d.BitmapFont: {header-font: {file: 32.fnt} },
- com.badlogic.gdx.graphics.g2d.BitmapFont: {button-font: {file: 24.fnt} },
- com.badlogic.gdx.graphics.g2d.BitmapFont: {small-button-font: {file: 16.font} },
+{ com.badlogic.gdx.graphics.g2d.BitmapFont: {header-font: {file: font/32.fnt} },
+ com.badlogic.gdx.graphics.g2d.BitmapFont: {button-font: {file: font/24.fnt} },
+ com.badlogic.gdx.graphics.g2d.BitmapFont: {small-button-font: {file: font/16.fnt} },
+ com.badlogic.gdx.graphics.g2d.BitmapFont: {big-header-font: {file: font/52.fnt} },
 
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
+big: { down: round-down, up: round-up, font: header-font },
 default: { down: round-down, up: round-up, font: button-font } },
 
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
+big: { font: big-header-font },
 default: { font: header-font },
 small: { font: button-font },
 x-small: { font: small-button-font }, }

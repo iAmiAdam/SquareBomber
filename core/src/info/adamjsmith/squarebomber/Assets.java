@@ -84,13 +84,13 @@ public class Assets {
 		test = walkFrames[3];
 		playerWalk = new Animation(0.1f, walkFrames);
 		
-		font16 = new BitmapFont(Gdx.files.internal("16.fnt"), Gdx.files.internal("16.png"), false);
+		font16 = new BitmapFont(Gdx.files.internal("font/16.fnt"), Gdx.files.internal("font/16.png"), false);
 		font16.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		
-		font24 = new BitmapFont(Gdx.files.internal("24.fnt"), Gdx.files.internal("24.png"), false);
+		font24 = new BitmapFont(Gdx.files.internal("font/24.fnt"), Gdx.files.internal("font/24.png"), false);
 		font24.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		
-		font32 = new BitmapFont(Gdx.files.internal("32.fnt"), Gdx.files.internal("32.png"), false);
+		font32 = new BitmapFont(Gdx.files.internal("font/32.fnt"), Gdx.files.internal("font/32.png"), false);
 		font32.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		
 		uiSkin = new Skin(Gdx.files.internal("ui/uiskin.json"));

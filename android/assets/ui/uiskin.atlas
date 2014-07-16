@@ -6,7 +6,7 @@ round-up
 	rotate: false
 	xy: 0, 0
 	size: 25, 25
-	split: 5, 5, 5, 5 
+	split: 6, 6, 6, 6 
 	orig: 25, 25
 	offset: 0, 0
 	index: -1
@@ -14,7 +14,7 @@ round-down
 	rotate: false
 	xy: 25, 0
 	size: 25, 25
-	split: 5, 5, 5, 5
+	split: 6, 6, 6, 6
 	orig: 25, 25
 	offset: 0, 0
 	index: -1

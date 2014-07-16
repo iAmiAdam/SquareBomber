@@ -4,6 +4,7 @@ import info.adamjsmith.squarebomber.SquareBomber;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -24,20 +25,20 @@ public class MainMenuScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
-		// TODO Auto-generated method stub
-		
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		stage.act(Gdx.graphics.getDeltaTime());
+		stage.draw();
+		Table.drawDebug(stage);
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
-		
+		stage.getViewport().update(width, height, true);
 	}
 
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
-		
+		createStage();		
 	}
 
 	@Override
@@ -60,19 +61,18 @@ public class MainMenuScreen implements Screen {
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
-		
+		stage.dispose();		
 	}
 	
-	public void createStage() {
+	private void createStage() {
 		stage = new Stage();
 		Gdx.input.setInputProcessor(stage);
-		
-		Label title = new Label("Square Bomber", game.assets.uiSkin);
-		TextButton singlePlayer = new TextButton("Single Player", game.assets.uiSkin);
-		TextButton multiPlayer = new TextButton("Multi Player", game.assets.uiSkin);
-		TextButton leaderboards = new TextButton("Leaderboards", game.assets.uiSkin);
-		TextButton achievements = new TextButton("Achievements", game.assets.uiSkin);
+		float density = Gdx.graphics.getDensity();
+		Label title = new Label("Square Bomber", game.assets.uiSkin, "big");
+		TextButton singlePlayer = new TextButton("Single Player", game.assets.uiSkin, "big");
+		TextButton multiPlayer = new TextButton("Multi Player", game.assets.uiSkin, "big");
+		TextButton leaderboards = new TextButton("Leaderboards", game.assets.uiSkin, "big");
+		TextButton achievements = new TextButton("Achievements", game.assets.uiSkin, "big");
 		
 		singlePlayer.addListener(new InputListener() {
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -81,6 +81,25 @@ public class MainMenuScreen implements Screen {
 			}
 		});
 		
+		multiPlayer.addListener(new InputListener() {
+			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+				game.setScreen(new GameScreen(game));
+				return false;
+			}
+		});
+		
+		table = new Table();
+		stage.addActor(table);
+		table.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		table.debug();
+		
+		table.add(title).colspan(2);
+		table.row();
+		table.add(singlePlayer).width(singlePlayer.getPrefWidth() * density).height(singlePlayer.getPrefHeight() * density).pad(10);
+		table.add(multiPlayer).width(singlePlayer.getPrefWidth() * density).height(singlePlayer.getPrefHeight() * density).pad(10);
+		table.row();
+		table.add(leaderboards).width(singlePlayer.getPrefWidth() * density).height(singlePlayer.getPrefHeight() * density).pad(10);
+		table.add(achievements).width(singlePlayer.getPrefWidth() * density).height(singlePlayer.getPrefHeight() * density).pad(10);
 		
 	}
 

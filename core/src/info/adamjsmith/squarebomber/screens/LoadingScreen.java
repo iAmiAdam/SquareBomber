@@ -14,7 +14,7 @@ public class LoadingScreen implements Screen {
 	@Override
 	public void render(float delta) {
 		if(game.assets.manager.update()) {
-			game.setScreen(new GameScreen(game));
+			game.setScreen(new MainMenuScreen(game));
 		}
 	}
 
