@@ -1,5 +1,6 @@
 package info.adamjsmith.squarebomber;
 
+import info.adamjsmith.squarebomber.gpgs.ActionResolver;
 import info.adamjsmith.squarebomber.screens.LoadingScreen;
 
 import com.badlogic.gdx.ApplicationListener;
@@ -7,6 +8,11 @@ import com.badlogic.gdx.Game;
 
 public class SquareBomber extends Game implements ApplicationListener{
 	public Assets assets = new Assets();
+	public ActionResolver actionResolver;
+	
+	public SquareBomber(ActionResolver actionResolver) {
+		this.actionResolver = actionResolver;
+	}
 	
 	@Override
 	public void create () {
