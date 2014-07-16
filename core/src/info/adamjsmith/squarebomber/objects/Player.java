@@ -3,13 +3,12 @@ package info.adamjsmith.squarebomber.objects;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.World;
 
 public class Player extends DynamicObject {
 	
-	private float ppt = 128;
 	private BodyDef bd;
 	private Body body;
 	
@@ -33,16 +32,15 @@ public class Player extends DynamicObject {
 		this.bombs = 1;
 		this.power = 1;
 		
-		PolygonShape polygon = new PolygonShape();
-		Vector2 size = new Vector2((this.width * 0.5f) / ppt, (this.height * 0.5f) / ppt);
-		polygon.setAsBox(this.width * 0.5f, this.height * 0.5f, size, 0.0f);
+		CircleShape circle = new CircleShape();
+		circle.setRadius(0.4f);
 		
 		bd = new BodyDef();
 		bd.type = BodyType.DynamicBody;
 		bd.position.set(this.x, this.y);
 		body = world.createBody(bd);
 		body.setFixedRotation(true);
-		body.createFixture(polygon, 1).setUserData(GameObject.IDPlayer);
+		body.createFixture(circle, 1).setUserData(GameObject.IDPlayer);
 		body.setUserData(this);
 		
 		this.direction = Direction.STOP;
