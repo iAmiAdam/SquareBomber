@@ -67,8 +67,10 @@ public class AndroidLauncher extends AndroidApplication implements GameHelperLis
 		
 		gameHelper.setup(this);
 		
-		gameServices = new MultiplayerServices();
-
+		gameServices = new MultiplayerServices(gameHelper, this);
+		
+		loginGPGS();
+		
 		setContentView(layout);
 	}
 	
@@ -143,26 +145,29 @@ public class AndroidLauncher extends AndroidApplication implements GameHelperLis
 	
 	@Override
 	public void startQuickGame() {
-		// auto-match criteria to invite one random automatch opponent.
-	    // You can also specify more opponents (up to 3).
 	    Bundle am = RoomConfig.createAutoMatchCriteria(2, 6, 0);
 
-	    // build the room config:
 	    RoomConfig.Builder roomConfigBuilder = RoomConfig.builder(gameServices);
 	    roomConfigBuilder.setMessageReceivedListener(gameServices);
 	    roomConfigBuilder.setRoomStatusUpdateListener(gameServices);
 	    roomConfigBuilder.setAutoMatchCriteria(am);
 	    RoomConfig roomConfig = roomConfigBuilder.build();
 
-	    // create room:
 	    Games.RealTimeMultiplayer.create(gameHelper.getApiClient(), roomConfig);
-
-	    // prevent screen from sleeping during handshake
-	    getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
-	    // go to game screen
 	}
 	
+	@Override
+	public void joinQuickGame() {
+	    Bundle am = RoomConfig.createAutoMatchCriteria(2, 6, 0);
+
+	    RoomConfig.Builder roomConfigBuilder = RoomConfig.builder(gameServices);
+	    roomConfigBuilder.setMessageReceivedListener(gameServices);
+	    roomConfigBuilder.setRoomStatusUpdateListener(gameServices);
+	    roomConfigBuilder.setAutoMatchCriteria(am);
+	    RoomConfig roomConfig = roomConfigBuilder.build();
+
+	    Games.RealTimeMultiplayer.join(gameHelper.getApiClient(), roomConfig);
+	}	
 	
 	protected static Handler handler = new Handler() {
 		@Override

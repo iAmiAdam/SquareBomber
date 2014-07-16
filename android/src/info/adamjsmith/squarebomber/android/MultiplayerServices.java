@@ -2,14 +2,27 @@ package info.adamjsmith.squarebomber.android;
 
 import java.util.List;
 
+import android.app.Activity;
+import android.content.Intent;
+
+import com.google.android.gms.games.Games;
 import com.google.android.gms.games.multiplayer.realtime.RealTimeMessage;
 import com.google.android.gms.games.multiplayer.realtime.RealTimeMessageReceivedListener;
 import com.google.android.gms.games.multiplayer.realtime.Room;
 import com.google.android.gms.games.multiplayer.realtime.RoomStatusUpdateListener;
 import com.google.android.gms.games.multiplayer.realtime.RoomUpdateListener;
+import com.google.example.games.basegameutils.GameHelper;
 
-public class MultiplayerServices implements RoomUpdateListener, RealTimeMessageReceivedListener, RoomStatusUpdateListener{
-
+public class MultiplayerServices implements RoomUpdateListener, RealTimeMessageReceivedListener, RoomStatusUpdateListener {
+	
+	GameHelper gh;
+	Activity ctx;
+	
+	public MultiplayerServices(GameHelper gh, Activity ctx) {
+		this.gh = gh;
+		this.ctx = ctx;
+	}
+	
 	@Override
 	public void onJoinedRoom(int statusCode, Room room) {
 		// TODO Auto-generated method stub
@@ -30,8 +43,8 @@ public class MultiplayerServices implements RoomUpdateListener, RealTimeMessageR
 
 	@Override
 	public void onRoomCreated(int statusCode, Room room) {
-		// TODO Auto-generated method stub
-		
+		Intent i = Games.RealTimeMultiplayer.getWaitingRoomIntent(gh.getApiClient(), room, 2);
+		ctx.startActivityForResult(i, 1);
 	}
 
 	@Override
