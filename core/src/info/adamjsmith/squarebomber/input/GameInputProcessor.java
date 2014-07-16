@@ -12,8 +12,6 @@ public class GameInputProcessor implements InputProcessor {
 	
 	private float x = (Gdx.graphics.getWidth() / 7) * 6;
 	private float y = (Gdx.graphics.getHeight() / 5) * 4;
-	private float width = (Gdx.graphics.getWidth()) / 7;
-	private float height = (Gdx.graphics.getHeight()) / 5;
 	private float widthSegment = (Gdx.graphics.getWidth() / 7) / 3;
 	private float heightSegment = (Gdx.graphics.getHeight() / 5) / 3;
 	
@@ -41,28 +39,17 @@ public class GameInputProcessor implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		
-		//if(screenY < Gdx.graphics.getHeight() / 2 && screenX > Gdx.graphics.getWidth() / 4 && screenX < (Gdx.graphics.getWidth() / 4) + (Gdx.graphics.getWidth() / 2)) {
-			//world.player.move(Direction.UP);
-		//}
-		//if(screenY > Gdx.graphics.getHeight() / 2 && screenX > Gdx.graphics.getWidth() / 4 && screenX < (Gdx.graphics.getWidth() / 4) + (Gdx.graphics.getWidth() / 2)) {
-			//world.player.move(Direction.DOWN);
-		//}
-		//if(screenX < Gdx.graphics.getWidth() / 4) {
-			//world.player.move(Direction.LEFT);
-		//}
-		//if(screenX > (Gdx.graphics.getWidth() / 4) + (Gdx.graphics.getWidth() / 2)) {
-			//world.player.move(Direction.RIGHT);
-		//}
-		//if(screenX < (Gdx.graphics.getHeight() / 8) && screenY < (Gdx.graphics.getWidth() / 8)) {
-			//world.placeBomb();
-		//}
+		if(screenX < x && screenY < y) {
+			world.placeBomb();
+		}
 		return false;
 	}
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		world.player.move(Direction.STOP);
+		if(screenX > x && screenY > y) {
+			world.player.move(Direction.STOP);
+		}
 		return false;
 	}
 
