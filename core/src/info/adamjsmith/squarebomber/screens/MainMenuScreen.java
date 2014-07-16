@@ -91,11 +91,26 @@ public class MainMenuScreen implements Screen {
 		
 		multiPlayer.addListener(new InputListener() {
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-				game.setScreen(new GameScreen(game));
+				game.actionResolver.startQuickGame();
 				return false;
 			}
 		});
 		
+		leaderboards.addListener(new InputListener() {
+			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+				game.actionResolver.getLeaderboardGPGS();
+				return false;
+			}
+		});
+		
+		achievements.addListener(new InputListener() {
+			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+				game.actionResolver.getAchievementsGPGS();
+				return false;
+			}
+		});
+		
+
 		table = new Table();
 		stage.addActor(table);
 		table.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());

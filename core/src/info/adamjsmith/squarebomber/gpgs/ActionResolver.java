@@ -7,5 +7,6 @@ public interface ActionResolver {
 	public void unlockAchievementGPGS(String achievementId);
 	public void getLeaderboardGPGS();
 	public void getAchievementsGPGS();
+	public void startQuickGame();
 	public void showAds(boolean show);
 }

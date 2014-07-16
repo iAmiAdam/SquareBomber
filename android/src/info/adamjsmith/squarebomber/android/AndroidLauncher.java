@@ -17,11 +17,13 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.games.Games;
+import com.google.android.gms.games.multiplayer.realtime.RoomConfig;
 import com.google.example.games.basegameutils.GameHelper;
 import com.google.example.games.basegameutils.GameHelper.GameHelperListener;
 
 public class AndroidLauncher extends AndroidApplication implements GameHelperListener, info.adamjsmith.squarebomber.gpgs.ActionResolver {
 	private GameHelper gameHelper;
+	private MultiplayerServices gameServices;
 	protected static AdView adView;
 	private final static int SHOW_ADS = 1;
 	private final static int HIDE_ADS = 0;
@@ -64,6 +66,8 @@ public class AndroidLauncher extends AndroidApplication implements GameHelperLis
 		gameHelper.enableDebugLog(true);
 		
 		gameHelper.setup(this);
+		
+		gameServices = new MultiplayerServices();
 
 		setContentView(layout);
 	}
@@ -136,6 +140,29 @@ public class AndroidLauncher extends AndroidApplication implements GameHelperLis
 	public void onSignInSucceeded() {
 		Toast.makeText(this, "Signed into Google Play Games", Toast.LENGTH_LONG).show();		
 	}
+	
+	@Override
+	public void startQuickGame() {
+		// auto-match criteria to invite one random automatch opponent.
+	    // You can also specify more opponents (up to 3).
+	    Bundle am = RoomConfig.createAutoMatchCriteria(2, 6, 0);
+
+	    // build the room config:
+	    RoomConfig.Builder roomConfigBuilder = RoomConfig.builder(gameServices);
+	    roomConfigBuilder.setMessageReceivedListener(gameServices);
+	    roomConfigBuilder.setRoomStatusUpdateListener(gameServices);
+	    roomConfigBuilder.setAutoMatchCriteria(am);
+	    RoomConfig roomConfig = roomConfigBuilder.build();
+
+	    // create room:
+	    Games.RealTimeMultiplayer.create(gameHelper.getApiClient(), roomConfig);
+
+	    // prevent screen from sleeping during handshake
+	    getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+	    // go to game screen
+	}
+	
 	
 	protected static Handler handler = new Handler() {
 		@Override
