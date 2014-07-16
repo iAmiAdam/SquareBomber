@@ -8,6 +8,5 @@ public interface ActionResolver {
 	public void getLeaderboardGPGS();
 	public void getAchievementsGPGS();
 	public void startQuickGame();
-	public void joinQuickGame();
 	public void showAds(boolean show);
 }

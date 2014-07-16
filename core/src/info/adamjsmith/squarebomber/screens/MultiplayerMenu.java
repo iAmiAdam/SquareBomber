@@ -77,19 +77,11 @@ private SquareBomber game;
 		float density = Gdx.graphics.getDensity();
 		Label title = new Label("Square Bomber", game.assets.uiSkin, "big");
 		TextButton createGame = new TextButton("Create Quick Game", game.assets.uiSkin, "big");
-		TextButton joinGame = new TextButton("Join Quick Game", game.assets.uiSkin, "big");
 		TextButton inviteGame = new TextButton("Create Private Game", game.assets.uiSkin, "big");
 		
 		createGame.addListener(new InputListener() {
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
 				game.actionResolver.startQuickGame();
-				return false;
-			}
-		});
-		
-		joinGame.addListener(new InputListener() {
-			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-				game.actionResolver.joinQuickGame();
 				return false;
 			}
 		});
@@ -108,10 +100,9 @@ private SquareBomber game;
 		stage.addActor(table);
 		table.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
-		table.add(title).colspan(2);
+		table.add(title);
 		table.row();
 		table.add(createGame).width(createGame.getPrefWidth() * density).height(createGame.getPrefHeight() * density).pad(10);
-		table.add(joinGame).width(createGame.getPrefWidth() * density).height(createGame.getPrefHeight() * density).pad(10);
 		table.row();
 		table.add(inviteGame).width(createGame.getPrefWidth() * density).height(createGame.getPrefHeight() * density).pad(10);		
 	}

@@ -11,12 +11,14 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.games.Games;
+import com.google.android.gms.games.multiplayer.realtime.RealTimeMultiplayer;
 import com.google.android.gms.games.multiplayer.realtime.RoomConfig;
 import com.google.example.games.basegameutils.GameHelper;
 import com.google.example.games.basegameutils.GameHelper.GameHelperListener;
@@ -145,29 +147,17 @@ public class AndroidLauncher extends AndroidApplication implements GameHelperLis
 	
 	@Override
 	public void startQuickGame() {
-	    Bundle am = RoomConfig.createAutoMatchCriteria(2, 6, 0);
+	    Bundle am = RoomConfig.createAutoMatchCriteria(1, 5, 0);
 
 	    RoomConfig.Builder roomConfigBuilder = RoomConfig.builder(gameServices);
 	    roomConfigBuilder.setMessageReceivedListener(gameServices);
 	    roomConfigBuilder.setRoomStatusUpdateListener(gameServices);
 	    roomConfigBuilder.setAutoMatchCriteria(am);
 	    RoomConfig roomConfig = roomConfigBuilder.build();
+	    Gdx.app.log("StartQuickGame", "started quick game");
 
 	    Games.RealTimeMultiplayer.create(gameHelper.getApiClient(), roomConfig);
 	}
-	
-	@Override
-	public void joinQuickGame() {
-	    Bundle am = RoomConfig.createAutoMatchCriteria(2, 6, 0);
-
-	    RoomConfig.Builder roomConfigBuilder = RoomConfig.builder(gameServices);
-	    roomConfigBuilder.setMessageReceivedListener(gameServices);
-	    roomConfigBuilder.setRoomStatusUpdateListener(gameServices);
-	    roomConfigBuilder.setAutoMatchCriteria(am);
-	    RoomConfig roomConfig = roomConfigBuilder.build();
-
-	    Games.RealTimeMultiplayer.join(gameHelper.getApiClient(), roomConfig);
-	}	
 	
 	protected static Handler handler = new Handler() {
 		@Override

@@ -25,7 +25,6 @@ public class MultiplayerServices implements RoomUpdateListener, RealTimeMessageR
 	
 	@Override
 	public void onJoinedRoom(int statusCode, Room room) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -37,8 +36,7 @@ public class MultiplayerServices implements RoomUpdateListener, RealTimeMessageR
 
 	@Override
 	public void onRoomConnected(int statusCode, Room room) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -55,14 +53,12 @@ public class MultiplayerServices implements RoomUpdateListener, RealTimeMessageR
 
 	@Override
 	public void onConnectedToRoom(Room room) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onDisconnectedFromRoom(Room room) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -115,14 +111,12 @@ public class MultiplayerServices implements RoomUpdateListener, RealTimeMessageR
 
 	@Override
 	public void onRoomAutoMatching(Room room) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onRoomConnecting(Room room) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 }
