@@ -61,3 +61,6 @@ build/
 
 ## OS Specific
 .DS_Store
+
+## Misc
+android/res/values
