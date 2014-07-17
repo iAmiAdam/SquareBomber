@@ -11,14 +11,12 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.games.Games;
-import com.google.android.gms.games.multiplayer.realtime.RealTimeMultiplayer;
 import com.google.android.gms.games.multiplayer.realtime.RoomConfig;
 import com.google.example.games.basegameutils.GameHelper;
 import com.google.example.games.basegameutils.GameHelper.GameHelperListener;
@@ -26,6 +24,7 @@ import com.google.example.games.basegameutils.GameHelper.GameHelperListener;
 public class AndroidLauncher extends AndroidApplication implements GameHelperListener, info.adamjsmith.squarebomber.gpgs.ActionResolver {
 	private GameHelper gameHelper;
 	private MultiplayerServices gameServices;
+	SquareBomber game;
 	protected static AdView adView;
 	private final static int SHOW_ADS = 1;
 	private final static int HIDE_ADS = 0;
@@ -44,7 +43,9 @@ public class AndroidLauncher extends AndroidApplication implements GameHelperLis
 		config.useAccelerometer = false;
 		config.useCompass = false;
 		
-		View gameView = initializeForView(new SquareBomber(this), config);
+		game = new SquareBomber(this);
+		
+		View gameView = initializeForView(game, config);
 		layout.addView(gameView);
 		
 		adView = new AdView(this);
@@ -69,7 +70,7 @@ public class AndroidLauncher extends AndroidApplication implements GameHelperLis
 		
 		gameHelper.setup(this);
 		
-		gameServices = new MultiplayerServices(gameHelper, this);
+		gameServices = new MultiplayerServices(gameHelper, this, game);
 		
 		loginGPGS();
 		
@@ -154,7 +155,6 @@ public class AndroidLauncher extends AndroidApplication implements GameHelperLis
 	    roomConfigBuilder.setRoomStatusUpdateListener(gameServices);
 	    roomConfigBuilder.setAutoMatchCriteria(am);
 	    RoomConfig roomConfig = roomConfigBuilder.build();
-	    Gdx.app.log("StartQuickGame", "started quick game");
 
 	    Games.RealTimeMultiplayer.create(gameHelper.getApiClient(), roomConfig);
 	}
@@ -172,4 +172,10 @@ public class AndroidLauncher extends AndroidApplication implements GameHelperLis
 			}
 		}
 	};
+
+	@Override
+	public void beginGame() {
+		// TODO Auto-generated method stub
+		
+	}
 }

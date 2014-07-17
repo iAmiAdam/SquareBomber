@@ -1,5 +1,8 @@
 package info.adamjsmith.squarebomber.android;
 
+import info.adamjsmith.squarebomber.SquareBomber;
+import info.adamjsmith.squarebomber.screens.MultiplayerGame;
+
 import java.util.List;
 
 import android.app.Activity;
@@ -15,12 +18,14 @@ import com.google.example.games.basegameutils.GameHelper;
 
 public class MultiplayerServices implements RoomUpdateListener, RealTimeMessageReceivedListener, RoomStatusUpdateListener {
 	
+	SquareBomber game;
 	GameHelper gh;
 	Activity ctx;
 	
-	public MultiplayerServices(GameHelper gh, Activity ctx) {
+	public MultiplayerServices(GameHelper gh, Activity ctx, SquareBomber game) {
 		this.gh = gh;
 		this.ctx = ctx;
+		this.game = game;
 	}
 	
 	@Override
@@ -36,7 +41,7 @@ public class MultiplayerServices implements RoomUpdateListener, RealTimeMessageR
 
 	@Override
 	public void onRoomConnected(int statusCode, Room room) {
-
+		game.setScreen(new MultiplayerGame(game));
 	}
 
 	@Override
@@ -53,7 +58,7 @@ public class MultiplayerServices implements RoomUpdateListener, RealTimeMessageR
 
 	@Override
 	public void onConnectedToRoom(Room room) {
-
+		
 	}
 
 	@Override
@@ -117,6 +122,10 @@ public class MultiplayerServices implements RoomUpdateListener, RealTimeMessageR
 	@Override
 	public void onRoomConnecting(Room room) {
 
+	}
+	
+	public void sendReliableMessage(Byte[] messageData, int roomId) {
+		//Games.RealTimeMultiplayer.sendReliableMessage(gh.getApiClient(), null, messageData, roomId, 2);
 	}
 
 }
