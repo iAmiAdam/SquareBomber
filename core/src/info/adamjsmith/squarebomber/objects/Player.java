@@ -22,6 +22,7 @@ public class Player extends DynamicObject {
 	public int bombs;
 	public int power;
 	
+	public String mid;
 	
 	public Player(World world, float x, float y) {
 		this.width = 0.75f;
@@ -44,6 +45,31 @@ public class Player extends DynamicObject {
 		body.setUserData(this);
 		
 		this.direction = Direction.STOP;
+	}
+	
+	public void create(World world, Vector2 pos) {
+		this.speed = 5f;
+		this.bombs = 1;
+		this.power = 1;
+		this.x = pos.x;
+		this.y = pos.y;
+		
+		CircleShape circle = new CircleShape();
+		circle.setRadius(0.4f);
+		
+		bd = new BodyDef();
+		bd.type = BodyType.DynamicBody;
+		bd.position.set(this.x, this.y);
+		body = world.createBody(bd);
+		body.setFixedRotation(true);
+		body.createFixture(circle, 1).setUserData(GameObject.IDPlayer);
+		body.setUserData(this);
+		
+		this.direction = Direction.STOP;
+	}
+	
+	public Player(String id) {
+		this.mid = id;
 	}
 	
 	

@@ -1,8 +1,10 @@
 package info.adamjsmith.squarebomber.android;
 
 import info.adamjsmith.squarebomber.SquareBomber;
+import info.adamjsmith.squarebomber.objects.Player;
 import info.adamjsmith.squarebomber.screens.MultiplayerGame;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
@@ -41,7 +43,19 @@ public class MultiplayerServices implements RoomUpdateListener, RealTimeMessageR
 
 	@Override
 	public void onRoomConnected(int statusCode, Room room) {
-		game.setScreen(new MultiplayerGame(game));
+		String myID = room.getParticipantId(Games.Players.getCurrentPlayerId(gh.getApiClient()));
+		ArrayList<String> participants = room.getParticipantIds();
+		
+		Player[] players = new Player[participants.size()];
+		
+		int i = 0;
+		for (String s : participants) {
+			players[i] = new Player(s);
+			i++;
+		}
+		
+		
+		game.setScreen(new MultiplayerGame(game, players, myID));
 	}
 
 	@Override

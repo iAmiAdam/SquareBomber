@@ -22,14 +22,14 @@ public class GameRenderer {
 	private SquareBomber game;
 	private GameUpdater world;
 	
-	private OrthogonalTiledMapRenderer renderer;
-	private OrthographicCamera camera;
-	private OrthographicCamera uiCamera;
-	private SpriteBatch batch;
-	private Matrix4 uiMatrix;
+	public OrthogonalTiledMapRenderer renderer;
+	public OrthographicCamera camera;
+	public OrthographicCamera uiCamera;
+	public SpriteBatch batch;
+	public Matrix4 uiMatrix;
 	
-	private float stateTime;
-	private TextureRegion currentFrame = new TextureRegion();
+	public float stateTime;
+	public TextureRegion currentFrame = new TextureRegion();
 	
 	public GameRenderer(SquareBomber game, GameUpdater world) {
 		this.world = world;
@@ -71,14 +71,14 @@ public class GameRenderer {
 		
 	}
 	
-	private void drawCrates() {
+	public void drawCrates() {
 		Array<Crate> crates = world.getCrates();
 		for(Crate crate: crates) {
 			batch.draw(game.assets.crate, crate.getX() + 0.025f, crate.getY() + 0.025f, 0.95f, 0.95f);
 		}
 	}
 	
-	private void drawPlayer() {
+	public void drawPlayer() {
 		switch(world.player.direction) {
 			case STOP:
 				batch.draw(game.assets.playerStop, world.player.getX() - (world.player.getWidth() / 2), world.player.getY() - (world.player.getHeight() / 2), 
@@ -97,14 +97,14 @@ public class GameRenderer {
 		}
 	}
 	
-	private void drawBombs() {
+	public void drawBombs() {
 		Array<Bomb> bombs = world.getBombs();
 		for(Bomb bomb: bombs) {
 			batch.draw(game.assets.bomb, bomb.getX(), bomb.getY(), 1f, 1f);
 		}
 	}
 	
-	private void drawPowerUps() {
+	public void drawPowerUps() {
 		Array<PowerUp> powerUps = world.getPowerUps();
 		for(PowerUp powerUp: powerUps) {
 			switch (powerUp.type) {
@@ -120,7 +120,7 @@ public class GameRenderer {
 		}
 	}
 	
-	private void drawExplosions() {
+	public void drawExplosions() {
 		Array<Explosion> explosions = world.getExplosions();
 		for (Explosion explosion: explosions) {
 			Iterator<ExplosionPart> partsIter = explosion.parts.iterator();
