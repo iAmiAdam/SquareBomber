@@ -21,6 +21,16 @@ public class MultiplayerUpdater extends GameUpdater {
 		createPlayers();
 	}
 	
+	public void update() {
+		updatePlayers();
+		updateCrates();
+		updateBombs();
+		updateExplosions();
+		sweepDeadBodies();
+		checkPowers();
+		world.step(1/45f, 6, 2);
+	}
+	
 	public void receiveMessage(byte[] message) {
 		
 	}
@@ -30,6 +40,12 @@ public class MultiplayerUpdater extends GameUpdater {
 		for (Player player: players) {
 			player.create(world, spawns[i]);
 			i++;
+		}
+	}
+	
+	private void updatePlayers() {
+		for (Player player: players) {
+			player.update();
 		}
 	}
 	

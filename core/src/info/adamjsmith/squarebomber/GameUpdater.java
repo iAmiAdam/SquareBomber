@@ -55,7 +55,7 @@ public class GameUpdater {
 		world.step(1/45f, 6, 2);
 	}
 	
-	private void createWorld() {
+	public void createWorld() {
 		
 		ppt = 128f;
 		
@@ -95,7 +95,7 @@ public class GameUpdater {
 			shape.dispose();
 		}
 		
-		player = new Player(world, 2.5f, 2.5f);
+		//player = new Player(world, 2.5f, 2.5f);
 		
 		
 	}
@@ -116,7 +116,7 @@ public class GameUpdater {
 		return powerUps;
 	}
 	
-	private void updateBombs() {
+	public void updateBombs() {
 		Iterator<Bomb> iter = bombs.iterator();
 		while(iter.hasNext()) {
 			Bomb bomb =  iter.next();
@@ -132,7 +132,7 @@ public class GameUpdater {
 		}
 	}
 	
-	private void updateExplosions() {
+	public void updateExplosions() {
 		Iterator<Explosion> iter = explosions.iterator();
 		while(iter.hasNext()) {
 			Explosion explosion = iter.next();
@@ -144,7 +144,7 @@ public class GameUpdater {
 		}
 	}
 	
-	private void updateCrates() {
+	public void updateCrates() {
 		Iterator<Crate> iter = crates.iterator();
 		while(iter.hasNext()) {
 			Crate crate = iter.next();
@@ -157,7 +157,7 @@ public class GameUpdater {
 		}
 	}
 	
-	private static PolygonShape getRectangle(RectangleMapObject rectangleObject) {
+	public static PolygonShape getRectangle(RectangleMapObject rectangleObject) {
 		rectangle = rectangleObject.getRectangle();
 		PolygonShape polygon = new PolygonShape();
 		Vector2 size = new Vector2(((rectangle.x + rectangle.width) * 0.5f) / ppt, ((rectangle.y + rectangle.height) * 0.5f) / ppt);
@@ -177,7 +177,7 @@ public class GameUpdater {
 		powerUps.add(powerUp);
 	}
 	
-	private void checkPowers() {
+	public void checkPowers() {
 		Iterator<PowerUp> iter = powerUps.iterator();
 		while(iter.hasNext()) {
 			PowerUp powerUp = iter.next();
@@ -289,7 +289,7 @@ public class GameUpdater {
 		}
 	}
 	
-	private void sweepDeadBodies() {
+	public void sweepDeadBodies() {
 		Array<Body> bodies = new Array<Body>();
 		world.getBodies(bodies);
 		Iterator<Body> iter = bodies.iterator(); 
