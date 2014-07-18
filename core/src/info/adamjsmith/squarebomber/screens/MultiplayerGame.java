@@ -1,6 +1,7 @@
 package info.adamjsmith.squarebomber.screens;
 
 import info.adamjsmith.squarebomber.SquareBomber;
+import info.adamjsmith.squarebomber.input.GameInputProcessor;
 import info.adamjsmith.squarebomber.multiplayer.MultiplayerRenderer;
 import info.adamjsmith.squarebomber.multiplayer.MultiplayerUpdater;
 import info.adamjsmith.squarebomber.objects.Player;
@@ -13,18 +14,17 @@ public class MultiplayerGame implements Screen {
 	MultiplayerRenderer renderer;
 	MultiplayerUpdater updater;
 	
-	public MultiplayerGame(SquareBomber game, Player[] players, String myID) {
+	public MultiplayerGame(SquareBomber game, Player[] players, String myID, String roomID) {
 		this.game = game;
 		Gdx.app.log("Multiplayer Game", "At the screen");
 		updater = new MultiplayerUpdater(game, players, myID);
-		renderer = new MultiplayerRenderer(game, updater);
+		renderer = new MultiplayerRenderer(game, updater, myID);
 	}
 
 	@Override
 	public void render(float delta) {
 		updater.update();
 		renderer.render();
-		
 	}
 
 	@Override
@@ -35,7 +35,7 @@ public class MultiplayerGame implements Screen {
 
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
+		Gdx.input.setInputProcessor(new GameInputProcessor(updater));
 		
 	}
 

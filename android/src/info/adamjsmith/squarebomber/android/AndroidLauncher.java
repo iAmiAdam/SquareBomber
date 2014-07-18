@@ -1,6 +1,8 @@
 package info.adamjsmith.squarebomber.android;
 
 import info.adamjsmith.squarebomber.SquareBomber;
+import info.adamjsmith.squarebomber.screens.MultiplayerGame;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,6 +13,7 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.google.android.gms.ads.AdRequest;
@@ -81,6 +84,10 @@ public class AndroidLauncher extends AndroidApplication implements GameHelperLis
 	public void onActivityResult(int request, int response, Intent data) {
 		super.onActivityResult(request, response, data);
 		gameHelper.onActivityResult(request, response, data);
+		
+		if (request == 2 && response == Activity.RESULT_OK) {
+			game.setScreen(new MultiplayerGame(game, gameServices.players, gameServices.myID, gameServices.roomID));
+		}
 	}
 
 	@Override
@@ -178,4 +185,5 @@ public class AndroidLauncher extends AndroidApplication implements GameHelperLis
 		// TODO Auto-generated method stub
 		
 	}
+	
 }

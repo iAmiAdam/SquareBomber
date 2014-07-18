@@ -13,12 +13,15 @@ public class MultiplayerUpdater extends GameUpdater {
 			new Vector2(3.5f, 3.5f)
 	};
 	
+	public Player player;
+	
 	public Player[] players;
 	
 	public MultiplayerUpdater(SquareBomber game, Player[] players, String myID) {
 		super(game);
 		this.players = players;
 		createPlayers();
+		player = getCurrentPlayer(myID);
 	}
 	
 	public void update() {
@@ -51,5 +54,14 @@ public class MultiplayerUpdater extends GameUpdater {
 	
 	public Player[] getPlayers() {
 		return players;
+	}
+	
+	public Player getCurrentPlayer(String ID) {
+		for(Player player: players) {
+			if(player.mid == ID) {
+				return player;
+			}
+		}
+		return player;
 	}
 }
