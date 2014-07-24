@@ -1,26 +1,20 @@
 package info.adamjsmith.squarebomber.android;
 
 import info.adamjsmith.squarebomber.SquareBomber;
-import info.adamjsmith.squarebomber.screens.MultiplayerGame;
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.games.Games;
-import com.google.android.gms.games.multiplayer.realtime.RoomConfig;
 
 public class AndroidLauncher extends AndroidApplication implements info.adamjsmith.squarebomber.gpgs.ActionResolver {
 	SquareBomber game;
@@ -44,6 +38,10 @@ public class AndroidLauncher extends AndroidApplication implements info.adamjsmi
 		config.useCompass = false;
 		
 		mTournaments = new AndroidTournaments(this);
+		
+		if (mTournaments != null) {
+			Log.d("NextPeer", "Tournaments not null");
+		}
 		
 		game = new SquareBomber(this, mTournaments);
 		

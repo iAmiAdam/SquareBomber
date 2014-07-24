@@ -26,6 +26,10 @@ public class SquareBomber extends Game implements ApplicationListener{
 	
 	@Override
 	public void create () {
+		
+		if(this.tournaments != null) {
+			NextpeerPlugin.load(this.tournaments);
+		}
 		setScreen(new LoadingScreen(this));
 	}
 	

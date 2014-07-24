@@ -82,7 +82,7 @@ private SquareBomber game;
 		
 		createGame.addListener(new InputListener() {
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-				Gdx.app.log("NextPeer", "Launched");
+				Gdx.app.log("Nextpeer", String.valueOf(NextpeerPlugin.isAvailable()));
 				if (NextpeerPlugin.isAvailable()) {
 					NextpeerPlugin.launch();
 				}
