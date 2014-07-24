@@ -1,21 +1,22 @@
 package info.adamjsmith.squarebomber.android;
 
+import android.content.Context;
+
 import com.nextpeer.android.Nextpeer;
 import com.nextpeer.android.NextpeerListener;
 import com.nextpeer.android.NextpeerTournamentEndData;
 import com.nextpeer.android.NextpeerTournamentStartData;
 import com.nextpeer.libgdx.Tournaments;
 
-import android.content.Context;
-
 /**
  * Android implementation of the Tournaments class with Nextpeer Android SDK
  *
  */
 public final class AndroidTournaments extends Tournaments {
+	
 	public AndroidTournaments(Context context) {
 		
-		final String gameKey = "@string/game_key";
+		final String gameKey = context.getResources().getString(R.string.game_key);
 		
 		Nextpeer.initialize(context, gameKey, _listener);
 	}
