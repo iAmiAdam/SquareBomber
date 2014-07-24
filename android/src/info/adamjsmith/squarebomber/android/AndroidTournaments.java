@@ -34,7 +34,7 @@ public final class AndroidTournaments extends Tournaments {
 	    public void onTournamentStart(NextpeerTournamentStartData startData) {
 	    	
 	    	if (callback != null) {
-	    		callback.onTournamentStart(startData.tournamentRandomSeed);
+	    		callback.onTournamentStart(startData);
 	    	}
 	    }
 

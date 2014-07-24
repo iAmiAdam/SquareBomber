@@ -8,6 +8,11 @@
 
 package com.nextpeer.libgdx;
 
+import java.util.List;
+
+import com.nextpeer.android.NextpeerTournamentPlayer;
+import com.nextpeer.android.NextpeerTournamentStartData;
+
 /**
  * Nextpeer platform Callback class allow you to get notified of Nextpeer-related events.
  */
@@ -17,8 +22,11 @@ public abstract class TournamentsCallback {
 	 * Called when the tournament is supposed to start.
 	 * Here is the place to the launch the game's activity.
 	 * @param tournamentRandomSeed Used when the game 'generate' the level with its random function -> so all players will have the same world
+	 * @param opponents 
+	 * @param numberOfPlayers 
+	 * @param currentPlayer 
 	 */
-    public abstract void onTournamentStart(long tournamentRandomSeed);
+    public abstract void onTournamentStart(NextpeerTournamentStartData startData);
 
     /**
      * This method is invoked whenever the current tournament has finished 

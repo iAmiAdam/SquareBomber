@@ -12,32 +12,25 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Matrix4;
 
-public class MultiplayerRenderer {
+public class MultiplayerRenderer extends GameRenderer {
 	
 	private MultiplayerUpdater world;
 	private SquareBomber game;
-	private Player player;
+	//private Player player;
 	
-	private SpriteBatch batch;
-	private OrthographicCamera camera;
-	private OrthogonalTiledMapRenderer renderer;
-	private Matrix4 uiMatrix;
+	//private SpriteBatch batch;
+	//private OrthographicCamera camera;
+	//private OrthogonalTiledMapRenderer renderer;
+	//private Matrix4 uiMatrix;
 	
 	private float stateTime;
 	private TextureRegion currentFrame;
 	
 	public MultiplayerRenderer(SquareBomber game, MultiplayerUpdater world) {
-		this.world = world;
-		this.game = game;
-		this.batch = new SpriteBatch();
-		renderer = new OrthogonalTiledMapRenderer(game.assets.map, 1/128f);
-		camera = new OrthographicCamera(19f, 19f);
-		camera.viewportWidth = 7f;
-		camera.viewportHeight = 5f;
-		uiMatrix = camera.combined.cpy();
-		uiMatrix.setToOrtho2D(0, 0, 7f, 5f);
+		super(game, world);
 	}
 	
+	@Override
 	public void render() {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -46,7 +39,9 @@ public class MultiplayerRenderer {
 		renderer.setView(camera);
 		renderer.render();	
 		
+		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
+		drawPlayer();
 		batch.setProjectionMatrix(uiMatrix);
 		batch.draw(game.assets.controller, 6f, 0f, 1f, 1f);
 		batch.end();

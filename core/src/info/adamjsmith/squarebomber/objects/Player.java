@@ -22,6 +22,8 @@ public class Player extends DynamicObject {
 	public int bombs;
 	public int power;
 	
+	public String playerId;
+	
 	public String mid;
 	
 	public Player(World world, float x, float y) {
