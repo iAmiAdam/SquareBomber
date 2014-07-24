@@ -4,7 +4,6 @@ import info.adamjsmith.squarebomber.SquareBomber;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -21,7 +20,8 @@ public class AndroidLauncher extends AndroidApplication implements info.adamjsmi
 	protected static AdView adView;
 	private final static int SHOW_ADS = 1;
 	private final static int HIDE_ADS = 0;
-	private AndroidTournaments mTournaments = null;
+	public String apiKey = "@string/warp_api";
+	public String secretKey = "@string/warp_secret";
 	
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
@@ -37,13 +37,7 @@ public class AndroidLauncher extends AndroidApplication implements info.adamjsmi
 		config.useAccelerometer = false;
 		config.useCompass = false;
 		
-		mTournaments = new AndroidTournaments(this);
-		
-		if (mTournaments != null) {
-			Log.d("NextPeer", "Tournaments not null");
-		}
-		
-		game = new SquareBomber(this, mTournaments);
+		game = new SquareBomber(this);
 		
 		View gameView = initializeForView(game, config);
 		layout.addView(gameView);
@@ -87,30 +81,4 @@ public class AndroidLauncher extends AndroidApplication implements info.adamjsmi
 		}
 	};	
 	
-	@Override
-	protected void onStart() {
-		super.onStart();
-		
-		if(mTournaments != null) {
-			mTournaments.onStart();
-		}
-	}
-	
-	@Override
-	public void onStop() {
-		super.onStop();
-		
-		if (mTournaments != null && mTournaments.isCurrentlyInTournament()) {
-			mTournaments.reportForfeitForCurrentTournament();
-		}
-	}
-	
-	@Override
-	public void onBackPressed() {
-		if(mTournaments != null && mTournaments.isCurrentlyInTournament()) {
-			mTournaments.reportForfeitForCurrentTournament();
-		}
-		
-		super.onBackPressed();
-	}
 }
