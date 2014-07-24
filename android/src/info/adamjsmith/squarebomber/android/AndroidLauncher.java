@@ -26,7 +26,6 @@ import com.google.example.games.basegameutils.GameHelper.GameHelperListener;
 
 public class AndroidLauncher extends AndroidApplication implements GameHelperListener, info.adamjsmith.squarebomber.gpgs.ActionResolver {
 	private GameHelper gameHelper;
-	private MultiplayerServices gameServices;
 	SquareBomber game;
 	protected static AdView adView;
 	private final static int SHOW_ADS = 1;
@@ -73,21 +72,10 @@ public class AndroidLauncher extends AndroidApplication implements GameHelperLis
 		
 		gameHelper.setup(this);
 		
-		gameServices = new MultiplayerServices(gameHelper, this, game);
 		
 		loginGPGS();
 		
 		setContentView(layout);
-	}
-	
-	@Override
-	public void onActivityResult(int request, int response, Intent data) {
-		super.onActivityResult(request, response, data);
-		gameHelper.onActivityResult(request, response, data);
-		
-		if (request == 2 && response == Activity.RESULT_OK) {
-			game.setScreen(new MultiplayerGame(game, gameServices.players, gameServices.myID, gameServices.roomID));
-		}
 	}
 
 	@Override
@@ -153,19 +141,6 @@ public class AndroidLauncher extends AndroidApplication implements GameHelperLis
 		Toast.makeText(this, "Signed into Google Play Games", Toast.LENGTH_LONG).show();		
 	}
 	
-	@Override
-	public void startQuickGame() {
-	    Bundle am = RoomConfig.createAutoMatchCriteria(1, 5, 0);
-
-	    RoomConfig.Builder roomConfigBuilder = RoomConfig.builder(gameServices);
-	    roomConfigBuilder.setMessageReceivedListener(gameServices);
-	    roomConfigBuilder.setRoomStatusUpdateListener(gameServices);
-	    roomConfigBuilder.setAutoMatchCriteria(am);
-	    RoomConfig roomConfig = roomConfigBuilder.build();
-
-	    Games.RealTimeMultiplayer.create(gameHelper.getApiClient(), roomConfig);
-	}
-	
 	protected static Handler handler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
@@ -178,12 +153,5 @@ public class AndroidLauncher extends AndroidApplication implements GameHelperLis
 				break;
 			}
 		}
-	};
-
-	@Override
-	public void beginGame() {
-		// TODO Auto-generated method stub
-		
-	}
-	
+	};	
 }

@@ -81,7 +81,6 @@ private SquareBomber game;
 		
 		createGame.addListener(new InputListener() {
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-				game.actionResolver.startQuickGame();
 				return false;
 			}
 		});
