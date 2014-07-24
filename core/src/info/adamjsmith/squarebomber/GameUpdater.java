@@ -93,11 +93,12 @@ public class GameUpdater {
 			body.setUserData(crate);
 			crates.add(crate);
 			shape.dispose();
-		}
+		}	
 		
-		//player = new Player(world, 2.5f, 2.5f);
-		
-		
+	}
+	
+	public void createPlayer() {
+		player = new Player(world, 2.5f, 2.5f);
 	}
 	
 	public Array<Crate> getCrates() {

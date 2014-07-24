@@ -7,6 +7,7 @@ import info.adamjsmith.squarebomber.screens.MultiplayerMenu;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.nextpeer.libgdx.NextpeerPlugin;
 import com.nextpeer.libgdx.Tournaments;
 import com.nextpeer.libgdx.TournamentsCallback;
@@ -55,7 +56,12 @@ public class SquareBomber extends Game implements ApplicationListener{
 		@Override
 		public void onTournamentStart(long tournamentRandomSeed) {
 			NextpeerPlugin.instance().lastKnownTournamentRandomSeed = tournamentRandomSeed;
-			setScreen(new MultiplayerGame(SquareBomber.this));
+			Gdx.app.postRunnable(new Runnable() {
+				@Override
+				public void run() {
+					setScreen(new MultiplayerGame(SquareBomber.this));
+				}
+			});
 		}
 
 		@Override

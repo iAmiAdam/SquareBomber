@@ -34,7 +34,6 @@ public class MultiplayerRenderer {
 		camera = new OrthographicCamera(19f, 19f);
 		camera.viewportWidth = 7f;
 		camera.viewportHeight = 5f;
-		Gdx.app.log("REnderer", "in the renderer");
 		uiMatrix = camera.combined.cpy();
 		uiMatrix.setToOrtho2D(0, 0, 7f, 5f);
 	}
