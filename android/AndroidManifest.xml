@@ -26,6 +26,8 @@
         <activity android:name="com.google.android.gms.ads.AdActivity"
              android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
         
+        <activity android:name="com.nextpeer.android.NextpeerActivity" />
+        
         <meta-data android:name="com.google.android.gms.games.APP_ID"
         android:value="@string/app_id" />
    		<meta-data android:name="com.google.android.gms.version"

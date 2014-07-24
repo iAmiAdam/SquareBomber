@@ -27,6 +27,7 @@ public class AndroidLauncher extends AndroidApplication implements info.adamjsmi
 	protected static AdView adView;
 	private final static int SHOW_ADS = 1;
 	private final static int HIDE_ADS = 0;
+	private AndroidTournaments mTournaments = null;
 	
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
@@ -42,7 +43,9 @@ public class AndroidLauncher extends AndroidApplication implements info.adamjsmi
 		config.useAccelerometer = false;
 		config.useCompass = false;
 		
-		game = new SquareBomber(this);
+		mTournaments = new AndroidTournaments(this);
+		
+		game = new SquareBomber(this, mTournaments);
 		
 		View gameView = initializeForView(game, config);
 		layout.addView(gameView);
@@ -85,4 +88,31 @@ public class AndroidLauncher extends AndroidApplication implements info.adamjsmi
 			}
 		}
 	};	
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
+		
+		if(mTournaments != null) {
+			mTournaments.onStart();
+		}
+	}
+	
+	@Override
+	public void onStop() {
+		super.onStop();
+		
+		if (mTournaments != null && mTournaments.isCurrentlyInTournament()) {
+			mTournaments.reportForfeitForCurrentTournament();
+		}
+	}
+	
+	@Override
+	public void onBackPressed() {
+		if(mTournaments != null && mTournaments.isCurrentlyInTournament()) {
+			mTournaments.reportForfeitForCurrentTournament();
+		}
+		
+		super.onBackPressed();
+	}
 }

@@ -17,11 +17,10 @@ public class MultiplayerUpdater extends GameUpdater {
 	
 	public Player[] players;
 	
-	public MultiplayerUpdater(SquareBomber game, Player[] players, String myID) {
+	public MultiplayerUpdater(SquareBomber game) {
 		super(game);
 		this.players = players;
 		createPlayers();
-		player = getCurrentPlayer(myID);
 	}
 	
 	public void update() {

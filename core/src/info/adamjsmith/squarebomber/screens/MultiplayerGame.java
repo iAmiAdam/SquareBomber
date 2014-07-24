@@ -14,11 +14,11 @@ public class MultiplayerGame implements Screen {
 	MultiplayerRenderer renderer;
 	MultiplayerUpdater updater;
 	
-	public MultiplayerGame(SquareBomber game, Player[] players, String myID, String roomID) {
+	public MultiplayerGame(SquareBomber game) {
 		this.game = game;
 		Gdx.app.log("Multiplayer Game", "At the screen");
-		updater = new MultiplayerUpdater(game, players, myID);
-		renderer = new MultiplayerRenderer(game, updater, myID);
+		updater = new MultiplayerUpdater(game);
+		renderer = new MultiplayerRenderer(game, updater);
 	}
 
 	@Override

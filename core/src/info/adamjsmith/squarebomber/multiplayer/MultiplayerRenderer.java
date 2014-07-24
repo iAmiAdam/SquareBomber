@@ -25,10 +25,9 @@ public class MultiplayerRenderer {
 	private float stateTime;
 	private TextureRegion currentFrame;
 	
-	public MultiplayerRenderer(SquareBomber game, MultiplayerUpdater world, String myID) {
+	public MultiplayerRenderer(SquareBomber game, MultiplayerUpdater world) {
 		this.world = world;
 		this.game = game;
-		this.player = world.getCurrentPlayer(myID);
 		this.batch = new SpriteBatch();
 		renderer = new OrthogonalTiledMapRenderer(game.assets.map, 1/128f);
 		camera = new OrthographicCamera(19f, 19f);

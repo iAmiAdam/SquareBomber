@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.nextpeer.libgdx.NextpeerPlugin;
 
 public class MultiplayerMenu implements Screen {
 private SquareBomber game;
@@ -81,6 +82,10 @@ private SquareBomber game;
 		
 		createGame.addListener(new InputListener() {
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+				Gdx.app.log("NextPeer", "Launched");
+				if (NextpeerPlugin.isAvailable()) {
+					NextpeerPlugin.launch();
+				}
 				return false;
 			}
 		});
