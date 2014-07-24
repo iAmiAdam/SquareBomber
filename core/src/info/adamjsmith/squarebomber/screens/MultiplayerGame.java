@@ -16,7 +16,6 @@ public class MultiplayerGame implements Screen {
 	
 	public MultiplayerGame(SquareBomber game) {
 		this.game = game;
-		Gdx.app.log("Multiplayer Game", "At the screen");
 		updater = new MultiplayerUpdater(game);
 		renderer = new MultiplayerRenderer(game, updater);
 	}
@@ -35,7 +34,7 @@ public class MultiplayerGame implements Screen {
 
 	@Override
 	public void show() {
-		Gdx.input.setInputProcessor(new GameInputProcessor(updater));
+		//Gdx.input.setInputProcessor(new GameInputProcessor(updater));
 		
 	}
 

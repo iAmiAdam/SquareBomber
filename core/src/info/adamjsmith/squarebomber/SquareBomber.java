@@ -2,24 +2,34 @@ package info.adamjsmith.squarebomber;
 
 import info.adamjsmith.squarebomber.gpgs.ActionResolver;
 import info.adamjsmith.squarebomber.screens.LoadingScreen;
+import info.adamjsmith.squarebomber.screens.MultiplayerGame;
+import info.adamjsmith.squarebomber.screens.MultiplayerMenu;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
-import com.shephertz.app42.gaming.multiplayer.client.WarpClient;
+import com.nextpeer.libgdx.NextpeerPlugin;
+import com.nextpeer.libgdx.Tournaments;
+import com.nextpeer.libgdx.TournamentsCallback;
 
 
 public class SquareBomber extends Game implements ApplicationListener{
 	public Assets assets = new Assets();
 	public ActionResolver actionResolver;
-	public WarpClient warpClient;
+	public Tournaments tournaments;
 	
-	public SquareBomber(ActionResolver actionResolver) {
+	public SquareBomber(ActionResolver actionResolver, Tournaments tournaments) {
 		this.actionResolver = actionResolver;
+		if (tournaments != null && tournaments.isSupported()) {
+	        this.tournaments = tournaments;
+	        this.tournaments.setTournamentsCallback(mNextpeerTournamentsCallback);
+	    }
 	}
 	
 	@Override
 	public void create () {
-
+		if(this.tournaments != null) {
+			NextpeerPlugin.load(this.tournaments);
+		}
 		setScreen(new LoadingScreen(this));
 	}
 	
@@ -41,4 +51,17 @@ public class SquareBomber extends Game implements ApplicationListener{
 		super.pause();
 	}
 	
+	private TournamentsCallback mNextpeerTournamentsCallback = new TournamentsCallback() {
+		@Override
+		public void onTournamentStart(long tournamentRandomSeed) {
+			NextpeerPlugin.instance().lastKnownTournamentRandomSeed = tournamentRandomSeed;
+			setScreen(new MultiplayerGame(SquareBomber.this));
+		}
+
+		@Override
+		public void onTournamentEnd() {
+			NextpeerPlugin.instance().lastKnownTournamentRandomSeed = 0;
+			setScreen(new MultiplayerMenu(SquareBomber.this));
+		}
+	};
 }

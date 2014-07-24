@@ -20,8 +20,7 @@ public class AndroidLauncher extends AndroidApplication implements info.adamjsmi
 	protected static AdView adView;
 	private final static int SHOW_ADS = 1;
 	private final static int HIDE_ADS = 0;
-	public String apiKey = "@string/warp_api";
-	public String secretKey = "@string/warp_secret";
+	private AndroidTournaments mTournaments = null;
 	
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
@@ -37,7 +36,9 @@ public class AndroidLauncher extends AndroidApplication implements info.adamjsmi
 		config.useAccelerometer = false;
 		config.useCompass = false;
 		
-		game = new SquareBomber(this);
+		mTournaments = new AndroidTournaments(this);
+		
+		game = new SquareBomber(this, mTournaments);
 		
 		View gameView = initializeForView(game, config);
 		layout.addView(gameView);
