@@ -42,7 +42,7 @@ public class MultiplayerRenderer {
 	public void render() {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		camera.position.set(2.5f, 2.5f, 0);
+		camera.position.set(world.player.getX(), world.player.getY(), 0);
 		camera.update();
 		renderer.setView(camera);
 		renderer.render();	

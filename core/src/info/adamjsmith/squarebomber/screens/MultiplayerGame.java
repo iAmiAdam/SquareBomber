@@ -1,6 +1,7 @@
 package info.adamjsmith.squarebomber.screens;
 
 import info.adamjsmith.squarebomber.SquareBomber;
+import info.adamjsmith.squarebomber.input.MultiplayerInputProcessor;
 import info.adamjsmith.squarebomber.multiplayer.MultiplayerRenderer;
 import info.adamjsmith.squarebomber.multiplayer.MultiplayerUpdater;
 
@@ -35,7 +36,7 @@ public class MultiplayerGame implements Screen {
 
 	@Override
 	public void show() {
-		//Gdx.input.setInputProcessor(new GameInputProcessor(updater));
+		Gdx.input.setInputProcessor(new MultiplayerInputProcessor(updater));
 		
 	}
 
