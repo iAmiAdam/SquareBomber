@@ -10,9 +10,6 @@ package com.nextpeer.libgdx;
 
 import info.adamjsmith.squarebomber.multiplayer.MultiplayerUpdater;
 import info.adamjsmith.squarebomber.objects.Opponent;
-import info.adamjsmith.squarebomber.objects.Player;
-
-import com.badlogic.gdx.Gdx;
 
 /**
  * Nextpeer platform Callback class allow you to get notified of Nextpeer-related events.
@@ -50,10 +47,7 @@ public abstract class TournamentsCallback {
 	 * @param message The custom message {@link NextpeerTournamentCustomMessage}
 	 */
 	public void onReceiveTournamentCustomMessage(float x, float y, String playerId) {
-		Gdx.app.log("x", String.valueOf(x));
-		Gdx.app.log("y", String.valueOf(y));
-		world.opponents[0] = new Opponent(x, y);
-		world.opponents[0].playerId = playerId;
+		world.opponents[0] = new Opponent(x, y, playerId);
 	}
     
 	/**
@@ -62,8 +56,15 @@ public abstract class TournamentsCallback {
  	 * The container that is passed contains the sending user's name and image as well as the message being sent.
 	 * @param message The custom message {@link NextpeerTournamentCustomMessage}
 	 */
-	public void onReceiveUnreliableTournamentCustomMessage(NextpeerTournamentCustomMessage message) {
-		Gdx.app.log("Message", "Unreliable received");
+	public void onReceiveUnreliableTournamentCustomMessage(float x, float y, String playerId) {
+		for (Opponent o : world.opponents) {
+			if (o != null) {
+				if (o.playerId == playerId) {
+					o.x = x;
+					o.y = y;
+				}
+			}
+		}
 	}
     
 	/**

@@ -1,10 +1,8 @@
 package info.adamjsmith.squarebomber.android;
 
-import java.io.ByteArrayInputStream;
 import java.nio.ByteBuffer;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.nextpeer.android.Nextpeer;
 import com.nextpeer.android.NextpeerListener;
@@ -67,6 +65,20 @@ public final class AndroidTournaments extends Tournaments {
 			case 0:
 		    		callback.onReceiveTournamentCustomMessage(x, y, message.playerId);
 			}
+	    }
+	    
+	    public void onReceiveUnreliableTournamentCustomMessage(NextpeerTournamentCustomMessage message) {
+	    	ByteBuffer b1 = ByteBuffer.wrap(message.customMessage);
+	    	int type;
+	    	float x, y;
+	    	type = b1.getInt();
+	    	x = b1.getFloat();
+	    	y = b1.getFloat();
+	    	
+	    	switch(type) {
+	    	case 0:
+	    		callback.onReceiveUnreliableTournamentCustomMessage(x, y, message.playerId);
+	    	}
 	    }
 	};
 
