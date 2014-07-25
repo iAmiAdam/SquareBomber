@@ -1,12 +1,15 @@
 package info.adamjsmith.squarebomber.android;
 
+import java.io.ByteArrayInputStream;
+
 import android.content.Context;
+import android.util.Log;
 
 import com.nextpeer.android.Nextpeer;
 import com.nextpeer.android.NextpeerListener;
+import com.nextpeer.android.NextpeerTournamentCustomMessage;
 import com.nextpeer.android.NextpeerTournamentEndData;
 import com.nextpeer.android.NextpeerTournamentStartData;
-import com.nextpeer.libgdx.NextpeerTournamentCustomMessage;
 import com.nextpeer.libgdx.Tournaments;
 
 /**
@@ -48,7 +51,22 @@ public final class AndroidTournaments extends Tournaments {
 	    	if (callback != null) {
 	    		callback.onTournamentEnd();
 	    	}
-	    }	    
+	    }
+	    
+	    public void onReceiveTournamentCustomMessage(NextpeerTournamentCustomMessage message) {
+	    	Log.d("Received", "A message");
+			ByteArrayInputStream bArray = new ByteArrayInputStream(message.customMessage);
+			int type = (int) bArray.read(message.customMessage, 0, 4);
+			switch(type) {
+			case 0:
+				float x = bArray.read(message.customMessage, 4, 4);
+				float y = bArray.read(message.customMessage, 8, 4);
+				if (callback != null) {
+					Log.d("Sending to", "callback");
+		    		callback.onReceiveTournamentCustomMessage(x, y, message.playerId);
+		    	}
+			}
+	    }
 	};
 
 	/***
@@ -162,4 +180,5 @@ public final class AndroidTournaments extends Tournaments {
 	public void registerToSynchronizedEvent(String eventName, int timeoutInMilliseconds) {
 		Nextpeer.registerToSynchronizedEvent(eventName, timeoutInMilliseconds);
 	}
+	
 }

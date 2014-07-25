@@ -11,8 +11,6 @@ package com.nextpeer.libgdx;
 import info.adamjsmith.squarebomber.multiplayer.MultiplayerUpdater;
 import info.adamjsmith.squarebomber.objects.Player;
 
-import java.io.ByteArrayInputStream;
-
 import com.badlogic.gdx.Gdx;
 
 /**
@@ -50,17 +48,9 @@ public abstract class TournamentsCallback {
  	 * that are currently playing. The container that is passed contains the sending user's name and image as well as the message being sent.
 	 * @param message The custom message {@link NextpeerTournamentCustomMessage}
 	 */
-	public void onReceiveTournamentCustomMessage(NextpeerTournamentCustomMessage message) {
-		Gdx.app.log("Message", "received");
-		ByteArrayInputStream bArray = new ByteArrayInputStream(message.customMessage);
-		int type = (int) bArray.read(message.customMessage, 0, 4);
-		switch(type) {
-		case 0:
-			float x = bArray.read(message.customMessage, 4, 4);
-			float y = bArray.read(message.customMessage, 8, 4);
-			world.opponents[0] = new Player(world.world, x, y);
-			world.opponents[0].playerId = message.playerId;
-		}
+	public void onReceiveTournamentCustomMessage(float x, float y, String playerId) {
+		world.opponents[0] = new Player(world.world, x, y);
+		world.opponents[0].playerId = playerId;
 	}
     
 	/**

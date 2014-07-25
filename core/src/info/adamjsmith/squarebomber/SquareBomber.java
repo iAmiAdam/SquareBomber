@@ -60,7 +60,7 @@ public class SquareBomber extends Game implements ApplicationListener{
 			Gdx.app.postRunnable(new Runnable() {
 				@Override
 				public void run() {
-					SquareBomber.this.setScreen(new MultiplayerGame(SquareBomber.this, playerId));
+					setScreen(new MultiplayerGame(SquareBomber.this, playerId));
 				}
 			});
 		}
