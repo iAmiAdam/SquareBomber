@@ -80,6 +80,35 @@ public class AndroidLauncher extends AndroidApplication implements info.adamjsmi
 				break;
 			}
 		}
-	};	
+	};
 	
+	@Override
+	protected void onStart() {
+	    super.onStart();
+
+	    // Notify the beginning of a user session.
+    	if (mTournaments != null) {
+    		mTournaments.onStart();
+    	}
+	}
+	
+	@Override 
+	public void onStop() {
+	    super.onStop(); 
+
+	    // If there is an on-going tournament make sure to forfeit it 
+    	if (mTournaments != null && mTournaments.isCurrentlyInTournament()) {
+    		mTournaments.reportForfeitForCurrentTournament();
+    	}
+	}
+	
+	 @Override
+	    public void onBackPressed() {
+		    // If the game is in tournament mode -> forfeit the tournament.
+	    	if (mTournaments != null && mTournaments.isCurrentlyInTournament()) {
+	    		mTournaments.reportForfeitForCurrentTournament();
+	    	}
+
+			super.onBackPressed();
+	    }
 }

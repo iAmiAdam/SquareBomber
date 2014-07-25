@@ -8,22 +8,35 @@
 
 package com.nextpeer.libgdx;
 
-import com.nextpeer.libgdx.NextpeerTournamentCustomMessage;
+import info.adamjsmith.squarebomber.multiplayer.MultiplayerUpdater;
+import info.adamjsmith.squarebomber.objects.Player;
+
+import java.io.ByteArrayInputStream;
+
+import com.badlogic.gdx.Gdx;
 
 /**
  * Nextpeer platform Callback class allow you to get notified of Nextpeer-related events.
  */
 public abstract class TournamentsCallback {
-
+	
+	public MultiplayerUpdater world;
+	
+	public void setWorld(MultiplayerUpdater world) {
+		this.world = world;
+	}
+	
+	
 	/**
 	 * Called when the tournament is supposed to start.
 	 * Here is the place to the launch the game's activity.
+	 * @param playerId 
 	 * @param tournamentRandomSeed Used when the game 'generate' the level with its random function -> so all players will have the same world
 	 * @param opponents 
 	 * @param numberOfPlayers 
 	 * @param currentPlayer 
 	 */
-    public abstract void onTournamentStart(long TournamentRandomSeed);
+    public abstract void onTournamentStart(long TournamentRandomSeed, String playerId);
 
     /**
      * This method is invoked whenever the current tournament has finished 
@@ -38,7 +51,16 @@ public abstract class TournamentsCallback {
 	 * @param message The custom message {@link NextpeerTournamentCustomMessage}
 	 */
 	public void onReceiveTournamentCustomMessage(NextpeerTournamentCustomMessage message) {
-		
+		Gdx.app.log("Message", "received");
+		ByteArrayInputStream bArray = new ByteArrayInputStream(message.customMessage);
+		int type = (int) bArray.read(message.customMessage, 0, 4);
+		switch(type) {
+		case 0:
+			float x = bArray.read(message.customMessage, 4, 4);
+			float y = bArray.read(message.customMessage, 8, 4);
+			world.opponents[0] = new Player(world.world, x, y);
+			world.opponents[0].playerId = message.playerId;
+		}
 	}
     
 	/**
@@ -47,7 +69,9 @@ public abstract class TournamentsCallback {
  	 * The container that is passed contains the sending user's name and image as well as the message being sent.
 	 * @param message The custom message {@link NextpeerTournamentCustomMessage}
 	 */
-	public void onReceiveUnreliableTournamentCustomMessage(NextpeerTournamentCustomMessage message) {}
+	public void onReceiveUnreliableTournamentCustomMessage(NextpeerTournamentCustomMessage message) {
+		Gdx.app.log("Message", "Unreliable received");
+	}
     
 	/**
 	 * This method is invoked when a synchronized event has triggered by the platform.

@@ -8,6 +8,7 @@
 
 package com.nextpeer.libgdx;
 
+import com.badlogic.gdx.Gdx;
 import com.nextpeer.libgdx.Tournaments;
 
 /**
@@ -123,7 +124,6 @@ public final class NextpeerPlugin {
 
 	
 	public static final void pushDataToOtherPlayers(byte[] data) {
-
 		if (!isCurrentlyInTournament()) return;
 
 		Tournaments t = tournaments();
