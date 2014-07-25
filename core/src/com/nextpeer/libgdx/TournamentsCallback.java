@@ -57,12 +57,11 @@ public abstract class TournamentsCallback {
 	 * @param message The custom message {@link NextpeerTournamentCustomMessage}
 	 */
 	public void onReceiveUnreliableTournamentCustomMessage(float x, float y, String playerId) {
-		for (Opponent o : world.opponents) {
-			if (o != null) {
-				if (o.playerId == playerId) {
-					o.x = x;
-					o.y = y;
-				}
+		for(int i = 0; i < world.opponents.length; i++) {
+			if(world.opponents[i] != null) {
+				if (world.opponents[i].playerId == playerId)
+					world.opponents[i].x = x;
+					world.opponents[i].y = y;
 			}
 		}
 	}

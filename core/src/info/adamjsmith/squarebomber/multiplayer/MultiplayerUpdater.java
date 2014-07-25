@@ -23,17 +23,18 @@ public class MultiplayerUpdater {
 		world = new World(new Vector2(0, 0), false);
 		opponents = new Opponent[5];
 		
-		player = new Player(world, 2.5f, 2.5f);
+		player = new Player(world, 3.5f, 2.5f);
 		player.playerId = playerId;
 		
-		lastMessage = TimeUtils.millis();
+		lastMessage = TimeUtils.nanoTime();
 		
 		sendSpawn();
 	}
 	
 	public void update() {
 		
-		if (lastMessage - TimeUtils.millis() > 0.2) {
+		if ((TimeUtils.nanoTime() - lastMessage) / 1000000000.0 > 0.5f) {
+			lastMessage = TimeUtils.nanoTime();
 			sendUpdate();
 		}
 		player.update();
@@ -49,7 +50,7 @@ public class MultiplayerUpdater {
 	
 	public void sendUpdate() {
 		byte[] message;
-		message = ByteBuffer.allocate(12).putInt(0).putFloat(player.x).putFloat(player.y).array();
+		message = ByteBuffer.allocate(12).putInt(0).putFloat(player.getX()).putFloat(player.getY()).array();
 		
 		NextpeerPlugin.unreliablePushDataToOtherPlayers(message);
 	}
