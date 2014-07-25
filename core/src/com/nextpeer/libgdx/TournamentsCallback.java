@@ -9,6 +9,7 @@
 package com.nextpeer.libgdx;
 
 import info.adamjsmith.squarebomber.multiplayer.MultiplayerUpdater;
+import info.adamjsmith.squarebomber.objects.Opponent;
 import info.adamjsmith.squarebomber.objects.Player;
 
 import com.badlogic.gdx.Gdx;
@@ -49,7 +50,9 @@ public abstract class TournamentsCallback {
 	 * @param message The custom message {@link NextpeerTournamentCustomMessage}
 	 */
 	public void onReceiveTournamentCustomMessage(float x, float y, String playerId) {
-		world.opponents[0] = new Player(world.world, x, y);
+		Gdx.app.log("x", String.valueOf(x));
+		Gdx.app.log("y", String.valueOf(y));
+		world.opponents[0] = new Opponent(x, y);
 		world.opponents[0].playerId = playerId;
 	}
     

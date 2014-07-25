@@ -1,10 +1,12 @@
 package info.adamjsmith.squarebomber.multiplayer;
 
 import info.adamjsmith.squarebomber.SquareBomber;
+import info.adamjsmith.squarebomber.objects.Opponent;
 import info.adamjsmith.squarebomber.objects.Player;
 
 import java.nio.ByteBuffer;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.nextpeer.libgdx.NextpeerPlugin;
@@ -12,12 +14,12 @@ import com.nextpeer.libgdx.NextpeerPlugin;
 public class MultiplayerUpdater {
 	
 	public World world;
-	public Player[] opponents;
+	public Opponent[] opponents;
 	public Player player;
 	
 	public MultiplayerUpdater(SquareBomber game, String playerId) {
 		world = new World(new Vector2(0, 0), false);
-		opponents = new Player[5];
+		opponents = new Opponent[5];
 		
 		player = new Player(world, 2.5f, 2.5f);
 		player.playerId = playerId;
@@ -42,5 +44,9 @@ public class MultiplayerUpdater {
 		message = ByteBuffer.allocate(8).putFloat(player.x).putFloat(player.y).array();
 		
 		NextpeerPlugin.unreliablePushDataToOtherPlayers(message);
+	}
+	
+	public Opponent[] getOpponents() {
+		return opponents;
 	}
 }

@@ -124,10 +124,7 @@ public final class NextpeerPlugin {
 
 	
 	public static final void pushDataToOtherPlayers(byte[] data) {
-		if (!isCurrentlyInTournament()) {
-			Gdx.app.log("Pushing", "Not in tournament");
-			return;
-		}
+		if (!isCurrentlyInTournament()) return;
 
 		Tournaments t = tournaments();
 		if (t == null) return;

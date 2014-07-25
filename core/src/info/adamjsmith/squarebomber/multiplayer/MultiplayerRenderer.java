@@ -1,6 +1,7 @@
 package info.adamjsmith.squarebomber.multiplayer;
 
 import info.adamjsmith.squarebomber.SquareBomber;
+import info.adamjsmith.squarebomber.objects.Opponent;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -49,6 +50,7 @@ public class MultiplayerRenderer {
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		drawPlayer();
+		drawOpponents();
 		batch.setProjectionMatrix(uiMatrix);
 		batch.draw(game.assets.controller, 6f, 0f, 1f, 1f);
 		batch.end();
@@ -72,6 +74,16 @@ public class MultiplayerRenderer {
 					world.player.getWidth(), world.player.getHeight(),
 					1f, 1f, world.player.rotation);
 			break;
+		}
+	}
+	
+	private void drawOpponents() {
+		Opponent[] opponents = world.getOpponents();
+		
+		for (Opponent o: opponents) {
+			if (o != null) {
+				batch.draw(game.assets.playerStop, o.x, o.y, 0.75f, 0.75f);
+			}
 		}
 	}
 }
