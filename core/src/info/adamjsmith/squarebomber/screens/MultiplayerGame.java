@@ -4,20 +4,20 @@ import info.adamjsmith.squarebomber.SquareBomber;
 import info.adamjsmith.squarebomber.multiplayer.MultiplayerRenderer;
 import info.adamjsmith.squarebomber.multiplayer.MultiplayerUpdater;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.nextpeer.android.NextpeerTournamentStartData;
-import com.nextpeer.libgdx.GameTournamentsCallback;
+
 
 public class MultiplayerGame implements Screen {
 	SquareBomber game;
 	MultiplayerRenderer renderer;
 	MultiplayerUpdater updater;
 	
-	public MultiplayerGame(SquareBomber game, NextpeerTournamentStartData startData) {
+	public MultiplayerGame(SquareBomber game) {
 		this.game = game;
-		updater = new MultiplayerUpdater(game, startData);
+		Gdx.app.log("In The", "screen");
+		updater = new MultiplayerUpdater(game);
 		renderer = new MultiplayerRenderer(game, updater);
-		game.tournaments.setTournamentsCallback(new GameTournamentsCallback(game, updater));
 	}
 
 	@Override

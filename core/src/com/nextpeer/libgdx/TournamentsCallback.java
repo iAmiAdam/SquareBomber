@@ -8,8 +8,7 @@
 
 package com.nextpeer.libgdx;
 
-import com.nextpeer.android.NextpeerTournamentCustomMessage;
-import com.nextpeer.android.NextpeerTournamentStartData;
+import com.nextpeer.libgdx.NextpeerTournamentCustomMessage;
 
 /**
  * Nextpeer platform Callback class allow you to get notified of Nextpeer-related events.
@@ -24,7 +23,7 @@ public abstract class TournamentsCallback {
 	 * @param numberOfPlayers 
 	 * @param currentPlayer 
 	 */
-    public abstract void onTournamentStart(NextpeerTournamentStartData startData);
+    public abstract void onTournamentStart(long TournamentRandomSeed);
 
     /**
      * This method is invoked whenever the current tournament has finished 
@@ -38,7 +37,9 @@ public abstract class TournamentsCallback {
  	 * that are currently playing. The container that is passed contains the sending user's name and image as well as the message being sent.
 	 * @param message The custom message {@link NextpeerTournamentCustomMessage}
 	 */
-	public void onReceiveTournamentCustomMessage(NextpeerTournamentCustomMessage message) {}
+	public void onReceiveTournamentCustomMessage(NextpeerTournamentCustomMessage message) {
+		
+	}
     
 	/**
 	 * This method will be called when Nextpeer has received a buffer from another player.

@@ -121,6 +121,18 @@ public final class NextpeerPlugin {
 		t.unreliablePushDataToOtherPlayers(data);
 	}
 
+	
+	public static final void pushDataToOtherPlayers(byte[] data) {
+
+		if (!isCurrentlyInTournament()) return;
+
+		Tournaments t = tournaments();
+		if (t == null) return;
+
+		t.pushDataToOtherPlayers(data);
+	}
+	
+	
 	/**
 	 * Call this method when your game manages the current tournament and the player just died (a.k.a. 'Last Man Standing').
 	 * <p><strong>Note:</strong> The method will act only if the current tournament is from a 'GameControlled' tournament type.</p>
