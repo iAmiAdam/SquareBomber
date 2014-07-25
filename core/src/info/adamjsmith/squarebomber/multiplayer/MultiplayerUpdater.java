@@ -35,7 +35,7 @@ public class MultiplayerUpdater {
 		message = ByteBuffer.allocate(4).putInt(0).array();
 		message = ByteBuffer.allocate(4).putFloat(player.getX()).array();
 		message = ByteBuffer.allocate(4).putFloat(player.getY()).array();
-		//NextpeerPlugin.pushDataToOtherPlayers(message);
+		NextpeerPlugin.pushDataToOtherPlayers(message);
 	}
 	
 	public void sendUpdate() {

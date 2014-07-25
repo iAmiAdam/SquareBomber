@@ -9,7 +9,7 @@
 package com.nextpeer.libgdx;
 
 import com.badlogic.gdx.Gdx;
-import com.nextpeer.libgdx.Tournaments;
+
 
 /**
  * Cross platform wrapper for Nextpeer platform. In case the Tournament instance is not available for certain platform (Desktop) the execution will not fail.
@@ -124,7 +124,10 @@ public final class NextpeerPlugin {
 
 	
 	public static final void pushDataToOtherPlayers(byte[] data) {
-		if (!isCurrentlyInTournament()) return;
+		if (!isCurrentlyInTournament()) {
+			Gdx.app.log("Pushing", "Not in tournament");
+			return;
+		}
 
 		Tournaments t = tournaments();
 		if (t == null) return;
