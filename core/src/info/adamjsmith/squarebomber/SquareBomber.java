@@ -9,7 +9,6 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.nextpeer.libgdx.NextpeerPlugin;
-import com.nextpeer.libgdx.NextpeerTournamentCustomMessage;
 import com.nextpeer.libgdx.Tournaments;
 import com.nextpeer.libgdx.TournamentsCallback;
 
