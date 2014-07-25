@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.nextpeer.android.Nextpeer;
 import com.nextpeer.android.NextpeerListener;
+import com.nextpeer.android.NextpeerTournamentCustomMessage;
 import com.nextpeer.android.NextpeerTournamentEndData;
 import com.nextpeer.android.NextpeerTournamentStartData;
 import com.nextpeer.libgdx.Tournaments;
@@ -46,6 +47,12 @@ public final class AndroidTournaments extends Tournaments {
 	    public void onTournamentEnd(NextpeerTournamentEndData endData) {
 	    	if (callback != null) {
 	    		callback.onTournamentEnd();
+	    	}
+	    }
+	    
+	    public void onReceiveTournamentCustomMessage(NextpeerTournamentCustomMessage message) {
+	    	if (callback != null) {
+	    		callback.onReceiveTournamentCustomMessage(message);
 	    	}
 	    }
 	};

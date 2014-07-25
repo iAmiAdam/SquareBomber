@@ -8,9 +8,7 @@
 
 package com.nextpeer.libgdx;
 
-import java.util.List;
-
-import com.nextpeer.android.NextpeerTournamentPlayer;
+import com.nextpeer.android.NextpeerTournamentCustomMessage;
 import com.nextpeer.android.NextpeerTournamentStartData;
 
 /**
@@ -63,4 +61,5 @@ public abstract class TournamentsCallback {
      * @return true if you support this tournament, false otherwise (default true).
      */
     public boolean onSupportsTournament(String tournamentUuid) { return true; }
+
 }

@@ -1,13 +1,12 @@
 package info.adamjsmith.squarebomber.screens;
 
 import info.adamjsmith.squarebomber.SquareBomber;
-import info.adamjsmith.squarebomber.input.GameInputProcessor;
 import info.adamjsmith.squarebomber.multiplayer.MultiplayerRenderer;
 import info.adamjsmith.squarebomber.multiplayer.MultiplayerUpdater;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.nextpeer.android.NextpeerTournamentStartData;
+import com.nextpeer.libgdx.GameTournamentsCallback;
 
 public class MultiplayerGame implements Screen {
 	SquareBomber game;
@@ -18,6 +17,7 @@ public class MultiplayerGame implements Screen {
 		this.game = game;
 		updater = new MultiplayerUpdater(game, startData);
 		renderer = new MultiplayerRenderer(game, updater);
+		game.tournaments.setTournamentsCallback(new GameTournamentsCallback(game, updater));
 	}
 
 	@Override
