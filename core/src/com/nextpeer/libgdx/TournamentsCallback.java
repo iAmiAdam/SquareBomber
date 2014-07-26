@@ -61,7 +61,7 @@ public abstract class TournamentsCallback {
 	public void onReceiveUnreliableTournamentCustomMessage(float x, float y, String playerId) {
 		for(int i = 0; i < world.opponents.length; i++) {
 			if(world.opponents[i] != null) {
-				if (world.opponents[i].playerId == playerId) {
+				if (world.opponents[i].playerId.equals(playerId)) {
 					world.opponents[i].x = x;
 					world.opponents[i].y = y;
 				}
