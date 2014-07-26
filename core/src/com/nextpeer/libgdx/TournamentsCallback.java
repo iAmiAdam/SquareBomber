@@ -8,6 +8,8 @@
 
 package com.nextpeer.libgdx;
 
+import com.badlogic.gdx.Gdx;
+
 import info.adamjsmith.squarebomber.multiplayer.MultiplayerUpdater;
 import info.adamjsmith.squarebomber.objects.Opponent;
 
@@ -59,9 +61,10 @@ public abstract class TournamentsCallback {
 	public void onReceiveUnreliableTournamentCustomMessage(float x, float y, String playerId) {
 		for(int i = 0; i < world.opponents.length; i++) {
 			if(world.opponents[i] != null) {
-				if (world.opponents[i].playerId == playerId)
+				if (world.opponents[i].playerId == playerId) {
 					world.opponents[i].x = x;
 					world.opponents[i].y = y;
+				}
 			}
 		}
 	}

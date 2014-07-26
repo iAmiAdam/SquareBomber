@@ -33,7 +33,7 @@ public class MultiplayerUpdater {
 	
 	public void update() {
 		
-		if ((TimeUtils.nanoTime() - lastMessage) / 1000000000.0 > 0.5f) {
+		if ((TimeUtils.nanoTime() - lastMessage) / 1000000000.0 > 0.06f) {
 			lastMessage = TimeUtils.nanoTime();
 			sendUpdate();
 		}
@@ -42,16 +42,14 @@ public class MultiplayerUpdater {
 	}	
 	
 	public void sendSpawn() {
-		
 		byte[] message = new byte[12];
 		message = ByteBuffer.allocate(12).putInt(0).putFloat(player.getX()).putFloat(player.getY()).array();
 		NextpeerPlugin.pushDataToOtherPlayers(message);
 	}
 	
 	public void sendUpdate() {
-		byte[] message;
-		message = ByteBuffer.allocate(12).putInt(0).putFloat(player.getX()).putFloat(player.getY()).array();
-		
+		byte[] message = new byte[12];
+		message = ByteBuffer.allocate(12).putInt(1).putFloat(player.getX()).putFloat(player.getY()).array();
 		NextpeerPlugin.unreliablePushDataToOtherPlayers(message);
 	}
 	

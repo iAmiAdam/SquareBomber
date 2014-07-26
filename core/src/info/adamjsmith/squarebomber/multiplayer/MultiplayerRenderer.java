@@ -82,7 +82,7 @@ public class MultiplayerRenderer {
 		
 		for (Opponent o: opponents) {
 			if (o != null) {
-				batch.draw(game.assets.playerStop, o.x - (o.getWidth() / 2), o.y - (o.getHeight() / 2), 0.75f, 0.75f);
+				batch.draw(game.assets.playerStop, o.getX() - (o.getWidth() / 2), o.getY() - (o.getHeight() / 2), 0.75f, 0.75f);
 			}
 		}
 	}

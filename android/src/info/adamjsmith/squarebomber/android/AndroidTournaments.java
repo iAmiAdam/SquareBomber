@@ -53,7 +53,6 @@ public final class AndroidTournaments extends Tournaments {
 	    }
 	    
 	    public void onReceiveTournamentCustomMessage(NextpeerTournamentCustomMessage message) {
-	    	
 	    	ByteBuffer b1 = ByteBuffer.wrap(message.customMessage);
 	    	int type;
 	    	float x, y;
@@ -61,9 +60,10 @@ public final class AndroidTournaments extends Tournaments {
 	    	x = b1.getFloat();
 	    	y = b1.getFloat();
 	    	
-			switch((int)type) {
+			switch(type) {
 			case 0:
-		    		callback.onReceiveTournamentCustomMessage(x, y, message.playerId);
+		    	callback.onReceiveTournamentCustomMessage(x, y, message.playerId);
+		    	break;
 			}
 	    }
 	    
@@ -74,10 +74,10 @@ public final class AndroidTournaments extends Tournaments {
 	    	type = b1.getInt();
 	    	x = b1.getFloat();
 	    	y = b1.getFloat();
-	    	
 	    	switch(type) {
 	    	case 0:
 	    		callback.onReceiveUnreliableTournamentCustomMessage(x, y, message.playerId);
+	    		break;
 	    	}
 	    }
 	};
