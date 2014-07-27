@@ -156,4 +156,8 @@ public class MultiplayerUpdater {
 	public Array<Crate> getCrates() {
 		return crates;
 	}
+	
+	public Array<Bomb> getBombs() {
+		return bombs;
+	}
 }

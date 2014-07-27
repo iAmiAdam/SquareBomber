@@ -1,6 +1,7 @@
 package info.adamjsmith.squarebomber.multiplayer;
 
 import info.adamjsmith.squarebomber.SquareBomber;
+import info.adamjsmith.squarebomber.objects.Bomb;
 import info.adamjsmith.squarebomber.objects.Crate;
 import info.adamjsmith.squarebomber.objects.Opponent;
 
@@ -95,6 +96,14 @@ public class MultiplayerRenderer {
 		
 		for (Crate c: crates) {
 			batch.draw(game.assets.crate, c.getX(), c.getY(), 0.99f, 0.99f);
+		}
+	}
+	
+	private void drawBombs() {
+		Array<Bomb> bombs = world.getBombs();
+		
+		for (Bomb b: bombs) {
+			batch.draw(game.assets.bomb, b.getX(), b.getY(), 1f, 1f);
 		}
 	}
 }
