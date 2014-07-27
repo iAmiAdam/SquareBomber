@@ -9,6 +9,7 @@ import info.adamjsmith.squarebomber.objects.ExplosionPart;
 import info.adamjsmith.squarebomber.objects.GameObject;
 import info.adamjsmith.squarebomber.objects.Opponent;
 import info.adamjsmith.squarebomber.objects.Player;
+import info.adamjsmith.squarebomber.objects.PowerUp;
 
 import java.nio.ByteBuffer;
 import java.util.Iterator;
@@ -39,6 +40,7 @@ public class MultiplayerUpdater {
 	public Array<Bomb> bombs = new Array<Bomb>();
 	public Array<Crate> crates = new Array<Crate>();
 	public Array<Explosion> explosions = new Array<Explosion>();
+	public Array<PowerUp> powerUps = new Array<PowerUp>();
 	
 	private float lastMessage;
 	private static float ppt;
@@ -75,8 +77,10 @@ public class MultiplayerUpdater {
 			sendUpdate();
 		}
 		player.update();
+		updateCrates();
 		updateBombs();
 		updateExplosions();
+		sweepDeadBodies();
 		world.step(1/45f, 4, 6);
 	}	
 	
@@ -182,6 +186,24 @@ public class MultiplayerUpdater {
 				explosion = null;
 			}
 		}
+	}
+	
+	private void updateCrates() {
+		Iterator<Crate> iter = crates.iterator();
+		while(iter.hasNext()) {
+			Crate crate = iter.next();
+			if(crate.exists == false) {
+				if(crate.explode()) {
+					placePowerUp(crate.x, crate.y);
+				}
+				iter.remove();
+			}
+		}
+	}
+	
+	private void placePowerUp(float x, float y) {
+		PowerUp powerUp = new PowerUp(x, y);
+		powerUps.add(powerUp);
 	}
 	
 	public Opponent[] getOpponents() {
