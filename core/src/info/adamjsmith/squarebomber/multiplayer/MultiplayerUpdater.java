@@ -237,6 +237,10 @@ public class MultiplayerUpdater {
 		return explosions;
 	}
 	
+	public Array<PowerUp> getPowerUps() {
+		return powerUps;
+	}
+	
 	private void ExplosionBuilder(Explosion explosion) {
 		boolean up = false;
 		boolean down = false;

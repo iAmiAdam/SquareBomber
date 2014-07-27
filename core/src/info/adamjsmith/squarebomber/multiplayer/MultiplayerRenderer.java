@@ -8,6 +8,7 @@ import info.adamjsmith.squarebomber.objects.Crate;
 import info.adamjsmith.squarebomber.objects.Explosion;
 import info.adamjsmith.squarebomber.objects.ExplosionPart;
 import info.adamjsmith.squarebomber.objects.Opponent;
+import info.adamjsmith.squarebomber.objects.PowerUp;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -59,6 +60,7 @@ public class MultiplayerRenderer {
 		drawPlayer();
 		drawOpponents();
 		drawCrates();
+		drawPowerUps();
 		drawBombs();
 		drawExplosions();
 		batch.setProjectionMatrix(uiMatrix);
@@ -110,6 +112,22 @@ public class MultiplayerRenderer {
 		
 		for (Bomb b: bombs) {
 			batch.draw(game.assets.bomb, b.getX(), b.getY(), 1f, 1f);
+		}
+	}
+	
+	public void drawPowerUps() {
+		Array<PowerUp> powerUps = world.getPowerUps();
+		for(PowerUp powerUp: powerUps) {
+			switch (powerUp.type) {
+			case 1:
+				batch.draw(game.assets.bombUp, powerUp.getX(), powerUp.getY(), 1f, 1f);
+				break;
+			case 2:
+				batch.draw(game.assets.powerUp, powerUp.getX(), powerUp.getY(), 1f, 1f);
+				break;
+			case 3:
+				batch.draw(game.assets.speedUp, powerUp.getX(), powerUp.getY(), 1f, 1f);
+			}
 		}
 	}
 	
