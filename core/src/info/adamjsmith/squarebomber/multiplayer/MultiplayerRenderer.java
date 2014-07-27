@@ -1,6 +1,7 @@
 package info.adamjsmith.squarebomber.multiplayer;
 
 import info.adamjsmith.squarebomber.SquareBomber;
+import info.adamjsmith.squarebomber.objects.Crate;
 import info.adamjsmith.squarebomber.objects.Opponent;
 
 import com.badlogic.gdx.Gdx;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.utils.Array;
 
 public class MultiplayerRenderer {
 	
@@ -51,6 +53,7 @@ public class MultiplayerRenderer {
 		batch.begin();
 		drawPlayer();
 		drawOpponents();
+		drawCrates();
 		batch.setProjectionMatrix(uiMatrix);
 		batch.draw(game.assets.controller, 6f, 0f, 1f, 1f);
 		batch.end();
@@ -84,6 +87,14 @@ public class MultiplayerRenderer {
 			if (o != null) {
 				batch.draw(game.assets.playerStop, o.getX() - (o.getWidth() / 2), o.getY() - (o.getHeight() / 2), 0.75f, 0.75f);
 			}
+		}
+	}
+	
+	private void drawCrates() {
+		Array<Crate> crates = world.getCrates();
+		
+		for (Crate c: crates) {
+			batch.draw(game.assets.crate, c.getX(), c.getY(), 0.99f, 0.99f);
 		}
 	}
 }

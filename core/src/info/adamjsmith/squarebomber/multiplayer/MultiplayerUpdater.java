@@ -132,4 +132,8 @@ public class MultiplayerUpdater {
 	public Opponent[] getOpponents() {
 		return opponents;
 	}
+	
+	public Array<Crate> getCrates() {
+		return crates;
+	}
 }
