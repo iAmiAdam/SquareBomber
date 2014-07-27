@@ -12,7 +12,6 @@ import info.adamjsmith.squarebomber.objects.Player;
 import java.nio.ByteBuffer;
 import java.util.Iterator;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -34,10 +33,10 @@ public class MultiplayerUpdater {
 	
 	public World world;
 	public Opponent[] opponents;
-	public Array<Bomb> bombs;
 	public Player player;
-	public Array<Crate> crates = new Array<Crate>();
 	public Array<Block> blocks = new Array<Block>();
+	public Array<Bomb> bombs = new Array<Bomb>();
+	public Array<Crate> crates = new Array<Crate>();
 	public Array<Explosion> explosions = new Array<Explosion>();
 	
 	private float lastMessage;
@@ -75,6 +74,7 @@ public class MultiplayerUpdater {
 			sendUpdate();
 		}
 		player.update();
+		updateBombs();
 		world.step(1/45f, 4, 6);
 	}	
 	
@@ -154,7 +154,7 @@ public class MultiplayerUpdater {
 		}
 	}
 	
-	public void updateBombs() {
+	private void updateBombs() {
 		Iterator<Bomb> iter = bombs.iterator();
 		while(iter.hasNext()) {
 			Bomb bomb =  iter.next();
@@ -182,6 +182,10 @@ public class MultiplayerUpdater {
 		return bombs;
 	}
 	
+	public Array<Explosion> getExplosions() {
+		return explosions;
+	}
+	
 	private void ExplosionBuilder(Explosion explosion) {
 		boolean up = false;
 		boolean down = false;
@@ -196,7 +200,6 @@ public class MultiplayerUpdater {
 			while(blocksIter.hasNext()) {
 				Block block = blocksIter.next();
 				if (up == false) {
-					Gdx.app.log("blockx", String.valueOf(block.x));
 					if(block.x == explosion.x && block.y == explosion.y + i) {
 						up = true;
 					}

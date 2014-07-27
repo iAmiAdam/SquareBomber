@@ -1,8 +1,12 @@
 package info.adamjsmith.squarebomber.multiplayer;
 
+import java.util.Iterator;
+
 import info.adamjsmith.squarebomber.SquareBomber;
 import info.adamjsmith.squarebomber.objects.Bomb;
 import info.adamjsmith.squarebomber.objects.Crate;
+import info.adamjsmith.squarebomber.objects.Explosion;
+import info.adamjsmith.squarebomber.objects.ExplosionPart;
 import info.adamjsmith.squarebomber.objects.Opponent;
 
 import com.badlogic.gdx.Gdx;
@@ -55,6 +59,8 @@ public class MultiplayerRenderer {
 		drawPlayer();
 		drawOpponents();
 		drawCrates();
+		drawBombs();
+		drawExplosions();
 		batch.setProjectionMatrix(uiMatrix);
 		batch.draw(game.assets.controller, 6f, 0f, 1f, 1f);
 		batch.end();
@@ -104,6 +110,36 @@ public class MultiplayerRenderer {
 		
 		for (Bomb b: bombs) {
 			batch.draw(game.assets.bomb, b.getX(), b.getY(), 1f, 1f);
+		}
+	}
+	
+	private void drawExplosions() {
+		Array<Explosion> explosions = world.getExplosions();
+		for (Explosion explosion: explosions) {
+			Iterator<ExplosionPart> partsIter = explosion.parts.iterator();
+			while(partsIter.hasNext()) {
+				ExplosionPart part = partsIter.next();
+				switch(part.type) {
+				case 0:
+					batch.draw(game.assets.exStart, part.position.x, part.position.y, 1f, 1f);
+					break;
+				case 1:
+					if(part.direction == 1) {
+						batch.draw(game.assets.exMidUp, part.position.x, part.position.y, 1f, 1f, 0, 0, 128, 128, part.flip, part.flip);
+					} else {
+						batch.draw(game.assets.exMid, part.position.x, part.position.y, 1f, 1f, 0, 0, 128, 128, part.flip, part.flip);
+					}
+					break;
+				case 2:
+					if(part.direction == 1) {
+						batch.draw(game.assets.exEndUp, part.position.x, part.position.y, 1f, 1f, 0, 0, 128, 128, part.flip, part.flip);
+					} else {
+						batch.draw(game.assets.exEnd, part.position.x, part.position.y, 1f, 1f, 0, 0, 128, 128, part.flip, part.flip);
+					}
+					break;
+				}
+			}
+			
 		}
 	}
 }
