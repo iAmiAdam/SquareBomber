@@ -37,6 +37,15 @@ public class MultiplayerUpdater {
 	private static float ppt;
 	private static Rectangle rectangle;
 	
+	private Vector2[] spawns = {
+			new Vector2(2.5f, 2.5f),
+			new Vector2(15.5f, 12.5f),
+			new Vector2(2.5f, 15.5f),
+			new Vector2(15.5f, 15.5f),
+			new Vector2(4.5f, 9.5f),
+			new Vector2(13.5f, 10.5f)
+	};
+	
 	
 	public MultiplayerUpdater(SquareBomber game, String playerId) {
 		this.game = game;
@@ -103,7 +112,7 @@ public class MultiplayerUpdater {
 		
 	}
 	
-	public static PolygonShape getRectangle(RectangleMapObject rectangleObject) {
+	private static PolygonShape getRectangle(RectangleMapObject rectangleObject) {
 		rectangle = rectangleObject.getRectangle();
 		PolygonShape polygon = new PolygonShape();
 		Vector2 size = new Vector2(((rectangle.x + rectangle.width) * 0.5f) / ppt, ((rectangle.y + rectangle.height) * 0.5f) / ppt);
@@ -111,7 +120,7 @@ public class MultiplayerUpdater {
 		return polygon;
 	}
 	
-	public void sendSpawn() {
+	private void sendSpawn() {
 		byte[] message = new byte[12];
 		message = ByteBuffer.allocate(12).putInt(0).putFloat(player.getX()).putFloat(player.getY()).array();
 		NextpeerPlugin.pushDataToOtherPlayers(message);
