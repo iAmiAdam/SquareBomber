@@ -6,6 +6,7 @@ import info.adamjsmith.squarebomber.objects.Bomb;
 import info.adamjsmith.squarebomber.objects.Crate;
 import info.adamjsmith.squarebomber.objects.Explosion;
 import info.adamjsmith.squarebomber.objects.ExplosionPart;
+import info.adamjsmith.squarebomber.objects.GameObject;
 import info.adamjsmith.squarebomber.objects.Opponent;
 import info.adamjsmith.squarebomber.objects.Player;
 
@@ -75,6 +76,7 @@ public class MultiplayerUpdater {
 		}
 		player.update();
 		updateBombs();
+		updateExplosions();
 		world.step(1/45f, 4, 6);
 	}	
 	
@@ -166,6 +168,18 @@ public class MultiplayerUpdater {
 				explosions.add(ex);
 				ExplosionBuilder(ex);
 				bomb = null;
+			}
+		}
+	}
+	
+	private void updateExplosions() {
+		Iterator<Explosion> iter = explosions.iterator();
+		while(iter.hasNext()) {
+			Explosion explosion = iter.next();
+			explosion.update();
+			if(explosion.over == true) {
+				iter.remove();
+				explosion = null;
 			}
 		}
 	}
@@ -279,6 +293,24 @@ public class MultiplayerUpdater {
 					explosion.parts.add(new ExplosionPart(explosion.x + i, explosion.y, 2, 0, true));
 				} else {
 					explosion.parts.add(new ExplosionPart(explosion.x + i, explosion.y, 1, 0, true));
+				}
+			}
+		}
+	}
+	
+	public void sweepDeadBodies() {
+		Array<Body> bodies = new Array<Body>();
+		world.getBodies(bodies);
+		Iterator<Body> iter = bodies.iterator(); 
+		while(iter.hasNext()) {
+			Body body = iter.next();
+			if(body != null) {
+				GameObject data = (GameObject) body.getUserData();
+				if(!data.exists) {
+					world.destroyBody(body);
+					body.setUserData(null);
+					body = null;
+					data = null;
 				}
 			}
 		}
