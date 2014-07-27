@@ -53,6 +53,12 @@ public class MultiplayerUpdater {
 		NextpeerPlugin.unreliablePushDataToOtherPlayers(message);
 	}
 	
+	public void sendBomb() {
+		byte[] message = new byte[12];
+		message = ByteBuffer.allocate(12).putInt(1).putFloat(player.getX()).putFloat(player.getY()).array();
+		NextpeerPlugin.pushDataToOtherPlayers(message);
+	}
+	
 	public Opponent[] getOpponents() {
 		return opponents;
 	}
