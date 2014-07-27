@@ -13,6 +13,7 @@ import info.adamjsmith.squarebomber.objects.PowerUp;
 
 import java.nio.ByteBuffer;
 import java.util.Iterator;
+import java.util.Random;
 
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
@@ -32,6 +33,9 @@ import com.nextpeer.libgdx.NextpeerPlugin;
 public class MultiplayerUpdater {
 	
 	private SquareBomber game;
+	private long seed;
+	
+	public String playerId;
 	
 	public World world;
 	public Opponent[] opponents;
@@ -46,7 +50,7 @@ public class MultiplayerUpdater {
 	private static float ppt;
 	private static Rectangle rectangle;
 	
-	private Vector2[] spawns = {
+	public Vector2[] spawns = {
 			new Vector2(2.5f, 2.5f),
 			new Vector2(15.5f, 12.5f),
 			new Vector2(2.5f, 15.5f),
@@ -56,18 +60,25 @@ public class MultiplayerUpdater {
 	};
 	
 	
-	public MultiplayerUpdater(SquareBomber game, String playerId) {
+	public MultiplayerUpdater(SquareBomber game, String playerId, long seed) {
 		this.game = game;
+		this.seed = seed;
+		this.playerId = playerId;
+		
 		createWorld();
 		opponents = new Opponent[5];
 		
-		
-		player = new Player(world, 3.5f, 2.5f);
-		player.playerId = playerId;
-		
 		lastMessage = TimeUtils.nanoTime();
-		
+		spawn();
+	}
+	
+	public void setUp() {
+		NextpeerPlugin.registerToSynchronizedEvent("spawn", 15000);
+	}
+	
+	private void spawn() {
 		sendSpawn();
+		//player.playerId = playerId;
 	}
 	
 	public void update() {
@@ -135,6 +146,16 @@ public class MultiplayerUpdater {
 	}
 	
 	private void sendSpawn() {
+		
+		//for (int i = 0; i < spawns.length; i++) {
+			//if (opponents[i] == null) {
+				//player = new Player(world, spawns[i].x, spawns[i].y);
+				//break;
+			//}
+		//}
+		
+		player = new Player(world, 2.5f, 2.5f);
+		
 		byte[] message = new byte[12];
 		message = ByteBuffer.allocate(12).putInt(0).putFloat(player.getX()).putFloat(player.getY()).array();
 		NextpeerPlugin.pushDataToOtherPlayers(message);

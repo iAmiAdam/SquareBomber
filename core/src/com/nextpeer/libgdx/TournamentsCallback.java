@@ -13,6 +13,7 @@ import com.badlogic.gdx.Gdx;
 import info.adamjsmith.squarebomber.multiplayer.MultiplayerUpdater;
 import info.adamjsmith.squarebomber.objects.Bomb;
 import info.adamjsmith.squarebomber.objects.Opponent;
+import info.adamjsmith.squarebomber.objects.Player;
 
 /**
  * Nextpeer platform Callback class allow you to get notified of Nextpeer-related events.
@@ -63,6 +64,7 @@ public abstract class TournamentsCallback {
 		for(int i = 0; i < world.opponents.length; i++) {
 			if(world.opponents[i] != null) {
 				if (world.opponents[i].playerId.equals(playerId)) {
+					Gdx.app.log("Message", "Received");
 					world.opponents[i].x = x;
 					world.opponents[i].y = y;
 				}
@@ -87,5 +89,15 @@ public abstract class TournamentsCallback {
      * @return true if you support this tournament, false otherwise (default true).
      */
     public boolean onSupportsTournament(String tournamentUuid) { return true; }
+    
+    public void onSpawn(String[] playerIds) {
+    	for (int i = 0; i < playerIds.length; i++) {
+    		if(playerIds[i].equals(world.playerId)) {
+    			world.player = new Player(world.world, world.spawns[i].x, world.spawns[i].y);
+    		} else {
+    			world.opponents[i] = new Opponent(world.spawns[i].x, world.spawns[i].y, playerIds[i]);
+    		}
+    	}
+    }
 
 }

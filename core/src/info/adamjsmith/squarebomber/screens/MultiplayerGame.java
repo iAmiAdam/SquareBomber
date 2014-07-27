@@ -14,10 +14,10 @@ public class MultiplayerGame implements Screen {
 	MultiplayerRenderer renderer;
 	MultiplayerUpdater updater;
 	
-	public MultiplayerGame(SquareBomber game, String playerId) {
+	public MultiplayerGame(SquareBomber game, String playerId, long seed) {
 		this.game = game;
 		Gdx.app.log("In The", "screen");
-		updater = new MultiplayerUpdater(game, playerId);
+		updater = new MultiplayerUpdater(game, playerId, seed);
 		renderer = new MultiplayerRenderer(game, updater);
 		game.mNextpeerTournamentsCallback.setWorld(updater);
 	}

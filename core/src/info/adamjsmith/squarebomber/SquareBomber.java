@@ -54,12 +54,12 @@ public class SquareBomber extends Game implements ApplicationListener{
 	
 	public TournamentsCallback mNextpeerTournamentsCallback = new TournamentsCallback() {
 		@Override
-		public void onTournamentStart(long tournamentRandomSeed, final String playerId) {
+		public void onTournamentStart(final long tournamentRandomSeed, final String playerId) {
 			NextpeerPlugin.instance().lastKnownTournamentRandomSeed = tournamentRandomSeed;
 			Gdx.app.postRunnable(new Runnable() {
 				@Override
 				public void run() {
-					setScreen(new MultiplayerGame(SquareBomber.this, playerId));
+					setScreen(new MultiplayerGame(SquareBomber.this, playerId, tournamentRandomSeed));
 				}
 			});
 		}

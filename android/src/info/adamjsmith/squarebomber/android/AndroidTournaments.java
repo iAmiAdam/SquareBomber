@@ -6,9 +6,11 @@ import android.content.Context;
 
 import com.nextpeer.android.Nextpeer;
 import com.nextpeer.android.NextpeerListener;
+import com.nextpeer.android.NextpeerSynchronizedEventFire;
 import com.nextpeer.android.NextpeerTournamentCustomMessage;
 import com.nextpeer.android.NextpeerTournamentEndData;
 import com.nextpeer.android.NextpeerTournamentStartData;
+import com.nextpeer.android.NextpeerTournamentStatusInfo;
 import com.nextpeer.libgdx.Tournaments;
 
 /**
@@ -29,6 +31,8 @@ public final class AndroidTournaments extends Tournaments {
 	 */	
 	private NextpeerListener _listener = new NextpeerListener() {
 		
+		
+		boolean spawned = false;
 		/**
 		 * This method will be called when a tournament is about to start
 		 * @param startData  The tournament start container will give you some details on the tournament which is about to be played.
@@ -67,6 +71,7 @@ public final class AndroidTournaments extends Tournaments {
 			case 1:
 				int power = b1.getInt();
 				callback.onReceiveTournamentCustomMessage(x, y, power);
+				break;
 			}
 	    }
 	    
@@ -81,6 +86,24 @@ public final class AndroidTournaments extends Tournaments {
 	    	case 0:
 	    		callback.onReceiveUnreliableTournamentCustomMessage(x, y, message.playerId);
 	    		break;
+	    	}
+	    }
+	    
+	    public void onReceiveTournamentStatus(NextpeerTournamentStatusInfo tournamentStatus) {
+	    	if(spawned == false) {
+	    		spawned = true;
+	    		String[] playerIds = new String[tournamentStatus.sortedResults.size()];
+	    		for (int i = 0; i < tournamentStatus.sortedResults.size(); i++) {
+	    			String playerId = tournamentStatus.sortedResults.get(i).player.playerId;
+	    			playerIds[i] = playerId;
+	    		}
+	    		callback.onSpawn(playerIds);
+	    	}
+	    }
+	    
+	    public void onReceiveSynchronizedEvent(String name, NextpeerSynchronizedEventFire fireReason) {
+	    	if (name.equals("spawn")) {
+	    		
 	    	}
 	    }
 	};
