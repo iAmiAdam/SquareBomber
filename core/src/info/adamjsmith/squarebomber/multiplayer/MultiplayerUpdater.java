@@ -2,6 +2,7 @@ package info.adamjsmith.squarebomber.multiplayer;
 
 import info.adamjsmith.squarebomber.SquareBomber;
 import info.adamjsmith.squarebomber.objects.Block;
+import info.adamjsmith.squarebomber.objects.Bomb;
 import info.adamjsmith.squarebomber.objects.Crate;
 import info.adamjsmith.squarebomber.objects.Opponent;
 import info.adamjsmith.squarebomber.objects.Player;
@@ -29,6 +30,7 @@ public class MultiplayerUpdater {
 	
 	public World world;
 	public Opponent[] opponents;
+	public Array<Bomb> bombs;
 	public Player player;
 	public Array<Crate> crates = new Array<Crate>();
 	public Array<Block> blocks = new Array<Block>();
@@ -51,6 +53,7 @@ public class MultiplayerUpdater {
 		this.game = game;
 		createWorld();
 		opponents = new Opponent[5];
+		
 		
 		player = new Player(world, 3.5f, 2.5f);
 		player.playerId = playerId;
@@ -133,9 +136,17 @@ public class MultiplayerUpdater {
 	}
 	
 	public void sendBomb() {
-		byte[] message = new byte[12];
-		message = ByteBuffer.allocate(12).putInt(1).putFloat(player.getX()).putFloat(player.getY()).array();
+		byte[] message = new byte[16];
+		message = ByteBuffer.allocate(16).putInt(1).putFloat((int)player.getX()).putFloat((int)player.getY()).putInt(player.power).array();
 		NextpeerPlugin.pushDataToOtherPlayers(message);
+	}
+	
+	public void placeBomb() {
+		if(player.bombs > 0) {
+			bombs.add(new Bomb((int)player.getX(), (int)player.getY(), player.power));
+			sendBomb();
+			player.bombs--;
+		}
 	}
 	
 	public Opponent[] getOpponents() {
