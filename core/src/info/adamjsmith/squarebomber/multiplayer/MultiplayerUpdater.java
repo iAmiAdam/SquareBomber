@@ -129,13 +129,13 @@ public class MultiplayerUpdater {
 		NextpeerPlugin.pushDataToOtherPlayers(message);
 	}
 	
-	public void sendUpdate() {
+	private void sendUpdate() {
 		byte[] message = new byte[12];
 		message = ByteBuffer.allocate(12).putInt(1).putFloat(player.getX()).putFloat(player.getY()).array();
 		NextpeerPlugin.unreliablePushDataToOtherPlayers(message);
 	}
 	
-	public void sendBomb() {
+	private void sendBomb() {
 		byte[] message = new byte[16];
 		message = ByteBuffer.allocate(16).putInt(1).putFloat((int)player.getX()).putFloat((int)player.getY()).putInt(player.power).array();
 		NextpeerPlugin.pushDataToOtherPlayers(message);

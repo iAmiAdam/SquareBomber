@@ -11,6 +11,7 @@ package com.nextpeer.libgdx;
 import com.badlogic.gdx.Gdx;
 
 import info.adamjsmith.squarebomber.multiplayer.MultiplayerUpdater;
+import info.adamjsmith.squarebomber.objects.Bomb;
 import info.adamjsmith.squarebomber.objects.Opponent;
 
 /**
@@ -67,6 +68,10 @@ public abstract class TournamentsCallback {
 				}
 			}
 		}
+	}
+	
+	public void onReceiveTournamentCustomMessage(float x, float y, int power) {
+		world.bombs.add(new Bomb((int)x, (int)y, power));
 	}
     
 	/**

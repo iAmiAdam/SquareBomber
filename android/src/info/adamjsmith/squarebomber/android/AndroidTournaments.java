@@ -64,6 +64,9 @@ public final class AndroidTournaments extends Tournaments {
 			case 0:
 		    	callback.onReceiveTournamentCustomMessage(x, y, message.playerId);
 		    	break;
+			case 1:
+				int power = b1.getInt();
+				callback.onReceiveTournamentCustomMessage(x, y, power);
 			}
 	    }
 	    

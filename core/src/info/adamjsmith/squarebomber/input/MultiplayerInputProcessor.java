@@ -39,7 +39,7 @@ public class MultiplayerInputProcessor implements InputProcessor {
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		if(screenX < x && screenY < y) {
-			
+			world.placeBomb();
 		}
 		return false;
 	}
