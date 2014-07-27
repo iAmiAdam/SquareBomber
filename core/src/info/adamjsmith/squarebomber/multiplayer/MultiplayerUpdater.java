@@ -4,11 +4,15 @@ import info.adamjsmith.squarebomber.SquareBomber;
 import info.adamjsmith.squarebomber.objects.Block;
 import info.adamjsmith.squarebomber.objects.Bomb;
 import info.adamjsmith.squarebomber.objects.Crate;
+import info.adamjsmith.squarebomber.objects.Explosion;
+import info.adamjsmith.squarebomber.objects.ExplosionPart;
 import info.adamjsmith.squarebomber.objects.Opponent;
 import info.adamjsmith.squarebomber.objects.Player;
 
 import java.nio.ByteBuffer;
+import java.util.Iterator;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -34,6 +38,7 @@ public class MultiplayerUpdater {
 	public Player player;
 	public Array<Crate> crates = new Array<Crate>();
 	public Array<Block> blocks = new Array<Block>();
+	public Array<Explosion> explosions = new Array<Explosion>();
 	
 	private float lastMessage;
 	private static float ppt;
@@ -149,6 +154,22 @@ public class MultiplayerUpdater {
 		}
 	}
 	
+	public void updateBombs() {
+		Iterator<Bomb> iter = bombs.iterator();
+		while(iter.hasNext()) {
+			Bomb bomb =  iter.next();
+			bomb.update();
+			if(bomb.exploded) {
+				iter.remove();
+				player.bombs++;
+				Explosion ex = new Explosion(bomb.getX(), bomb.getY(), bomb.power);
+				explosions.add(ex);
+				ExplosionBuilder(ex);
+				bomb = null;
+			}
+		}
+	}
+	
 	public Opponent[] getOpponents() {
 		return opponents;
 	}
@@ -159,5 +180,104 @@ public class MultiplayerUpdater {
 	
 	public Array<Bomb> getBombs() {
 		return bombs;
+	}
+	
+	private void ExplosionBuilder(Explosion explosion) {
+		boolean up = false;
+		boolean down = false;
+		boolean left = false;
+		boolean right = false;
+		
+		
+		explosion.parts.add(new ExplosionPart(explosion.x, explosion.y, 0, 0, false));
+		
+		for (int i = 1; i <= explosion.reach; i++){
+			Iterator<Block> blocksIter = blocks.iterator();
+			while(blocksIter.hasNext()) {
+				Block block = blocksIter.next();
+				if (up == false) {
+					Gdx.app.log("blockx", String.valueOf(block.x));
+					if(block.x == explosion.x && block.y == explosion.y + i) {
+						up = true;
+					}
+				}
+				if (down == false) {
+					if(block.x == explosion.x && block.y == explosion.y - i) {
+						down = true;
+					}
+				}
+				if (left == false) {
+					if(block.x == explosion.x - 1 && block.y == explosion.y) {
+						left = true;
+					}
+				}
+				
+				if (right == false) {
+					if(block.x == explosion.x + 1 && block.y == explosion.y) {
+						right = true;
+					}
+				}
+			}
+			Iterator<Crate> cratesIter = crates.iterator();
+			while(cratesIter.hasNext()) {
+				Crate crate = cratesIter.next();
+				if (up == false){
+					if(crate.x == explosion.x && crate.y == explosion.y + i) {
+						up = true;
+						crate.exists = false;
+						explosion.parts.add(new ExplosionPart(explosion.x, explosion.y + i, 2, 1, false));
+					}
+				}
+				if (down == false){
+					if(crate.x == explosion.x && crate.y == explosion.y - i) {
+						down = true;
+						crate.exists = false;
+						explosion.parts.add(new ExplosionPart(explosion.x, explosion.y - i, 2, 1, true));
+					}
+				}
+				if (left == false){
+					if(crate.x == explosion.x - i && crate.y == explosion.y) {
+						left = true;
+						crate.exists = false;
+						explosion.parts.add(new ExplosionPart(explosion.x - i, explosion.y, 2, 0, false));
+					}
+				}
+				if (right == false){
+					if(crate.x == explosion.x + i && crate.y == explosion.y) {
+						right = true;
+						crate.exists = false;
+						explosion.parts.add(new ExplosionPart(explosion.x + i, explosion.y, 2, 0, true));
+					}
+				}
+			}
+			if(up == false) {
+				if(i == explosion.reach) {
+					explosion.parts.add(new ExplosionPart(explosion.x, explosion.y + i, 2, 1, false));
+				} else {
+					explosion.parts.add(new ExplosionPart(explosion.x, explosion.y + i, 1, 1, false));
+				}
+			}
+			if(down == false) {
+				if(i == explosion.reach) {
+					explosion.parts.add(new ExplosionPart(explosion.x, explosion.y - i, 2, 1, true));
+				} else {
+					explosion.parts.add(new ExplosionPart(explosion.x, explosion.y - i, 1, 1, true));
+				}
+			}
+			if(left == false) {
+				if(i == explosion.reach) {
+					explosion.parts.add(new ExplosionPart(explosion.x - i, explosion.y , 2, 0, false));
+				} else {
+					explosion.parts.add(new ExplosionPart(explosion.x - i, explosion.y, 1, 0, false));
+				}
+			}
+			if(right == false) {
+				if(i == explosion.reach) {
+					explosion.parts.add(new ExplosionPart(explosion.x + i, explosion.y, 2, 0, true));
+				} else {
+					explosion.parts.add(new ExplosionPart(explosion.x + i, explosion.y, 1, 0, true));
+				}
+			}
+		}
 	}
 }
