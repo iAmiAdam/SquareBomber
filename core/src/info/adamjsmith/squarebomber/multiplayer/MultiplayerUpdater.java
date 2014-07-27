@@ -157,7 +157,7 @@ public class MultiplayerUpdater {
 	
 	private void sendUpdate() {
 		byte[] message = new byte[12];
-		message = ByteBuffer.allocate(12).putInt(1).putFloat(player.getX()).putFloat(player.getY()).array();
+		message = ByteBuffer.allocate(12).putInt(0).putFloat(player.getX()).putFloat(player.getY()).array();
 		NextpeerPlugin.unreliablePushDataToOtherPlayers(message);
 	}
 	
