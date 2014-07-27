@@ -13,12 +13,9 @@ public class GameScreen implements Screen {
 	private SquareBomber game;
 	private GameUpdater updater;
 	private GameRenderer renderer;
-
-
 	
-	public GameScreen(SquareBomber game) {
+	public GameScreen(SquareBomber game) {	
 		this.game = game;
-		
 		updater = new GameUpdater(game);
 		renderer = new GameRenderer(game, updater);
 	}
@@ -53,5 +50,7 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void dispose() {
+		updater.dispose();
+		renderer.dispose();
 	}
 }

@@ -8,7 +8,6 @@
 
 package com.nextpeer.libgdx;
 
-import com.badlogic.gdx.Gdx;
 
 
 /**

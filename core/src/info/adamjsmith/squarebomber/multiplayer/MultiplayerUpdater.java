@@ -13,7 +13,6 @@ import info.adamjsmith.squarebomber.objects.PowerUp;
 
 import java.nio.ByteBuffer;
 import java.util.Iterator;
-import java.util.Random;
 
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
@@ -52,7 +51,7 @@ public class MultiplayerUpdater {
 		
 	public Vector2[] spawns = {
 			new Vector2(2.5f, 2.5f),
-			new Vector2(15.5f, 12.5f),
+			new Vector2(15.5f, 2.5f),
 			new Vector2(2.5f, 15.5f),
 			new Vector2(15.5f, 15.5f),
 			new Vector2(4.5f, 9.5f),
@@ -76,11 +75,6 @@ public class MultiplayerUpdater {
 	
 	public void setUp() {
 		NextpeerPlugin.registerToSynchronizedEvent("spawn", 15000);
-	}
-	
-	private void spawn() {
-		sendSpawn();
-		//player.playerId = playerId;
 	}
 	
 	public void update() {
@@ -122,7 +116,6 @@ public class MultiplayerUpdater {
 		
 		for(MapObject object : objects) {
 			Shape shape = getRectangle((RectangleMapObject)object);
-			
 			BodyDef bd = new BodyDef();
 			bd.type = BodyType.StaticBody;
 			bd.position.set((rectangle.x * 0.5f) / ppt, (rectangle.y * 0.5f) / ppt);
@@ -144,15 +137,6 @@ public class MultiplayerUpdater {
 		Vector2 size = new Vector2(((rectangle.x + rectangle.width) * 0.5f) / ppt, ((rectangle.y + rectangle.height) * 0.5f) / ppt);
 		polygon.setAsBox((rectangle.width * 0.5f) / ppt, (rectangle.height * 0.5f) / ppt, size, 0.0f);		
 		return polygon;
-	}
-	
-	private void sendSpawn() {
-		
-		player = new Player(world, 0.5f, 0.5f);
-		
-		byte[] message = new byte[12];
-		message = ByteBuffer.allocate(12).putInt(0).putFloat(player.getX()).putFloat(player.getY()).array();
-		NextpeerPlugin.pushDataToOtherPlayers(message);
 	}
 	
 	private void sendUpdate() {
@@ -355,5 +339,9 @@ public class MultiplayerUpdater {
 				}
 			}
 		}
+	}
+	
+	public void dispose() {
+		world.dispose();
 	}
 }

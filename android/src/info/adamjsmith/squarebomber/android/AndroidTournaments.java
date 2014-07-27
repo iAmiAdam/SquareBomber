@@ -30,9 +30,7 @@ public final class AndroidTournaments extends Tournaments {
 	 * NextpeeerListeners methods
 	 */	
 	private NextpeerListener _listener = new NextpeerListener() {
-		
-		
-		boolean spawned = false;
+	
 		/**
 		 * This method will be called when a tournament is about to start
 		 * @param startData  The tournament start container will give you some details on the tournament which is about to be played.
@@ -90,13 +88,12 @@ public final class AndroidTournaments extends Tournaments {
 	    }
 	    
 	    public void onReceiveTournamentStatus(NextpeerTournamentStatusInfo tournamentStatus) {
-	    		spawned = true;
-	    		String[] playerIds = new String[tournamentStatus.sortedResults.size()];
-	    		for (int i = 0; i < tournamentStatus.sortedResults.size(); i++) {
-	    			String playerId = tournamentStatus.sortedResults.get(i).player.playerId;
-	    			playerIds[i] = playerId;
-	    		}
-	    		callback.onSpawn(playerIds);
+	    	String[] playerIds = new String[tournamentStatus.sortedResults.size()];
+	    	for (int i = 0; i < tournamentStatus.sortedResults.size(); i++) {
+	    		String playerId = tournamentStatus.sortedResults.get(i).player.playerId;
+	    		playerIds[i] = playerId;
+	    	}
+	    	callback.onSpawn(playerIds);
 	    }
 	    
 	    public void onReceiveSynchronizedEvent(String name, NextpeerSynchronizedEventFire fireReason) {

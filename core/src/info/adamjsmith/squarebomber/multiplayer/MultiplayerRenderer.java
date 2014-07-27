@@ -23,7 +23,6 @@ public class MultiplayerRenderer {
 	
 	private MultiplayerUpdater world;
 	private SquareBomber game;
-	//private Player player;
 	
 	private SpriteBatch batch;
 	private OrthographicCamera camera;
@@ -159,5 +158,10 @@ public class MultiplayerRenderer {
 			}
 			
 		}
+	}
+	
+	public void dispose() {
+		batch.dispose();
+		renderer.dispose();
 	}
 }

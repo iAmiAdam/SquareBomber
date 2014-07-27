@@ -2,8 +2,8 @@ package info.adamjsmith.squarebomber;
 
 import info.adamjsmith.squarebomber.gpgs.ActionResolver;
 import info.adamjsmith.squarebomber.screens.LoadingScreen;
+import info.adamjsmith.squarebomber.screens.MainMenuScreen;
 import info.adamjsmith.squarebomber.screens.MultiplayerGame;
-import info.adamjsmith.squarebomber.screens.MultiplayerMenu;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
@@ -67,7 +67,12 @@ public class SquareBomber extends Game implements ApplicationListener{
 		@Override
 		public void onTournamentEnd() {
 			NextpeerPlugin.instance().lastKnownTournamentRandomSeed = 0;
-			setScreen(new MultiplayerMenu(SquareBomber.this));
+			Gdx.app.postRunnable(new Runnable() {
+				@Override
+				public void run() {
+					setScreen(new MainMenuScreen(SquareBomber.this));
+				}
+			});
 		}
 		
 	};

@@ -43,6 +43,7 @@ public class GameUpdater {
 	public GameUpdater(SquareBomber game) {
 		this.game = game;
 		createWorld();
+		createPlayer();
 	}
 	
 	public void update() {
@@ -306,6 +307,10 @@ public class GameUpdater {
 				}
 			}
 		}
+	}
+	
+	public void dispose() {
+		world.dispose();
 	}
 
 }

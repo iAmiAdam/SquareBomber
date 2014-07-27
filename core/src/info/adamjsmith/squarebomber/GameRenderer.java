@@ -149,4 +149,9 @@ public class GameRenderer {
 			
 		}
 	}
+	
+	public void dispose() {
+		batch.dispose();
+		renderer.dispose();
+	}
 }

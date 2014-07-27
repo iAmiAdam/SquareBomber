@@ -2,6 +2,7 @@ package info.adamjsmith.squarebomber.screens;
 
 import info.adamjsmith.squarebomber.SquareBomber;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 
 public class LoadingScreen implements Screen {
