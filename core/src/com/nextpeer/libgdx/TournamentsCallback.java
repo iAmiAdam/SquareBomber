@@ -22,6 +22,8 @@ public abstract class TournamentsCallback {
 	
 	public MultiplayerUpdater world;
 	
+	private boolean spawned = false;
+	
 	public void setWorld(MultiplayerUpdater world) {
 		this.world = world;
 	}
@@ -91,12 +93,16 @@ public abstract class TournamentsCallback {
     public boolean onSupportsTournament(String tournamentUuid) { return true; }
     
     public void onSpawn(String[] playerIds) {
-    	for (int i = 0; i < playerIds.length; i++) {
-    		if(playerIds[i].equals(world.playerId)) {
-    			world.player = new Player(world.world, world.spawns[i].x, world.spawns[i].y);
-    		} else {
-    			world.opponents[i] = new Opponent(world.spawns[i].x, world.spawns[i].y, playerIds[i]);
-    		}
+    	if(spawned == false) {
+    		spawned = true;
+	    	for (int i = 0; i < playerIds.length; i++) {
+	    		if(playerIds[i].equals(world.playerId)) {
+	    			world.player = new Player(world.world, world.spawns[i].x, world.spawns[i].y);
+	    			world.player.playerId = playerIds[i];
+	    		} else {
+	    			world.opponents[i] = new Opponent(world.spawns[i].x, world.spawns[i].y, playerIds[i]);
+	    		}
+	    	}
     	}
     }
 

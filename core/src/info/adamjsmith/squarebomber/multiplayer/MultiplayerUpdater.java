@@ -49,7 +49,7 @@ public class MultiplayerUpdater {
 	private float lastMessage;
 	private static float ppt;
 	private static Rectangle rectangle;
-	
+		
 	public Vector2[] spawns = {
 			new Vector2(2.5f, 2.5f),
 			new Vector2(15.5f, 12.5f),
@@ -67,9 +67,11 @@ public class MultiplayerUpdater {
 		
 		createWorld();
 		opponents = new Opponent[5];
+		player = new Player(world);
+		
+		player = new Player(world, 0.5f, 0.5f);
 		
 		lastMessage = TimeUtils.nanoTime();
-		spawn();
 	}
 	
 	public void setUp() {
@@ -82,7 +84,6 @@ public class MultiplayerUpdater {
 	}
 	
 	public void update() {
-		
 		if ((TimeUtils.nanoTime() - lastMessage) / 1000000000.0 > 0.06f) {
 			lastMessage = TimeUtils.nanoTime();
 			sendUpdate();
@@ -93,7 +94,7 @@ public class MultiplayerUpdater {
 		updateExplosions();
 		sweepDeadBodies();
 		world.step(1/45f, 4, 6);
-	}	
+	}
 	
 	private void createWorld() {
 		
@@ -147,14 +148,7 @@ public class MultiplayerUpdater {
 	
 	private void sendSpawn() {
 		
-		//for (int i = 0; i < spawns.length; i++) {
-			//if (opponents[i] == null) {
-				//player = new Player(world, spawns[i].x, spawns[i].y);
-				//break;
-			//}
-		//}
-		
-		player = new Player(world, 2.5f, 2.5f);
+		player = new Player(world, 0.5f, 0.5f);
 		
 		byte[] message = new byte[12];
 		message = ByteBuffer.allocate(12).putInt(0).putFloat(player.getX()).putFloat(player.getY()).array();

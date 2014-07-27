@@ -90,7 +90,6 @@ public final class AndroidTournaments extends Tournaments {
 	    }
 	    
 	    public void onReceiveTournamentStatus(NextpeerTournamentStatusInfo tournamentStatus) {
-	    	if(spawned == false) {
 	    		spawned = true;
 	    		String[] playerIds = new String[tournamentStatus.sortedResults.size()];
 	    		for (int i = 0; i < tournamentStatus.sortedResults.size(); i++) {
@@ -98,7 +97,6 @@ public final class AndroidTournaments extends Tournaments {
 	    			playerIds[i] = playerId;
 	    		}
 	    		callback.onSpawn(playerIds);
-	    	}
 	    }
 	    
 	    public void onReceiveSynchronizedEvent(String name, NextpeerSynchronizedEventFire fireReason) {
