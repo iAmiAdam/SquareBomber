@@ -86,6 +86,7 @@ public class MultiplayerUpdater {
 		updateCrates();
 		updateBombs();
 		updateExplosions();
+		checkPowers();
 		sweepDeadBodies();
 		world.step(1/45f, 4, 6);
 	}
@@ -192,10 +193,23 @@ public class MultiplayerUpdater {
 		while(iter.hasNext()) {
 			Crate crate = iter.next();
 			if(crate.exists == false) {
-				if(crate.explode()) {
+				if(crate.explode(seed)) {
 					placePowerUp(crate.x, crate.y);
 				}
 				iter.remove();
+			}
+		}
+	}
+	
+	private void checkPowers() {
+		Iterator<PowerUp> iter = powerUps.iterator();
+		while(iter.hasNext()) {
+			PowerUp powerUp = iter.next();
+			if(player.getX() > powerUp.getX() && player.getX() < powerUp.getX() + 1f && player.getY() > powerUp.getY() && player.getY() < powerUp.getY() + 1f ||
+			   player.getX() + 1f > powerUp.getX() && player.getX() + 1f < powerUp.getX() + 1f && player.getY() + 1f > powerUp.getY() && player.getY() + 1f < powerUp.getY() +1f ) {
+				powerUp.givePower(player);
+				iter.remove();
+				powerUp = null;
 			}
 		}
 	}

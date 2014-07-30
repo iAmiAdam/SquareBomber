@@ -151,7 +151,7 @@ public class GameUpdater {
 		while(iter.hasNext()) {
 			Crate crate = iter.next();
 			if(crate.exists == false) {
-				if(crate.explode()) {
+				if(crate.explode(400)) {
 					placePowerUp(crate.x, crate.y);
 				}
 				iter.remove();

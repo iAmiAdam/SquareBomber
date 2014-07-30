@@ -66,7 +66,6 @@ public abstract class TournamentsCallback {
 		for(int i = 0; i < world.opponents.length; i++) {
 			if(world.opponents[i] != null) {
 				if (world.opponents[i].playerId.equals(playerId)) {
-					Gdx.app.log("Message", "Received");
 					world.opponents[i].x = x;
 					world.opponents[i].y = y;
 				}
